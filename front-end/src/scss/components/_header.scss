@@ -1,0 +1,25 @@
+.header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #fff;
+  &-wrapper {
+    width: 100%;
+    background-color: #fff;
+  }
+  .logo {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #1a2b5f;
+    span {
+      color: #ffc87a;
+    }
+  }
+  .menu-icon {
+    font-size: 2.4rem;
+  }
+  .anticon-menu{
+      font-size: 2rem;
+  }
+  
+  
+}

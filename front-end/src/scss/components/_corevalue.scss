@@ -1,0 +1,38 @@
+.corevalue {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  &__item {
+    display: flex;
+    align-items: center;
+  }
+  &__icon {
+    font-size: 5rem;
+    .fa-check-circle {
+      color: #2ecc40;
+    }
+    .fa-headphones {
+      color: #98b4d4;
+    }
+    .fa-history {
+      color: #FF6F61;
+    }
+
+    .fa-truck-moving {
+      color: #6B5B95;
+    }
+  }
+  &__info {
+    margin-left: 1rem;
+    span {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 400;
+    }
+    strong {
+      text-transform: uppercase;
+      font-size: 2rem;
+    }
+  }
+}
