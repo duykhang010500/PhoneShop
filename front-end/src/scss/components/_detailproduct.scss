@@ -1,0 +1,56 @@
+.detail__product {
+  background-color: #fff;
+  padding: 1rem 0 3rem 0;
+
+  h4 {
+    margin: 0;
+  }
+  &--name {
+    margin-top: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1.7rem;
+    .count-rating{
+        margin-left: 1rem;
+        font-weight: 400;
+        color: #1890ff;
+    }
+  }
+  &--info {
+      padding: 2rem 0;
+      border-bottom: 1px solid red;
+  }
+  &--price{
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #fd475a;
+      del {
+        margin-left: 2rem;
+        font-size: 2rem;
+        font-weight: 600;
+        color: silver;
+      }
+  }
+  
+  .free-shipping {
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .title{
+      font-weight: 600;
+    }
+
+  &--edition{
+    margin-top: 1.2rem;
+    
+  }
+
+  &--color{
+    margin-top: 1.5rem;
+  }
+
+  &--action{
+    margin-top: 2rem;
+  }
+}

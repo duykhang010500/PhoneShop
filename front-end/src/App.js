@@ -11,28 +11,37 @@ import Header from './components/Header';
 import HomePage from "./pages/Home";
 import Login from "./pages/Login";
 import './scss/index.scss'
+import DetailProduct from "./pages/DetailProduct";
+import PageNotFound from "./pages/PageNotFound";
+
 
 function App() {
+
   return (
     <Router>
       <Header />
-      
-          <Switch>
-            <Route exact path="/">
-              <HomePage/>
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-            </Route>
-          </Switch>
-          <CoreValue />
-        
-        <Footer />
-        <BackTop>
-          <UpCircleTwoTone style={{fontSize:"3.5rem"}}/>
-        </BackTop>
+
+      <Switch>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+        </Route>
+        <Route exact path="/:slug">
+          <DetailProduct />
+        </Route>
+        <Route path="/*">
+          <PageNotFound />
+        </Route>
+      </Switch>
+      <CoreValue />
+      <Footer />
+      <BackTop>
+        <UpCircleTwoTone style={{ fontSize: "3.5rem" }} />
+      </BackTop>
     </Router>
   );
 }
