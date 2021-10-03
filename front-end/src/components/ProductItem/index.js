@@ -2,17 +2,20 @@ import { Rate } from 'antd';
 import { Link } from 'react-router-dom'
 import { formatVND } from '../../utils/formatVND'
 
-export default function ProductItem() {
-    
-    const formatNewPrice = formatVND(30000000);
-    const formatOldPrice = formatVND(10000000)
+export default function ProductItem({ product }) {
+
+    // const { avatar, name, price, oldPrice, rating, ratingCount } = product
+    // console.log(product)
+
+    const formatNewPrice = formatVND(product.newPrice);
+    const formatOldPrice = formatVND(product.price)
     return (
         <li className="product__item">
             <Link to='/iphone-15gb'>
-                <img src="https://hoanghamobile.com/i/productlist/dsp/Uploads/2021/03/19/iphoone-12.png" alt="" className="product__item--thumb" />
+                <img src={product.avatar} alt="" className="product__item--thumb" />
             </Link>
             <div className="product__item--name">
-                Xiaomi Redmi Note 10 Pro 8GB
+                {product.name}
             </div>
             <div className="product__item--price">
                 <span className="product__item--price-new">{formatNewPrice}</span>
@@ -21,9 +24,9 @@ export default function ProductItem() {
                 </span>
             </div>
             <div className="product__item--rating">
-                <Rate disabled value={3.5} />
+                <Rate disabled value={product.rating} />
                 <span className="product__item--rating-num">
-                    10 đánh giá
+                    {product.ratingCount} đánh giá
                 </span>
             </div>
         </li>

@@ -1,13 +1,10 @@
-
 import React from 'react'
-
 import {
     Divider,
     Row,
     Typography,
     Col
 } from 'antd';
-
 import DetailProductTitle from '../components/DetailProduct/DetailProductTitle';
 import DetailProductInfo from '../components/DetailProduct/DetailProductInfo';
 import DetailProductWarranty from '../components/DetailProduct/DetailProductWarranty';

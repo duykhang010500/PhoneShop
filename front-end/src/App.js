@@ -33,6 +33,8 @@ function App() {
         <Route exact path="/:slug">
           <DetailProduct />
         </Route>
+        <Route exact path="/cart">
+        </Route>
         <Route path="/*">
           <PageNotFound />
         </Route>

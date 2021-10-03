@@ -1,0 +1,31 @@
+.subscription {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4rem 0;
+  &-left {
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  &-right {
+    margin-left: 2rem;
+    input {
+      background: #fefefe;
+      padding: 1rem 1rem;
+      width: 50rem;
+      border: none;
+      outline: none;
+    }
+    button {
+      background-color: #096dd9;
+      display: inline-block;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      padding: 1rem;
+      font-size: 1.4rem;
+      color: #fff;
+      font-weight: bold;
+    }
+  }
+}

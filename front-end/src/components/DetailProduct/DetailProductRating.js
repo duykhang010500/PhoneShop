@@ -26,7 +26,7 @@ export default function DetailProductRating() {
                             <Typography.Title level={4}>
                                 Điểm trung bình
                             </Typography.Title>
-                            <Typography.Text>
+                            <Typography.Text strong>
                                 3.7
                                 <Rate disabled value={1} count={1} style={{ fontSize: 30, marginBottom: 10}} />
                             </Typography.Text>
