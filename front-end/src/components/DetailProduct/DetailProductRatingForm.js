@@ -11,20 +11,23 @@ import {
     Button
 } from 'antd'
 
-export default function DetailProductRatingForm({ showFormRating }) {
-    const[str, setStr] = useState('')
-    const[star, setStar] = useState(0)
+import { IoMdPaperPlane } from "react-icons/io";
 
-    
+
+export default function DetailProductRatingForm({ showFormRating }) {
+    const [str, setStr] = useState('')
+    const [star, setStar] = useState(0)
+
+
     function handleChangeStar(e) {
         setStar(e)
     }
-    
+
     function handleChangeInput(e) {
         console.log(e)
         setStr(e.target.value)
     }
-    
+
     function handleSubmit() {
         console.log(star)
         console.log(str)
@@ -62,10 +65,13 @@ export default function DetailProductRatingForm({ showFormRating }) {
                         />
                         <Button
                             type="primary"
-                            size="middle"
+                            size="large"
                             style={{ marginTop: 10 }}
+                            icon={<IoMdPaperPlane />}
                             onClick={handleSubmit}
+
                         >
+                            &nbsp;
                             Gửi ngay
                         </Button>
                     </Col>

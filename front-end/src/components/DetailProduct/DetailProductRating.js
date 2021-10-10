@@ -28,7 +28,7 @@ export default function DetailProductRating() {
                             </Typography.Title>
                             <Typography.Text strong>
                                 3.7
-                                <Rate disabled value={1} count={1} style={{ fontSize: 30, marginBottom: 10}} />
+                                <Rate disabled value={1} count={1} style={{ fontSize: 30, marginBottom: 10 }} />
                             </Typography.Text>
                             <Typography.Text strong>
                                 N lượt đánh giá
@@ -87,17 +87,27 @@ export default function DetailProductRating() {
                 </Col>
                 <Col xs={24} md={6}>
                     <Row justify="space-around">
-                        <Button
-                            on
-                            danger
-                            type="primary"
-                            size="large"
-                            icon={<IoMdPaperPlane
-                                style={{ fontSize: 18 }} />}
-                            onClick={() => { setShowFormRating(!showFormRating) }}
-                        >
-                            &nbsp; Gửi đánh giá của bạn
-                        </Button>
+                        {
+                            showFormRating ?
+                                <Button
+                                    danger
+                                    type="primary"
+                                    size="large"
+                                    onClick={() => setShowFormRating(!showFormRating)}>
+                                    Đóng
+                                </Button>
+                                :
+                                <Button
+                                    danger
+                                    type="primary"
+                                    size="large"
+                                    icon={<IoMdPaperPlane
+                                        style={{ fontSize: 18 }} />}
+                                    onClick={() => { setShowFormRating(!showFormRating) }}
+                                >
+                                    &nbsp; Gửi đánh giá của bạn
+                                </Button>
+                        }
                     </Row>
                 </Col>
             </Row>

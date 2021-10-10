@@ -7,6 +7,7 @@ import {
 } from 'antd'
 import { Link } from 'react-router-dom'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { Typography } from 'antd'
 
 export default function Login() {
     message.config({
@@ -14,7 +15,7 @@ export default function Login() {
         maxCount: 1,
         duration: 5
     })
-    function handleSubmit(){
+    function handleSubmit() {
         message.success('Đăng nhập thành công!')
         setIsLoading(true)
     }
@@ -37,7 +38,7 @@ export default function Login() {
                 >
                     <Input
                         prefix={<UserOutlined
-                        className="site-form-item-icon" />}
+                            className="site-form-item-icon" />}
                         placeholder="Tài khoản"
                         type="email"
                     />
@@ -53,16 +54,20 @@ export default function Login() {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button 
-                    type="primary" 
-                    htmlType="submit" 
-                    className="login-form-button"
-                    loading={isLoading}
-                    onClick={handleSubmit}
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                        loading={isLoading}
+                        onClick={handleSubmit}
                     >
                         Đăng nhập
                     </Button>
-                    Hoặc <Link href="/register">Đăng ký ngay!</Link>
+                    Hoặc <Link to='/register'>
+                        <Typography.Text type="danger" strong>
+                            Đăng ký ngay
+                        </Typography.Text>
+                    </Link>
                 </Form.Item>
             </Form>
         </div>

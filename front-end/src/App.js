@@ -13,6 +13,7 @@ import Login from "./pages/Login";
 import './scss/index.scss'
 import DetailProduct from "./pages/DetailProduct";
 import PageNotFound from "./pages/PageNotFound";
+import Register from "./pages/Register";
 
 
 function App() {
@@ -20,7 +21,6 @@ function App() {
   return (
     <Router>
       <Header />
-
       <Switch>
         <Route exact path="/">
           <HomePage />
@@ -29,6 +29,7 @@ function App() {
           <Login />
         </Route>
         <Route exact path="/register">
+          <Register />
         </Route>
         <Route exact path="/:slug">
           <DetailProduct />

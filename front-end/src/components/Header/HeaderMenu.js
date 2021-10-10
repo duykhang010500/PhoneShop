@@ -14,8 +14,10 @@ import {
     Dropdown,
     Avatar,
     Button,
-    Typography
+    Typography,
+    Popover,
 } from 'antd'
+import Cart from '../Cart'
 
 const HeaderMenu = () => {
 
@@ -27,9 +29,11 @@ const HeaderMenu = () => {
                 </Link>
             </Menu.Item>
             <Menu.Item icon={<FileSyncOutlined />}>
+
                 <Link>
                     Đơn hàng
                 </Link>
+
             </Menu.Item>
             <Menu.Item style={{ textAlign: 'center' }}>
                 <Button danger onClick={handleLogout} icon={<LogoutOutlined />}>
@@ -42,7 +46,7 @@ const HeaderMenu = () => {
     const history = useHistory()
 
     function handleLogout() {
-        history.push('/login')
+        window.location.href = "/login"
     }
 
     return (
@@ -60,9 +64,15 @@ const HeaderMenu = () => {
                 </Badge>
             }
             >
-                <Link to="/cart">
-                    Giỏ hàng
-                </Link>
+                <Popover
+                    title={`0 sản phẩm`}
+                    trigger="hover"
+                    content={<Cart />}
+                >
+                    <Link to="/cart">
+                        Giỏ hàng
+                    </Link>
+                </Popover>
             </Menu.Item>
             {/* <Menu.Item icon={<UserOutlined className="menu-icon" />}>
                                                 <Link to="/login">
@@ -80,7 +90,6 @@ const HeaderMenu = () => {
                     </Link>
                 </Dropdown>
             </Menu.Item>
-
         </Menu>
 
     )
