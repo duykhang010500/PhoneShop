@@ -27,6 +27,25 @@ img {
   display: block;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: silver;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: silver;
+}
+
 .container {
   max-width: 120rem;
   margin: 0 auto;
@@ -69,7 +88,7 @@ a:hover {
 
 .slick-slide img {
   display: block;
-  height: 375px;
+  height: 30rem;
 }
 
 .ant-typography {
@@ -78,4 +97,15 @@ a:hover {
 
 .carousel {
   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
+
+.ant-checkbox-wrapper {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.ant-tag {
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-weight: 500;
 }

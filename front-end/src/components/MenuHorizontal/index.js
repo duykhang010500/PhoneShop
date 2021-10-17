@@ -13,7 +13,8 @@ import { IoIosFlash } from "react-icons/io";
 const menu = [
     {
         icon: <BsPhone />,
-        title: "Điện thoại"
+        title: "Điện thoại",
+        link: "/dien-thoai-di-dong"
     },
     {
         icon: <BsLaptop />,
@@ -45,7 +46,7 @@ const MenuHorizontal = () => {
                     menu.map((item, index) => {
                         return (
                             <li className="menu-item">
-                                <Link to="">
+                                <Link to={item.link}>
                                     {item.icon}
                                     <span>
                                         {item.title}

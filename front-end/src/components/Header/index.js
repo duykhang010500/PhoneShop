@@ -12,9 +12,9 @@ const { Search } = Input
 
 export default function Header() {
 
-    
 
-    
+
+
 
     return (
         <header>
@@ -26,19 +26,21 @@ export default function Header() {
                                 md={4}
                                 xs={22}
                             >
-                                <HeaderLogo/>
+                                <HeaderLogo />
                             </Col>
                             <Col
                                 md={10}
                                 xs={24}
                             >
-                               <HeaderSearch/>
+                                <HeaderSearch />
                             </Col>
                             <Col
                                 md={10}
                                 xs={2}
                             >
-                                <HeaderMenu/>
+
+                                <HeaderMenu />
+
                             </Col>
                         </Row>
                     </header>

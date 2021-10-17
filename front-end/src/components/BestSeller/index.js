@@ -1,6 +1,7 @@
 import ProductItem from '../ProductItem'
 import { Typography } from 'antd'
 import Products from '../../utils/mockData'
+
 export default function BestSeller() {
     // console.log(Product)
     return (

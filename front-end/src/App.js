@@ -14,6 +14,9 @@ import './scss/index.scss'
 import DetailProduct from "./pages/DetailProduct";
 import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
+import ProductByCategory from "./pages/ProductByCategory";
+
+
 
 
 function App() {
@@ -30,6 +33,9 @@ function App() {
         </Route>
         <Route exact path="/register">
           <Register />
+        </Route>
+        <Route exact path="/dien-thoai-di-dong">
+          <ProductByCategory />
         </Route>
         <Route exact path="/:slug">
           <DetailProduct />

@@ -75,16 +75,16 @@ const HeaderMenu = () => {
                 </Popover>
             </Menu.Item>
             {/* <Menu.Item icon={<UserOutlined className="menu-icon" />}>
-                                                <Link to="/login">
-                                                    Đăng nhập
-                                                </Link>
-                                            </Menu.Item> */}
+                <Link to="/login">
+                    Đăng nhập
+                </Link>
+            </Menu.Item> */}
             <Menu.Item>
                 <Dropdown overlay={menu} placement="bottomLeft" arrow>
                     <Link>
                         {/* <Avatar style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-                                                            K
-                                                        </Avatar> */}
+                            K
+                        </Avatar> */}
                         <Avatar src="https://image.lag.vn/upload/news/19/08/09/yasuo-bi-game-thu-phan-doi__1__LYDS.jpg" />
                         &nbsp; <Typography.Text strong>Duy Khang</Typography.Text>
                     </Link>

@@ -5,7 +5,7 @@ const HeaderSearch = () => {
     const { Search } = Input
     return (
         <Search
-            size="middle"
+            size="large"
             placeholder="Nhập tên sản phẩm cần tìm..."
             enterButton
             // loading

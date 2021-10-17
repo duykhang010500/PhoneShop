@@ -1,0 +1,18 @@
+.category-container {
+  margin-top: 3rem;
+}
+
+.list__filter {
+  // margin-top: 2rem;
+  &-title {
+    padding: 0.2rem 2rem 2rem 2rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    margin-bottom: 3rem;
+  }
+  &-product {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+}

@@ -6,7 +6,7 @@ const Slider = () => {
 
     return (
         <div className="container">
-            <Carousel className="carousel" autoplay dots={false}>
+            <Carousel className="carousel" dots={false} autoplay>
                 {
                     Banner.map((item, index) =>
                         <img key={index} src={item} alt="" />

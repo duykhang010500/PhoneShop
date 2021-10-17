@@ -25,3 +25,13 @@
     font-size: 2rem;
   }
 }
+
+.ant-input-search-button {
+  border-radius: 0 2rem 2rem 0 !important;
+  background-color: #1890ff !important;
+  border: none;
+  transition: all 0.2s ease-out;
+  &:hover {
+    background-color: #40a9ff !important;
+  }
+}
