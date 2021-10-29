@@ -60,43 +60,11 @@ a:hover {
   color: black;
 }
 
-.slick-dots {
-  bottom: 0;
-}
-
-.slick-thumb li {
-  width: 6rem;
-  height: 6rem;
-}
-
-.spacing {
-  border-top: 1px solid #f0f0f0;
-  margin: 2rem 0;
-}
-
 .title {
   // display: inline-block;
   // background-color: black;
   color: black;
   padding: 0.5rem;
-}
-
-.slick-slide {
-  height: 37.5rem;
-  object-fit: contain !important;
-}
-
-.slick-slide img {
-  display: block;
-  height: 30rem;
-}
-
-.ant-typography {
-  margin-top: 2rem;
-}
-
-.carousel {
-  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
 }
 
 .ant-checkbox-wrapper {
@@ -108,4 +76,15 @@ a:hover {
   padding: 0.5rem 1rem;
   border-radius: 2rem;
   font-weight: 500;
+}
+
+.underline {
+  width: 8rem;
+  border-top: 4px solid black;
+  margin-bottom: 2rem;
+}
+
+.ant-avatar-lg {
+  width: 7rem;
+  height: 7rem;
 }

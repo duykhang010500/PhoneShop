@@ -3,10 +3,11 @@ import {
     FacebookFilled,
     TwitterCircleFilled,
 } from '@ant-design/icons'
+import { Divider } from 'antd'
 export default function Footer() {
     return (
-
         <footer >
+            {/* <Divider /> */}
             <div className="container">
                 <div className="footer">
                     <ul className="footer__column">

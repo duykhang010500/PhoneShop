@@ -1,7 +1,9 @@
+import { Divider } from "antd";
 
 export default function CoreValue() {
     return (
-       <section>
+        <section>
+            <Divider />
             <div className="container">
                 <div className="corevalue">
                     <div className="corevalue__item">
@@ -42,6 +44,6 @@ export default function CoreValue() {
                     </div>
                 </div>
             </div>
-       </section>
+        </section>
     )
 }

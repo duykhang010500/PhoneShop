@@ -23,7 +23,7 @@ const ProductByCategory = () => {
                     <Typography.Text strong>Điện thoại di động</Typography.Text>
                 </Breadcrumb.Item>
             </Breadcrumb>
-            <Carousel />
+            {/* <Carousel /> */}
             <div className="category-container">
                 <Row gutter={[40, 40]}>
                     <Col xs={8} md={6}>

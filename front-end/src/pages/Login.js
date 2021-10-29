@@ -3,11 +3,11 @@ import {
     Form,
     Input,
     Button,
-    message
+    message,
+    Typography
 } from 'antd'
 import { Link } from 'react-router-dom'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { Typography } from 'antd'
 
 export default function Login() {
     message.config({

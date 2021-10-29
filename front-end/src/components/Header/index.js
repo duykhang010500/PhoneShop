@@ -2,6 +2,7 @@ import {
     Row,
     Col,
     Input,
+    Space,
 } from 'antd'
 
 import HeaderLogo from './HeaderLogo'
@@ -11,10 +12,6 @@ import HeaderMenu from './HeaderMenu'
 const { Search } = Input
 
 export default function Header() {
-
-
-
-
 
     return (
         <header>
@@ -38,9 +35,7 @@ export default function Header() {
                                 md={10}
                                 xs={2}
                             >
-
                                 <HeaderMenu />
-
                             </Col>
                         </Row>
                     </header>

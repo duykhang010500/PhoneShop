@@ -65,7 +65,7 @@ const HeaderMenu = () => {
             }
             >
                 <Popover
-                    title={`0 sản phẩm`}
+                    title={`1 sản phẩm`}
                     trigger="hover"
                     content={<Cart />}
                 >

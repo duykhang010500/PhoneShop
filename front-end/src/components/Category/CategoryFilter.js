@@ -46,7 +46,13 @@ const CategoryFilter = () => {
     const Feature = ['Chống nước', 'Bảo mật vân tay', 'Nhận diện khuôn mặt', 'Sạc nhanh']
 
     return (
-        <Row>
+        <Row
+            style={{
+                backgroundColor: "#fff",
+                borderRadius: "1rem",
+                padding: "1.5rem"
+            }}
+        >
             <Typography.Title level={5}>
                 Hãng sản xuất
             </Typography.Title>

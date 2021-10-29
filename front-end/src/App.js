@@ -15,9 +15,7 @@ import DetailProduct from "./pages/DetailProduct";
 import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
 import ProductByCategory from "./pages/ProductByCategory";
-
-
-
+import Cart from './pages/Cart'
 
 function App() {
 
@@ -34,13 +32,14 @@ function App() {
         <Route exact path="/register">
           <Register />
         </Route>
-        <Route exact path="/dien-thoai-di-dong">
+        <Route exact path="/cart">
+          <Cart />
+        </Route>
+        <Route exact path="/:category">
           <ProductByCategory />
         </Route>
-        <Route exact path="/:slug">
+        <Route exact path="/dien-thoai-di-dong/:slug">
           <DetailProduct />
-        </Route>
-        <Route exact path="/cart">
         </Route>
         <Route path="/*">
           <PageNotFound />
