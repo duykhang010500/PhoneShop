@@ -19,6 +19,11 @@ import {
 } from '@ant-design/icons'
 
 const Cart = () => {
+
+    function handleDelete() {
+        console.log('Delete')
+    }
+
     return (
         <div className="cart">
             {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
@@ -40,7 +45,8 @@ const Cart = () => {
                 </Col>
                 <Col span={2}>
                     <DeleteOutlined
-                        style={{ color: "red" }}
+                        style={{ color: "red", cursor: "pointer" }}
+                        onClick={handleDelete}
                     />
                 </Col>
             </Row>

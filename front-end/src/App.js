@@ -16,6 +16,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
 import ProductByCategory from "./pages/ProductByCategory";
 import Cart from './pages/Cart'
+import Checkout from "./pages/Checkout";
 
 function App() {
 
@@ -35,11 +36,14 @@ function App() {
         <Route exact path="/cart">
           <Cart />
         </Route>
-        <Route exact path="/:category">
+        <Route exact path="/dien-thoai-di-dong">
           <ProductByCategory />
         </Route>
         <Route exact path="/dien-thoai-di-dong/:slug">
           <DetailProduct />
+        </Route>
+        <Route exact path="/checkout">
+          <Checkout />
         </Route>
         <Route path="/*">
           <PageNotFound />

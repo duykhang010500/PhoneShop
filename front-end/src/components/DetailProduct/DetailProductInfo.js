@@ -4,12 +4,18 @@ import {
     Space,
     Typography,
     Radio,
-    Button
+    Button,
+    Tooltip
 } from 'antd'
 
+import {
+    HeartFilled,
+    HeartOutlined
+} from '@ant-design/icons'
+
 import { CheckCircleTwoTone } from '@ant-design/icons'
-export default function DetailProductInfo(){
-    return(
+export default function DetailProductInfo() {
+    return (
         <Row gutter={[40, 40]}>
             <Col md={10} xs={24}>
                 <img src="https://hoanghamobile.com/i/preview/Uploads/2020/10/10/iphone%2011%20(3).png" alt="" />
@@ -30,6 +36,19 @@ export default function DetailProductInfo(){
                         &nbsp;
                         Miễn phí vận chuyển toàn quốc
                     </Typography.Text>
+                    <Tooltip title="Xóa khỏi danh sách yêu thích">
+                        <HeartFilled
+                            style={{ color: "#FF4136", fontSize: "3rem" }}
+                            onClick={() => console.log('Xóa khỏi danh sách yêu thích')}
+                        />
+                    </Tooltip>
+                    <Tooltip title="Thêm vào danh sách yêu thích">
+                        <HeartOutlined
+                            style={{ color: "#FF4136", fontSize: "3rem" }}
+                            onClick={() => console.log('Thêm vào danh sách yêu thích')}
+                        />
+                    </Tooltip>
+
 
                     <Typography.Text strong>
                         Lựa chọn phiên bản

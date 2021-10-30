@@ -7,7 +7,8 @@ import {
     Space,
     Breadcrumb,
     Typography,
-    Avatar
+    Avatar,
+    Tooltip
 } from 'antd'
 
 import {
@@ -78,13 +79,16 @@ const Cart = () => {
                     20000000đ
                 </Col>
                 <Col>
-                    <Button
-                        icon={<DeleteOutlined />}
-                        size="large"
-                        danger
-                    >
-                        Xóa
-                    </Button>
+                    <Tooltip title="Xóa khỏi giỏ hàng">
+                        <Button
+                            icon={<DeleteOutlined />}
+                            size="large"
+                            danger
+                            shape="circle"
+                        >
+
+                        </Button>
+                    </Tooltip>
                 </Col>
             </Row>
 
@@ -125,6 +129,7 @@ const Cart = () => {
                         danger
                         type="primary"
                         icon={<CreditCardOutlined />}
+                        href="/checkout"
                     >
                         Thực hiện thanh toán
                     </Button>

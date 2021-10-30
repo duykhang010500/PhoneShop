@@ -22,9 +22,8 @@ export default function ProductItem({ product, isShowCategory }) {
             {/* <Badge.Ribbon text="Hot" color="#fd475a"> */}
             <Card
                 hoverable
-            // loading
             >
-                <Link to='/iphone-15gb'>
+                <Link to='/dien-thoai-di-dong/iphone-15'>
                     <img src={product.avatar} alt="" className="product__item--thumb" />
                 </Link>
                 <div className="product__item-info">
