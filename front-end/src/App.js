@@ -1,8 +1,11 @@
+import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
+  useRouteMatch,
 } from "react-router-dom";
+
+import './scss/index.scss'
 import { BackTop } from 'antd';
 import { UpCircleTwoTone } from '@ant-design/icons'
 import CoreValue from "./components/CoreValue";
@@ -10,7 +13,6 @@ import Footer from "./components/common/Footer";
 import Header from './components/common/Header';
 import HomePage from "./pages/Home";
 import Login from "./pages/Login";
-import './scss/index.scss'
 import DetailProduct from "./pages/DetailProduct";
 import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
@@ -18,12 +20,17 @@ import ProductByCategory from "./pages/ProductByCategory";
 import Cart from './pages/Cart'
 import Checkout from "./pages/Checkout";
 import DashboardUser from "./pages/DashboardUser";
+import DashboardAdmin from "./pages/DashboardAdmin";
 
 function App() {
 
+  const isDashBoardAdmin = useRouteMatch('/admin')
+
   return (
-    <Router>
-      <Header />
+    <div>
+      {
+        !isDashBoardAdmin && <Header />
+      }
       <Switch>
         <Route exact path="/">
           <HomePage />
@@ -49,16 +56,25 @@ function App() {
         <Route path="/user">
           <DashboardUser />
         </Route>
+        <Route path="/admin">
+          <DashboardAdmin />
+        </Route>
         <Route path="/*">
           <PageNotFound />
         </Route>
       </Switch>
-      <CoreValue />
-      <Footer />
+      {
+        !isDashBoardAdmin && (
+          <>
+            <CoreValue />
+            <Footer />
+          </>
+        )
+      }
       <BackTop>
         <UpCircleTwoTone style={{ fontSize: "3.5rem" }} />
       </BackTop>
-    </Router>
+    </div>
   );
 }
 

@@ -54,11 +54,11 @@ const HeaderMenu = () => {
 
         <Menu mode="horizontal" overflowedIndicator={<MenuOutlined />}>
 
-            <Menu.Item icon={<ReconciliationOutlined className="menu-icon" />}>
+            {/* <Menu.Item icon={<ReconciliationOutlined className="menu-icon" />}>
                 <Link to='/bill'>
                     Tra cứu đơn hàng
                 </Link>
-            </Menu.Item>
+            </Menu.Item> */}
             <Menu.Item icon={<NotificationOutlined className="menu-icon" />}>
                 <Link to='/news'>
                     Tin tức

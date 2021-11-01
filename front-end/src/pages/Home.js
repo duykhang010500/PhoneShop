@@ -10,10 +10,10 @@ export default function HomePage() {
     return (
         <section>
             {/* <MenuHorizontal /> */}
-            {/* <Carousel /> */}
+            <Carousel />
             {/* <BrandFeature /> */}
-            {/* <Ads /> */}
             <BestSeller title="BÁN CHẠY NHẤT" />
+            <Ads />
             <BestSeller title="Apple" />
             <BestSeller title="Samsung" />
             {/* <Subscription /> */}

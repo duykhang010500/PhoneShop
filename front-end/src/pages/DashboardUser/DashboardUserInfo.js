@@ -40,17 +40,21 @@ const DashboardUserInfo = () => {
                     gutter={[20, 5]}
                 >
 
-                    <Upload
-                        name="avatar"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                    // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    // beforeUpload={beforeUpload}
-                    // onChange={this.handleChange}
+                    <Col
+                        span={24}
                     >
-                        Tải ảnh
-                    </Upload>
+                        <Upload
+                            name="avatar"
+                            listType="picture-card"
+                            className="avatar-uploader"
+                            showUploadList={false}
+                        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                        // beforeUpload={beforeUpload}
+                        // onChange={this.handleChange}
+                        >
+                            Tải ảnh
+                        </Upload>
+                    </Col>
                     <Col
                         span={12}
                     >
@@ -126,19 +130,21 @@ const DashboardUserInfo = () => {
                             />
                         </Form.Item>
                     </Col>
-                    <Form.Item
-                        style={{ textAlign: 'center' }}
-                    >
-                        <Button
-                            type="primary"
-                            loading
+                    <Col span={24}>
+                        <Form.Item
+
                         >
-                            Cập nhật
-                        </Button>
-                    </Form.Item>
+                            <Button
+                                type="primary"
+                                loading
+                            >
+                                Cập nhật
+                            </Button>
+                        </Form.Item>
+                    </Col>
                 </Row>
             </Form>
-        </div >
+        </div>
     )
 }
 

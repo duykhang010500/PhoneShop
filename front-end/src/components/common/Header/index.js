@@ -26,13 +26,13 @@ export default function Header() {
                                 <HeaderLogo />
                             </Col>
                             <Col
-                                md={8}
+                                md={10}
                                 xs={24}
                             >
                                 <HeaderSearch />
                             </Col>
                             <Col
-                                md={12}
+                                md={10}
                                 xs={2}
                             >
                                 <HeaderMenu />

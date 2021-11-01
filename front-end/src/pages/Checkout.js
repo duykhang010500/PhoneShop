@@ -29,7 +29,6 @@ import {
     EditOutlined
 } from '@ant-design/icons'
 
-import { RiTruckLine } from "react-icons/ri";
 
 const Checkout = () => {
     const { Option } = Select
