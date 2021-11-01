@@ -1,13 +1,13 @@
 
 const product = [
-    // {
-    //     avatar: "https://hoanghamobile.com/i/productlist/dsp/Uploads/2021/03/19/iphoone-12.png",
-    //     name: "Apple iPhone 12 Pro Max - 128GB - Chính hãng VN/A",
-    //     price: 21000000,
-    //     newPrice: 20000000,
-    //     rating: 5,
-    //     ratingCount: 10
-    // },
+    {
+        avatar: "https://hoanghamobile.com/i/productlist/dsp/Uploads/2021/03/19/iphoone-12.png",
+        name: "Apple iPhone 12 Pro Max - 128GB - Chính hãng VN/A",
+        price: 21000000,
+        newPrice: 20000000,
+        rating: 5,
+        ratingCount: 10
+    },
     {
         avatar: "https://hoanghamobile.com/i/productlist/ts/Uploads/2021/09/10/image-removebg-preview.png",
         name: "Điện thoại di động Samsung Galaxy A03s 4GB/64GB - Chính hãng",

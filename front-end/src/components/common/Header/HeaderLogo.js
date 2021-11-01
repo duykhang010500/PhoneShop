@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const HeaderLogo = () => {
     return (
         <Link to="/" className="logo">
-            Phone<span>Shop</span>
+            Phone <span>Store</span>
         </Link>
     )
 }

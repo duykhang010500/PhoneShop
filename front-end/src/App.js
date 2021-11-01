@@ -6,8 +6,8 @@ import {
 import { BackTop } from 'antd';
 import { UpCircleTwoTone } from '@ant-design/icons'
 import CoreValue from "./components/CoreValue";
-import Footer from "./components/Footer";
-import Header from './components/Header';
+import Footer from "./components/common/Footer";
+import Header from './components/common/Header';
 import HomePage from "./pages/Home";
 import Login from "./pages/Login";
 import './scss/index.scss'
@@ -17,6 +17,7 @@ import Register from "./pages/Register";
 import ProductByCategory from "./pages/ProductByCategory";
 import Cart from './pages/Cart'
 import Checkout from "./pages/Checkout";
+import DashboardUser from "./pages/DashboardUser";
 
 function App() {
 
@@ -44,6 +45,9 @@ function App() {
         </Route>
         <Route exact path="/checkout">
           <Checkout />
+        </Route>
+        <Route path="/user">
+          <DashboardUser />
         </Route>
         <Route path="/*">
           <PageNotFound />

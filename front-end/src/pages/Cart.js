@@ -30,7 +30,6 @@ const Cart = () => {
                     padding: "1rem 2rem",
                     borderRadius: "3rem"
                 }}
-
             >
                 <Breadcrumb.Item href="/">
                     <HomeOutlined style={{ fontSize: '2rem' }} />
@@ -44,6 +43,35 @@ const Cart = () => {
             >
                 Giỏ hàng của bạn có 2 sản phẩm
             </Typography.Title>
+
+            <Row
+                justify="space-between"
+                className="cart-item"
+                align="middle"
+            >
+                <Col>
+                    Ảnh
+
+                </Col>
+                <Col>
+                    Tên
+                </Col>
+                <Col>
+                    <Typography.Text>
+                        Đơn giá
+                    </Typography.Text>
+                </Col>
+                <Col>
+                    Số lượng
+                </Col>
+                <Col>
+                    Thành tiền
+                </Col>
+                <Col>
+                    Xóa
+                </Col>
+            </Row>
+
             <Row
                 justify="space-between"
                 className="cart-item"
@@ -58,11 +86,19 @@ const Cart = () => {
 
                 </Col>
                 <Col>
-                    Iphone 12 Pro Max 256Gb
+                    <Typography.Text
+                        strong
+                        style={{ fontSize: "1.6rem" }}
+                    >
+                        Iphone 12 Pro Max 256Gb
+                    </Typography.Text>
                 </Col>
                 <Col>
-                    <Typography.Text>
-                        100000
+                    <Typography.Text
+                        strong
+                        type="danger"
+                    >
+                        1000000đ
                     </Typography.Text>
                 </Col>
                 <Col>
@@ -76,7 +112,12 @@ const Cart = () => {
                     />
                 </Col>
                 <Col>
-                    20000000đ
+                    <Typography.Text
+                        strong
+                        type="danger"
+                    >
+                        20000000đ
+                    </Typography.Text>
                 </Col>
                 <Col>
                     <Tooltip title="Xóa khỏi giỏ hàng">
