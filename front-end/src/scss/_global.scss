@@ -1,10 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-
 html {
   font-size: 62.5%;
 }
 body {
-  // font-family: 'Poppins', sans-serif;
   background-color: #f4f4f4;
   @media screen and (max-width: 767px) {
     padding: 0 1rem;
@@ -84,4 +81,8 @@ a:hover {
 
 .icon {
   font-size: 3rem;
+}
+.ant-statistic-title {
+  color: white;
+  font-size: 1.6rem;
 }

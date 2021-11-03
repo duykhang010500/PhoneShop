@@ -36,7 +36,7 @@ export default function DetailProductInfo() {
                         &nbsp;
                         Miễn phí vận chuyển toàn quốc
                     </Typography.Text>
-                    <Tooltip title="Xóa khỏi danh sách yêu thích">
+                    {/* <Tooltip title="Xóa khỏi danh sách yêu thích">
                         <HeartFilled
                             style={{ color: "#FF4136", fontSize: "3rem" }}
                             onClick={() => console.log('Xóa khỏi danh sách yêu thích')}
@@ -47,7 +47,7 @@ export default function DetailProductInfo() {
                             style={{ color: "#FF4136", fontSize: "3rem" }}
                             onClick={() => console.log('Thêm vào danh sách yêu thích')}
                         />
-                    </Tooltip>
+                    </Tooltip> */}
 
 
                     <Typography.Text strong>

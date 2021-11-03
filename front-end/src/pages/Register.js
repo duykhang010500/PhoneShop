@@ -1,61 +1,60 @@
 import React, { useState } from 'react'
 import {
+    useDispatch
+} from 'react-redux'
+
+import {
+    useHistory
+} from 'react-router-dom'
+
+import {
     Form,
     Input,
     Button,
     Typography,
     Row,
     Col,
-    Checkbox,
 } from 'antd'
 
 import {
     MailOutlined,
-    PhoneOutlined,
     LockOutlined,
     UserOutlined
 } from '@ant-design/icons'
 
+import {
+    actRegister
+} from '../store/auth/action'
+
 const Register = () => {
 
-    // const formItemLayout = {
-    //     labelCol: {
-    //         xs: { span: 8 },
-    //         sm: { span: 8 },
-    //     },
-    //     wrapperCol: {
-    //         xs: { span: 16 },
-    //         sm: { span: 16 },
-    //     },
-    // };
+    const dispatch = useDispatch()
 
-    const initState = {
-        email: '',
-        password: '',
-        repassword: ''
-    }
+    const [isLoading, setIsLoading] = useState(false)
 
-    const [formData, setFormData] = useState(initState)
-
-    const handleChangeInput = (e) => {
-        const { name, value } = e.target
-        setFormData({ ...formData, [name]: value })
+    const handleSubmit = (formData) => {
+        setIsLoading(true)
+        dispatch(actRegister(formData)).then(() => {
+            setIsLoading(false)
+        })
     }
 
     return (
         <div className="container register-page">
             <Form
-                // {...formItemLayout}
                 layout="vertical"
+                onFinish={handleSubmit}
             >
                 <Typography.Title level={2} style={{ textAlign: 'center' }}>
                     Đăng ký
                 </Typography.Title>
                 <Row gutter={[40, 16]}>
-                    <Col span={12}>
+                    <Col
+                        xs={24}
+                        md={12}
+                    >
                         <Form.Item
-
-                            name="fullname"
+                            name="name"
                             label="Họ và tên"
                             rules={[
                                 {
@@ -89,23 +88,10 @@ const Register = () => {
                             />
                         </Form.Item>
                     </Col>
-                    <Col span={12}>
-                        {/* <Form.Item
-                            name="phone"
-                            label="Điện thoại"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your Number Phone!',
-                                },
-                            ]}
-                        >
-                            <Input
-                                prefix={<PhoneOutlined />}
-                                size="large"
-                            />
-                        </Form.Item> */}
-
+                    <Col
+                        xs={24}
+                        md={12}
+                    >
                         <Form.Item
                             name="password"
                             label="Mật khẩu"
@@ -122,9 +108,8 @@ const Register = () => {
                                 size="large"
                             />
                         </Form.Item>
-
                         <Form.Item
-                            name="confirm"
+                            name="password_confirmation"
                             label="Nhập lại mật khẩu"
                             dependencies={['password']}
                             hasFeedback
@@ -152,9 +137,15 @@ const Register = () => {
                 </Row>
                 <Row>
                     <Col
-
+                        xs={24}
+                        md={12}
                     >
-                        <Button type="primary" htmlType="submit" size="large">
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            size="large"
+                            loading={isLoading}
+                        >
                             Đăng ký
                         </Button>
                     </Col>

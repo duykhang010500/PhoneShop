@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import {
     Breadcrumb,
     Col,
@@ -23,7 +24,9 @@ import {
     CodeSandboxOutlined,
     InboxOutlined,
     PlusOutlined,
-    LoadingOutlined
+    LoadingOutlined,
+    DeleteOutlined,
+    FormOutlined
 } from '@ant-design/icons'
 
 
@@ -41,6 +44,45 @@ const DashboardAminProducts = () => {
     };
     const { quill, quillRef } = useQuill({ theme, placeholder, modules });
 
+    const insertToEditor = (url) => {
+        const range = quill.getSelection();
+        quill.insertEmbed(range.index, 'image', url);
+    };
+
+    const saveToServer = async (file) => {
+        const body = new FormData();
+        body.append('image', file);
+        const res = await axios.post('https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2', body)
+        insertToEditor(res.data.data.display_url);
+    };
+
+    const selectLocalImage = () => {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+
+        input.onchange = () => {
+            const file = input.files[0];
+            saveToServer(file);
+        };
+    };
+
+    useEffect(() => {
+        if (quill) {
+            quill.on('text-change', (delta, oldDelta, source) => {
+                console.log('Text change!');
+                console.log(quill.root.innerHTML); // Get innerHTML using quill
+                form.setFieldsValue({
+                    content: quill.root.innerHTML
+                })
+            });
+            quill.getModule('toolbar').addHandler('image', selectLocalImage)
+        }
+    }, [quill]);
+
+
+    //End QUILL JS
     const { Option } = Select
     const { Dragger } = Upload
 
@@ -50,17 +92,28 @@ const DashboardAminProducts = () => {
 
     const props = {
         name: 'image',
-        multiple: true,
+        multiple: false,
         listType: 'picture',
         action: 'https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2',
         onChange(info) {
             const { status } = info.file;
             if (status !== 'uploading') {
-                console.log(info.file, info.fileList);
+                // console.log('file', info.file, info.fileList);
+                console.log('Upload xong')
+                console.log('list upload', info.fileList)
+
+
+
+                // console.log(info.fileList[0].response.data.display_url)
+                const urls = info.fileList.map(item => item.response.data.display_url)
+                console.log(urls)
+                form.setFieldsValue({
+                    images_product: urls
+                })
+
             }
             if (status === 'done') {
                 message.success(`${info.file.name} tải lên thành công`);
-                console.log(info.file.response.data.display_url)
             } else if (status === 'error') {
                 message.error(`${info.file.name} file upload failed.`);
             }
@@ -101,7 +154,12 @@ const DashboardAminProducts = () => {
                 setLoading(false)
             }
             );
-            console.log(info)
+            // console.log(info)
+            // console.log(info.file.response.data.display_url)
+            const url = info.file.response.data.display_url
+            form.setFieldsValue({
+                image: url
+            })
         }
     };
 
@@ -112,6 +170,75 @@ const DashboardAminProducts = () => {
         </div>
     );
 
+    const [form] = Form.useForm();
+
+    const handleSubmit = () => {
+        form
+            .validateFields()
+            .then(values => {
+                // form.resetFields();
+                onCreate(values);
+            })
+            .catch(info => {
+                console.log('Validate Failed:', info);
+            });
+    }
+
+    const onCreate = (values) => {
+        // Form Values
+        console.log(values)
+    }
+
+    const columns = [
+        {
+            title: 'Tên sản phẩm',
+            dataIndex: 'name',
+            key: 'name',
+        }
+        ,
+        {
+            title: 'Hãng sản xuất',
+            dataIndex: 'brand'
+        },
+        {
+            title: 'Giá',
+            dataIndex: 'price',
+            key: 'age',
+        }
+        ,
+        {
+            title: 'Số lượng',
+            dataIndex: 'quantity',
+            key: 'address',
+        },
+        {
+            title: 'Khuyến mại',
+            dataIndex: 'discount',
+
+        },
+        {
+            title: 'Hành động',
+            key: 'action',
+            render: (text, record) => (
+                <Space>
+                    <Button
+                        type="primary"
+                        danger
+                        icon={<DeleteOutlined />}
+                    >
+
+                    </Button>
+                    <Button
+                        type="primary"
+                        icon={<FormOutlined />}
+                        type="primary"
+                    >
+
+                    </Button>
+                </Space>
+            )
+        }
+    ]
 
     return (
         <Row
@@ -152,18 +279,32 @@ const DashboardAminProducts = () => {
                 </Space>
             </Col>
             <Col span={24}>
-                <Table />
+                <Table
+                    columns={columns}
+                />
             </Col>
             <Modal
-                title="Tạo sản phẩm mới"
+                title="Tạo sản phẩm"
                 visible={isVisibleModal}
                 onCancel={() => setIsVisibleModal(false)}
+                onOk={() => {
+                    form
+                        .validateFields()
+                        .then((values) => {
+                            form.resetFields();
+                            onCreate(values);
+                        })
+                        .catch((info) => {
+                            console.log('Validate Failed:', info);
+                        });
+                }}
                 width={800}
-                forceRender
+                forceRender={true}
                 okText="Tạo"
                 cancelText="Hủy bỏ"
             >
                 <Form
+                    form={form}
                     layout="horizontal"
                     // style={{
                     //     padding: "0 5rem"
@@ -190,13 +331,14 @@ const DashboardAminProducts = () => {
                             required: true,
                             message: 'Vui lòng chọn loại sản phẩm'
                         }]}
-                        name="category"
+                        name="brand"
                     >
                         <Select
                             size="large"
                         >
                             <Option
                                 key="iphone"
+                                value={1}
                             >
                                 Iphone
                             </Option>
@@ -209,13 +351,14 @@ const DashboardAminProducts = () => {
                             message: 'Vui lòng nhập số lượng sản phẩm'
                         }]}
                         name="quantity"
+                        initialValue={1}
+
                     >
                         <InputNumber
                             size="large"
                             style={{
                                 width: "100%"
                             }}
-                            defaultValue={1}
                             min={1}
                         />
                     </Form.Item>
@@ -227,19 +370,29 @@ const DashboardAminProducts = () => {
                         }]}
                         name="price"
                     >
-                        <Input
+                        <InputNumber
                             size="large"
+                            style={{
+                                width: "100%"
+                            }}
+                            min={1}
+                            step={100000}
                         />
                     </Form.Item>
                     <Form.Item
                         label="Khuyến mại (%)"
                         name="discount"
+                        initialValue={0}
+                        rules={[{
+                            required: true,
+                            message: 'Vui lòng nhập khuyến mại'
+                        }]}
                     >
                         <InputNumber
                             style={{
                                 width: "100%"
                             }}
-                            defaultValue={0}
+                            // defaultValue={0}
                             size="large"
                             max={99}
                             min={0}
@@ -259,7 +412,7 @@ const DashboardAminProducts = () => {
                     </Form.Item>
                     <Form.Item
                         label="Ảnh đại diện"
-                        name="avatar"
+                        name="image"
                         rules={[{
                             required: true,
                             message: "Vui lòng chọn ảnh đại diện cho sản phẩm"
@@ -271,7 +424,6 @@ const DashboardAminProducts = () => {
                             className="avatar-uploader"
                             maxCount={1}
                             showUploadList={false}
-
                             action='https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2'
                             beforeUpload={beforeUpload}
                             onChange={handleChange}
@@ -282,7 +434,7 @@ const DashboardAminProducts = () => {
                     </Form.Item>
                     <Form.Item
                         label="Ảnh sản phẩm"
-                        name="images"
+                        name="images_product"
                     >
                         <Dragger
                             {...props}

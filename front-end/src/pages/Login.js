@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { actLogin } from '../store/auth/action'
+
 import {
     Form,
     Input,
@@ -7,21 +10,29 @@ import {
     Typography
 } from 'antd'
 
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 
 export default function Login() {
     message.config({
         top: 70,
         maxCount: 1,
-        duration: 5
+        duration: 2
     })
-    function handleSubmit() {
-        message.success('Đăng nhập thành công!')
+    const [isLoading, setIsLoading] = useState(false)
+
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    const handleSubmit = (values) => {
         setIsLoading(true)
+        dispatch(actLogin(values)).then(() => {
+            setIsLoading(false)
+            message.success('Đăng nhập thành công!')
+            history.push('/')
+        })
     }
 
-    const [isLoading, setIsLoading] = useState(false)
 
     return (
         <div className="login-page">
@@ -29,18 +40,19 @@ export default function Login() {
                 Đăng nhập
             </h1>
             <Form
-                name="normal_login"
+                name="login-form"
                 className="login-form"
                 size="large"
+                onFinish={handleSubmit}
             >
                 <Form.Item
-                    name="username"
-                    rules={[{ required: true, message: 'Vui lòng nhập tên tài khoản!' }]}
+                    name="email"
+                    rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
                 >
                     <Input
                         prefix={<UserOutlined
                             className="site-form-item-icon" />}
-                        placeholder="Tài khoản"
+                        placeholder="Email"
                         type="email"
                     />
                 </Form.Item>
@@ -60,7 +72,6 @@ export default function Login() {
                         htmlType="submit"
                         className="login-form-button"
                         loading={isLoading}
-                        onClick={handleSubmit}
                     >
                         Đăng nhập
                     </Button>

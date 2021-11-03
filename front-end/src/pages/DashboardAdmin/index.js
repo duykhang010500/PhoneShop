@@ -49,7 +49,7 @@ const DashboardAdmin = () => {
                         icon={<DashboardOutlined
                             style={{ fontSize: "2rem" }}
                         />}>
-                        <Link to='/admin'>Tổng quát</Link>
+                        <Link to='/admin'>Tổng quan</Link>
                     </Menu.Item>
                     <SubMenu
                         key="sub1"
@@ -104,15 +104,17 @@ const DashboardAdmin = () => {
                         <Col
                             pull={1}
                         >
-                            <Badge
-                                dot
-                            >
-                                <Avatar
-                                    shape="square"
-                                    icon={<UserOutlined />}
+                            <Space size="large">
+                                <Badge
+                                // dot
+                                >
+                                    <Avatar
+                                        shape="circle"
+                                        icon={<UserOutlined />}
 
-                                />
-                            </Badge>
+                                    />
+                                </Badge>
+                            </Space>
                         </Col>
                     </Row>
                 </Header>

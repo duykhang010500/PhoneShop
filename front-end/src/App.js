@@ -1,30 +1,42 @@
-import React from "react";
+import React, {
+  useEffect
+} from "react"
 import {
   Switch,
   Route,
   useRouteMatch,
-} from "react-router-dom";
+} from "react-router-dom"
+
+import {
+  useDispatch
+} from 'react-redux'
 
 import './scss/index.scss'
-import { BackTop } from 'antd';
+import { BackTop } from 'antd'
 import { UpCircleTwoTone } from '@ant-design/icons'
-import CoreValue from "./components/CoreValue";
-import Footer from "./components/common/Footer";
-import Header from './components/common/Header';
-import HomePage from "./pages/Home";
-import Login from "./pages/Login";
-import DetailProduct from "./pages/DetailProduct";
-import PageNotFound from "./pages/PageNotFound";
-import Register from "./pages/Register";
-import ProductByCategory from "./pages/ProductByCategory";
+import CoreValue from "./components/CoreValue"
+import Footer from "./components/common/Footer"
+import Header from './components/common/Header'
+import HomePage from "./pages/Home"
+import Login from "./pages/Login"
+import DetailProduct from "./pages/DetailProduct"
+import PageNotFound from "./pages/PageNotFound"
+import Register from "./pages/Register"
+import ProductByCategory from "./pages/ProductByCategory"
 import Cart from './pages/Cart'
-import Checkout from "./pages/Checkout";
-import DashboardUser from "./pages/DashboardUser";
-import DashboardAdmin from "./pages/DashboardAdmin";
+import Checkout from "./pages/Checkout"
+import DashboardUser from "./pages/DashboardUser"
+import DashboardAdmin from "./pages/DashboardAdmin"
+import { actFetchMe } from "./store/auth/action"
 
 function App() {
 
   const isDashBoardAdmin = useRouteMatch('/admin')
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(actFetchMe())
+  }, [dispatch])
 
   return (
     <div>

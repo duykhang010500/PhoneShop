@@ -185,14 +185,20 @@ const Checkout = () => {
                                             count={1}
                                             size="small"
                                         >
-                                            <Avatar
+                                            {/* <Avatar
                                                 size="large"
                                                 shape="square"
                                                 src="https://cdn.cellphones.com.vn/media/catalog/product/cache/7/thumbnail/220x175/9df78eab33525d08d6e5fb8d27136e95/m/a/macbook-air-gold-select-201810_4.jpg"
+                                            /> */}
+                                            <Avatar
+                                                size="large"
+                                                shape="square"
+                                                src="https://cdn.tgdd.vn/Products/Images/42/249427/xiaomi-11-lite-5g-ne-pink-600x600.jpg"
                                             />
                                         </Badge>
                                     }
-                                    title="Iphone 5"
+                                    // title="Iphone 5"
+                                    title=" Điện thoại Xiaomi 11 Lite 5G NE"
                                     description={<>
                                         <Typography.Text
                                             style={{ display: "block" }}
@@ -204,7 +210,8 @@ const Checkout = () => {
                                             style={{ fontSize: "1.6rem" }}
                                             type="danger"
                                         >
-                                            5000000đ
+                                            {/* 5000000đ */}
+                                            1000000đ
                                         </Typography.Text>
                                     </>
                                     }

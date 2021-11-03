@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Form,
     Input,
@@ -7,17 +7,27 @@ import {
     Col,
     Row,
     Upload,
-    Select
+    Select,
+    Avatar,
+    Image
 } from 'antd'
 
 import {
     MailOutlined,
     PlusOutlined,
     UserOutlined,
-    ClockCircleOutlined
+    SaveOutlined
 } from '@ant-design/icons'
 
+import {
+    useSelector,
+    useDispatch
+} from 'react-redux'
+import { useAuthenticated } from '../../hooks/useAuthenticated'
+
 const DashboardUserInfo = () => {
+    useAuthenticated()
+    const [isLoading, setIsLoading] = useState(false)
 
     const { Option } = Select
 
@@ -28,13 +38,28 @@ const DashboardUserInfo = () => {
         </div>
     );
 
+    const currentUser = useSelector(state => state.Auth.currentUser)
+    if (!currentUser) {
+        return null
+    }
+
+    const handleSubmit = (values) => {
+        console.log(values)
+    }
+
     return (
         <div
             style={{ backgroundColor: "#fff", padding: "3rem" }}
         >
             <Form
                 layout="vertical"
-
+                initialValues={{
+                    email: currentUser.email,
+                    name: currentUser.name,
+                    sex: currentUser.sex,
+                    // dob: '2015-01-01'
+                }}
+                onFinish={handleSubmit}
             >
                 <Row
                     gutter={[20, 5]}
@@ -52,7 +77,9 @@ const DashboardUserInfo = () => {
                         // beforeUpload={beforeUpload}
                         // onChange={this.handleChange}
                         >
-                            Tải ảnh
+                            {
+                                currentUser.image ? <Image /> : <Avatar icon={<UserOutlined />} />
+                            }
                         </Upload>
                     </Col>
                     <Col
@@ -66,12 +93,14 @@ const DashboardUserInfo = () => {
                                     required: true
                                 }
                             ]}
+
                         >
                             <Input
-                                value="Your email"
+                                // value="Your email"
                                 disabled
                                 prefix={<MailOutlined />}
                                 size="large"
+                                defaultValue="usertest@gmail.com"
 
                             />
                         </Form.Item>
@@ -79,7 +108,7 @@ const DashboardUserInfo = () => {
                     <Col span={12}>
                         <Form.Item
                             label='Họ và tên'
-                            name="fullname"
+                            name="name"
                             rules={[
                                 {
                                     required: true
@@ -89,17 +118,18 @@ const DashboardUserInfo = () => {
                             <Input
                                 prefix={<UserOutlined />}
                                 size="large"
-
+                                defaultValue="User Test"
                             />
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item
                             label='Giới tính'
-                            name="gender"
+                            name="sex"
                             rules={[
                                 {
-                                    required: true
+                                    required: true,
+                                    message: "Vui lòng chọn giới tính"
                                 }
                             ]}
                         >
@@ -107,8 +137,15 @@ const DashboardUserInfo = () => {
                                 size="large"
                                 placeholder="Giới tính"
                             >
-                                <Option>
+                                <Option
+                                    value="male"
+                                >
                                     Nam
+                                </Option>
+                                <Option
+                                    value="female"
+                                >
+                                    Nữ
                                 </Option>
                             </Select>
                         </Form.Item>
@@ -116,7 +153,7 @@ const DashboardUserInfo = () => {
                     <Col span={12}>
                         <Form.Item
                             label='Ngày sinh'
-                            name="birthday"
+                            name="dob"
                             rules={[
                                 {
                                     required: true
@@ -126,17 +163,18 @@ const DashboardUserInfo = () => {
                             <DatePicker
                                 style={{ width: "100%" }}
                                 size="large"
-
                             />
                         </Form.Item>
                     </Col>
                     <Col span={24}>
                         <Form.Item
-
                         >
                             <Button
                                 type="primary"
-                                loading
+                                htmlType="submit"
+                                loading={isLoading}
+                                size="large"
+                                icon={<SaveOutlined />}
                             >
                                 Cập nhật
                             </Button>

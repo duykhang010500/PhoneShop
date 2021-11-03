@@ -71,28 +71,13 @@ const DashboardAdminOrders = () => {
             )
         }
     ];
-    const dataSource = [
-        {
-            key: '1',
-            name: 'Mike',
-            age: 32,
-            address: '10 Downing Street',
-        },
-        {
-            key: '2',
-            name: 'John',
-            age: 42,
-            address: '10 Downing Street',
-        },
-    ];
+
     return (
-        <Row>
+        <Row
+            gutter={[20, 20]}
+        >
             <Col span={24}>
-                <Breadcrumb
-                    style={{
-                        marginBottom: '2rem'
-                    }}
-                >
+                <Breadcrumb>
                     <Breadcrumb.Item href="/admin">
                         <HomeOutlined />
                     </Breadcrumb.Item>
@@ -102,7 +87,6 @@ const DashboardAdminOrders = () => {
             <Col span={24}>
                 <Table
                     columns={columns}
-                    dataSource={dataSource}
                 />
             </Col>
         </Row>

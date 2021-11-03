@@ -41,9 +41,9 @@ const Cart = () => {
             <Typography.Title
                 level={4}
             >
-                Giỏ hàng của bạn có 2 sản phẩm
+                Giỏ hàng của bạn có 1 sản phẩm
             </Typography.Title>
-
+            {/* 
             <Row
                 justify="space-between"
                 className="cart-item"
@@ -70,7 +70,7 @@ const Cart = () => {
                 <Col>
                     Xóa
                 </Col>
-            </Row>
+            </Row> */}
 
             <Row
                 justify="space-between"
@@ -79,7 +79,7 @@ const Cart = () => {
             >
                 <Col>
                     <Avatar
-                        src="https://cdn.tgdd.vn/Products/Images/42/241265/realme-c21y-black-600x600.jpg"
+                        src="https://cdn.tgdd.vn/Products/Images/42/249427/xiaomi-11-lite-5g-ne-pink-600x600.jpg"
                         size="large"
                         shape="square"
                     />
@@ -90,7 +90,8 @@ const Cart = () => {
                         strong
                         style={{ fontSize: "1.6rem" }}
                     >
-                        Iphone 12 Pro Max 256Gb
+                        {/* Iphone 12 Pro Max 256Gb */}
+                        Điện thoại Xiaomi 11 Lite 5G NE
                     </Typography.Text>
                 </Col>
                 <Col>
@@ -116,7 +117,7 @@ const Cart = () => {
                         strong
                         type="danger"
                     >
-                        20000000đ
+                        10000000đ
                     </Typography.Text>
                 </Col>
                 <Col>

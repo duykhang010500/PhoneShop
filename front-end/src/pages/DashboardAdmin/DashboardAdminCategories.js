@@ -24,35 +24,29 @@ import {
 
 const DashboardAdminCategories = () => {
 
-
+    const [form] = Form.useForm()
     const [showFormAdd, setShowFormAdd] = useState(false)
-
-    const dataSources = [
-        {
-            stt: '1',
-            category: 'Iphone',
-            key: '1'
-        },
-        {
-            stt: '2',
-            category: 'Iphone2',
-            key: '2'
-        },
-
-    ]
 
     const columns = [
         {
-            title: 'Mã hãng',
-            dataIndex: 'stt',
-            key: 'stt'
+            title: 'ID',
+            dataIndex: 'id'
         },
         {
             title: 'Tên hãng',
-            dataIndex: 'category',
-            key: 'cate',
-            width: '70%'
+            dataIndex: 'name',
+            key: 'name',
         },
+        {
+            title: 'Đường dẫn',
+            dataIndex: 'slug',
+            key: 'slug'
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'status',
+        }
+        ,
         {
             title: 'Hành động',
             key: 'action',
@@ -76,6 +70,10 @@ const DashboardAdminCategories = () => {
             )
         }
     ]
+
+    const handleSubmit = (values) => {
+        console.log(values)
+    }
 
     return (
         <Row
@@ -113,7 +111,7 @@ const DashboardAdminCategories = () => {
             <Col span={24}>
                 <Table
                     columns={columns}
-                    dataSource={dataSources}
+
                 />
             </Col>
             <Drawer
@@ -126,16 +124,25 @@ const DashboardAdminCategories = () => {
             >
                 <Form
                     layout="vertical"
+                    onFinish={handleSubmit}
                 >
                     <Form.Item
                         label="Tên hãng"
-                        name="cate"
+                        name="name"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Đường dẫn"
+                        name="slug"
                         rules={[{ required: true }]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item>
                         <Button
+                            type="primary"
                             htmlType="submit"
                             icon={<SaveOutlined />}
                         >
