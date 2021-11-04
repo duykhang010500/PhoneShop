@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
+import {
+    useDispatch
+} from 'react-redux'
 import {
     Form,
     Input,
@@ -10,8 +13,20 @@ import {
 import {
     LockOutlined
 } from '@ant-design/icons'
+import { actChangePassword } from '../../store/auth/action'
+
+
 
 const DashboardUserChangePassword = () => {
+    const [isLoading, setIsLoading] = useState(false)
+    const dispatch = useDispatch()
+    const handleSubmit = (formData) => {
+        setIsLoading(true)
+        dispatch(actChangePassword(formData)).then(() => {
+            setIsLoading(false)
+        })
+    }
+
     return (
         <div
             style={{
@@ -21,6 +36,7 @@ const DashboardUserChangePassword = () => {
         >
             <Form
                 layout="vertical"
+                onFinish={handleSubmit}
             >
                 <Row>
                     <Col
@@ -28,7 +44,7 @@ const DashboardUserChangePassword = () => {
                     >
                         <Form.Item
                             label="Mật khẩu hiện tại"
-                            name="password"
+                            name="old_password"
                             rules={[
 
                             ]}
@@ -41,7 +57,7 @@ const DashboardUserChangePassword = () => {
                         </Form.Item>
                         <Form.Item
                             label="Mật khẩu mới"
-                            name="repassword"
+                            name="new_password"
                         >
                             <Input.Password
                                 prefix={<LockOutlined />}
@@ -51,7 +67,7 @@ const DashboardUserChangePassword = () => {
                         </Form.Item>
                         <Form.Item
                             label="Nhập lại mật khẩu mới"
-
+                            name="new_password_confirmation"
                         >
                             <Input.Password
                                 prefix={<LockOutlined />}
@@ -63,8 +79,9 @@ const DashboardUserChangePassword = () => {
 
                         >
                             <Button
+                                htmlType="submit"
                                 type="primary"
-                                loading
+                                loading={isLoading}
                             >
                                 Đổi mật khẩu
                             </Button>

@@ -15,8 +15,17 @@ export const useAuthenticated = () => {
     const history = useHistory()
     useEffect(() => {
         if (!currentUser) {
+            history.push('/login')
+        }
+    }, [history, currentUser])
+}
+
+export const useNotAuthenticated = () => {
+    const currentUser = useSelector((state) => state.Auth.currentUser)
+    const history = useHistory()
+    useEffect(() => {
+        if (currentUser) {
             history.push('/')
         }
-    }, [history])
-
+    }, [history, currentUser])
 }

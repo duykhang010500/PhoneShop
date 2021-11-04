@@ -22,8 +22,15 @@ export const actRegister = (formData) => async (dispatch) => {
     try {
         const res = await authServices.register(formData)
         console.log(res)
+        return {
+            ok: true,
+            message: 'Tạo tài khoản thành công!'
+        }
     } catch (err) {
-        console.log(err.response.data)
+        return {
+            ok: false,
+            message: 'Email đã tồn tại, vui lòng nhập lại địa chỉ khác!'
+        }
     }
 
 }
@@ -38,8 +45,21 @@ export const actLogin = (formData) => async (dispatch) => {
         }
         const currentUser = res.data.user
         dispatch(actSetCurrentUser(currentUser))
+        return {
+            ok: true
+        }
     } catch (err) {
         console.log(err.response.data)
+        const hashError = {
+            "Unauthorized": "Sai email hoặc mật khẩu!"
+        }
+
+        const labelError = hashError[err.response.data.error]
+
+        return {
+            ok: false,
+            message: labelError
+        }
     }
 }
 
@@ -56,5 +76,14 @@ export const actFetchMe = () => async (dispatch) => {
         console.log(err)
         dispatch(actSetToken(''))
         dispatch(actSetCurrentUser(null))
+    }
+}
+
+export const actChangePassword = (formData) => async (dispatch) => {
+    try {
+        const res = await authServices.changePassword(formData)
+        console.log(res)
+    } catch (err) {
+        console.log(err)
     }
 }

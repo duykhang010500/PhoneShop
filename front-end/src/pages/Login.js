@@ -12,13 +12,18 @@ import {
 
 import { Link, useHistory } from 'react-router-dom'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { useNotAuthenticated } from '../hooks/useAuthenticate'
 
 export default function Login() {
+
+    useNotAuthenticated()
+
     message.config({
         top: 70,
         maxCount: 1,
         duration: 2
     })
+
     const [isLoading, setIsLoading] = useState(false)
 
     const dispatch = useDispatch()
@@ -26,11 +31,16 @@ export default function Login() {
 
     const handleSubmit = (values) => {
         setIsLoading(true)
-        dispatch(actLogin(values)).then(() => {
+        dispatch(actLogin(values)).then((res) => {
+            if (res.ok) {
+                history.push('/')
+            } else {
+                message.error(res.message)
+            }
+        }).finally(() => {
             setIsLoading(false)
-            message.success('Đăng nhập thành công!')
-            history.push('/')
         })
+
     }
 
 
@@ -47,23 +57,40 @@ export default function Login() {
             >
                 <Form.Item
                     name="email"
-                    rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Vui lòng nhập email!'
+                        },
+                        {
+                            type: "email",
+                            message: 'Email không hợp lệ'
+                        }
+                    ]}
                 >
                     <Input
                         prefix={<UserOutlined
                             className="site-form-item-icon" />}
                         placeholder="Email"
                         type="email"
+                        allowClear
                     />
                 </Form.Item>
                 <Form.Item
                     name="password"
-                    rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+                    rules={[{
+                        required: true,
+                        message: 'Vui lòng nhập mật khẩu!',
+                    }, {
+                        min: 6,
+                        message: 'Mật khẩu phải ít nhất 6 ký tự'
+                    }]}
                 >
                     <Input
                         prefix={<LockOutlined className="site-form-item-icon" />}
                         type="password"
                         placeholder="Mật khẩu"
+                        allowClear
                     />
                 </Form.Item>
                 <Form.Item>

@@ -14,6 +14,7 @@ import {
     Typography,
     Row,
     Col,
+    message,
 } from 'antd'
 
 import {
@@ -25,18 +26,24 @@ import {
 import {
     actRegister
 } from '../store/auth/action'
+import { useNotAuthenticated } from '../hooks/useAuthenticate'
 
 const Register = () => {
-
+    useNotAuthenticated()
     const dispatch = useDispatch()
 
     const [isLoading, setIsLoading] = useState(false)
-
+    const history = useHistory()
     const handleSubmit = (formData) => {
         setIsLoading(true)
-        dispatch(actRegister(formData)).then(() => {
-            setIsLoading(false)
-        })
+        dispatch(actRegister(formData)).then((res) => {
+            if (res.ok) {
+                message.success('Tạo tài khoản thành công')
+                history.push('/login')
+            } else {
+                message.error(res.message)
+            }
+        }).finally(() => setIsLoading(false))
     }
 
     return (
@@ -56,16 +63,22 @@ const Register = () => {
                         <Form.Item
                             name="name"
                             label="Họ và tên"
+                            hasFeedback
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter your full name!',
+                                    message: 'Vui lòng nhập họ và tên của bạn!',
                                 },
+                                {
+                                    min: 6,
+                                    message: 'Họ và tên phải từ 5 ký tự!'
+                                }
                             ]}
                         >
                             <Input
                                 prefix={<UserOutlined />}
                                 size="large"
+                                allowClear
                             />
                         </Form.Item>
                         <Form.Item
@@ -74,17 +87,19 @@ const Register = () => {
                             rules={[
                                 {
                                     type: 'email',
-                                    message: 'The input is not valid E-mail!',
+                                    message: 'Email không hợp lệ!',
                                 },
                                 {
                                     required: true,
-                                    message: 'Please input your E-mail!',
+                                    message: 'Vui lòng nhập email!',
                                 },
                             ]}
+                            hasFeedback
                         >
                             <Input
                                 prefix={<MailOutlined />}
                                 size="large"
+                                allowClear
                             />
                         </Form.Item>
                     </Col>
@@ -95,17 +110,23 @@ const Register = () => {
                         <Form.Item
                             name="password"
                             label="Mật khẩu"
+                            hasFeedback
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please input your password!',
+                                    message: 'Vui lòng nhập mật khẩu!',
                                 },
+                                {
+                                    min: 6,
+                                    message: 'Mật khẩu phải từ 6 ký tự trở lên!'
+                                }
                             ]}
-                            hasFeedback
+
                         >
                             <Input.Password
                                 prefix={<LockOutlined />}
                                 size="large"
+                                allowClear
                             />
                         </Form.Item>
                         <Form.Item
@@ -116,21 +137,23 @@ const Register = () => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please confirm your password!',
+                                    message: 'Vui lòng nhập lại mật khẩu!',
                                 },
                                 ({ getFieldValue }) => ({
                                     validator(_, value) {
                                         if (!value || getFieldValue('password') === value) {
                                             return Promise.resolve();
                                         }
-                                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                                        return Promise.reject(new Error('Mật khẩu xác nhận không giống!'));
                                     },
                                 }),
+
                             ]}
                         >
                             <Input.Password
                                 prefix={<LockOutlined />}
                                 size="large"
+                                allowClear
                             />
                         </Form.Item>
                     </Col>

@@ -9,6 +9,9 @@ const authServices = {
     },
     getMe() {
         return api.callWithToken().post('/auth/user/refresh')
+    },
+    changePassword(formData) {
+        return api.callWithToken().post('/auth/user/change-pass', formData)
     }
 }
 

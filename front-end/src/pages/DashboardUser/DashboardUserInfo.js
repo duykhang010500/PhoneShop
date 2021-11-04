@@ -23,7 +23,7 @@ import {
     useSelector,
     useDispatch
 } from 'react-redux'
-import { useAuthenticated } from '../../hooks/useAuthenticated'
+import { useAuthenticated } from '../../hooks/useAuthenticate'
 
 const DashboardUserInfo = () => {
     useAuthenticated()
