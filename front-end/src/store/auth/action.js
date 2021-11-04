@@ -83,7 +83,15 @@ export const actChangePassword = (formData) => async (dispatch) => {
     try {
         const res = await authServices.changePassword(formData)
         console.log(res)
+        return {
+            ok: true,
+            message: 'Thay đổi mật khẩu thành công!'
+        }
     } catch (err) {
         console.log(err)
+        return {
+            ok: false,
+            message: 'Mật khẩu hiện tại không đúng!'
+        }
     }
 }
