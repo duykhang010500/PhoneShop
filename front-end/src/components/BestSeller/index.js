@@ -8,12 +8,14 @@ export default function BestSeller({ title }) {
     return (
         <div className="container">
             <div className="product">
-                <Typography.Title level={4} className="title">
+                <Typography.Title
+                    level={4}
+                    className="title"
+                >
                     {title}
                 </Typography.Title>
                 <Underline />
                 <ul className="product__list">
-
                     {
                         Products.map((product, index) => <ProductItem key={index} product={product} />)
                     }

@@ -12,10 +12,11 @@ import {
 import {
     HomeOutlined,
     EyeOutlined,
-    FormOutlined
+    CheckOutlined
 } from '@ant-design/icons';
 
 const DashboardAdminOrders = () => {
+
     const columns = [
         {
             title: 'Mã đơn hàng',
@@ -39,34 +40,34 @@ const DashboardAdminOrders = () => {
             title: 'Tổng tiền'
         },
         {
-            title: 'Trạng thái'
+            title: 'Trạng thái',
+            dataIndex: 'status'
         },
         {
             title: 'Hành động',
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
+                    <Tooltip title="Cập nhật">
+                        <Button
+                            type="primary"
+                            icon={<CheckOutlined />}
+                            loading
+                        >
+                        </Button>
+                    </Tooltip>
                     <Tooltip title="Xem chi tiết">
                         <Button
                             type="primary"
-
                             icon={<EyeOutlined />}
                             style={{
                                 backgroundColor: "#52c41a",
                                 border: "none"
                             }}
                         >
-
                         </Button>
                     </Tooltip>
-                    <Tooltip title="Cập nhật">
-                        <Button
-                            type="primary"
-                            icon={<FormOutlined />}
-                        >
 
-                        </Button>
-                    </Tooltip>
                 </Space>
             )
         }
@@ -87,6 +88,7 @@ const DashboardAdminOrders = () => {
             <Col span={24}>
                 <Table
                     columns={columns}
+                // dataSource={dataSource}
                 />
             </Col>
         </Row>

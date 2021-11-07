@@ -1,27 +1,28 @@
 .footer {
-    padding: 1rem 0;
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  &__title {
+    font-weight: 600;
+  }
+  &__item {
+    margin-top: 1rem;
+  }
+  &__social {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    &__title{
-        font-weight: 600;
+    font-size: 3rem;
+    &--ytb {
+      color: #ff0000;
     }
-    &__item{
-        margin-top: 1rem;
+    &--fb {
+      color: #1877f2;
     }
-    &__social{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        font-size: 3rem;
-        &--ytb{
-            color: #FF0000;
-        }
-        &--fb{
-            color:  #1877F2;
-        }
-        &--tt{
-            color: #1DA1F2;
-        }
-    } 
+    &--tt {
+      color: #1da1f2;
+    }
+  }
 }

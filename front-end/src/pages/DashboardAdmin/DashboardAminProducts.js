@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+    useState,
+    useEffect
+} from 'react'
 import axios from 'axios'
 import {
     Breadcrumb,
@@ -15,33 +18,29 @@ import {
     message,
     InputNumber
 } from 'antd'
-
 import { useQuill } from 'react-quilljs';
-import 'quill/dist/quill.snow.css';
-
 import {
     HomeOutlined,
     CodeSandboxOutlined,
     InboxOutlined,
     PlusOutlined,
     LoadingOutlined,
+    PlusCircleOutlined,
     DeleteOutlined,
     FormOutlined
 } from '@ant-design/icons'
 
+import {
+    modules,
+    placeholder,
+    theme,
+} from '../../helpers/textEditorHelper'
+
+import { beforeUpload, draggerProps, getBase64 } from '../../helpers/uploadHelper';
 
 const DashboardAminProducts = () => {
 
     //QUILL JS
-    const theme = 'snow';
-    const placeholder = 'Nhập nội dung chi tiết...';
-    const modules = {
-        toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }, { list: 'ordered' }, { list: 'bullet' }, 'bold', 'italic', 'underline', { color: [] }, { background: [] }, 'image', 'video', 'clean'
-
-            ]
-        ],
-    };
     const { quill, quillRef } = useQuill({ theme, placeholder, modules });
 
     const insertToEditor = (url) => {
@@ -61,7 +60,6 @@ const DashboardAminProducts = () => {
         input.setAttribute('type', 'file');
         input.setAttribute('accept', 'image/*');
         input.click();
-
         input.onchange = () => {
             const file = input.files[0];
             saveToServer(file);
@@ -70,9 +68,9 @@ const DashboardAminProducts = () => {
 
     useEffect(() => {
         if (quill) {
-            quill.on('text-change', (delta, oldDelta, source) => {
+            quill.on('text-change', () => {
                 console.log('Text change!');
-                console.log(quill.root.innerHTML); // Get innerHTML using quill
+                console.log(quill.root.innerHTML);
                 form.setFieldsValue({
                     content: quill.root.innerHTML
                 })
@@ -80,67 +78,13 @@ const DashboardAminProducts = () => {
             quill.getModule('toolbar').addHandler('image', selectLocalImage)
         }
     }, [quill]);
-
-
     //End QUILL JS
+
     const { Option } = Select
     const { Dragger } = Upload
-
     const [isVisibleModal, setIsVisibleModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [imageUrl, setImageUrl] = useState("")
-
-    const props = {
-        name: 'image',
-        multiple: false,
-        listType: 'picture',
-        action: 'https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2',
-        onChange(info) {
-            const { status } = info.file;
-            if (status !== 'uploading') {
-                // console.log('file', info.file, info.fileList);
-                console.log('Upload xong')
-                console.log('list upload', info.fileList)
-
-
-
-                // console.log(info.fileList[0].response.data.display_url)
-                const urls = info.fileList.map(item => item.response.data.display_url)
-                console.log(urls)
-                form.setFieldsValue({
-                    images_product: urls
-                })
-
-            }
-            if (status === 'done') {
-                message.success(`${info.file.name} tải lên thành công`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-        onDrop(e) {
-            console.log('Dropped files', e.dataTransfer.files);
-        },
-
-    };
-
-    function beforeUpload(file) {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-        if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG file!');
-        }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-        }
-        return isJpgOrPng && isLt2M;
-    }
-
-    function getBase64(img, callback) {
-        const reader = new FileReader();
-        reader.addEventListener('load', () => callback(reader.result));
-        reader.readAsDataURL(img);
-    }
 
     const handleChange = info => {
         if (info.file.status === 'uploading') {
@@ -148,14 +92,11 @@ const DashboardAminProducts = () => {
             return;
         }
         if (info.file.status === 'done') {
-            // Get this url from response in real world.
             getBase64(info.file.originFileObj, imageUrl => {
                 setImageUrl(imageUrl)
                 setLoading(false)
             }
             );
-            // console.log(info)
-            // console.log(info.file.response.data.display_url)
             const url = info.file.response.data.display_url
             form.setFieldsValue({
                 image: url
@@ -170,75 +111,32 @@ const DashboardAminProducts = () => {
         </div>
     );
 
+    const handleDraggerChange = (info) => {
+        const { status } = info.file;
+        if (status !== 'uploading') {
+            // console.log('file', info.file, info.fileList);
+            console.log('Upload xong')
+            console.log('list upload', info.fileList)
+            // console.log(info.fileList[0].response.data.display_url)
+            const urls = info.fileList.map(item => item.response.data.display_url)
+            console.log(urls)
+            form.setFieldsValue({
+                images_product: urls
+            })
+        }
+        if (status === 'done') {
+            message.success(`${info.file.name} tải lên thành công`);
+        } else if (status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+    }
+
     const [form] = Form.useForm();
 
-    const handleSubmit = () => {
-        form
-            .validateFields()
-            .then(values => {
-                // form.resetFields();
-                onCreate(values);
-            })
-            .catch(info => {
-                console.log('Validate Failed:', info);
-            });
-    }
-
-    const onCreate = (values) => {
-        // Form Values
+    const handleSubmit = (values) => {
         console.log(values)
+        //Submit here
     }
-
-    const columns = [
-        {
-            title: 'Tên sản phẩm',
-            dataIndex: 'name',
-            key: 'name',
-        }
-        ,
-        {
-            title: 'Hãng sản xuất',
-            dataIndex: 'brand'
-        },
-        {
-            title: 'Giá',
-            dataIndex: 'price',
-            key: 'age',
-        }
-        ,
-        {
-            title: 'Số lượng',
-            dataIndex: 'quantity',
-            key: 'address',
-        },
-        {
-            title: 'Khuyến mại',
-            dataIndex: 'discount',
-
-        },
-        {
-            title: 'Hành động',
-            key: 'action',
-            render: (text, record) => (
-                <Space>
-                    <Button
-                        type="primary"
-                        danger
-                        icon={<DeleteOutlined />}
-                    >
-
-                    </Button>
-                    <Button
-                        type="primary"
-                        icon={<FormOutlined />}
-                        type="primary"
-                    >
-
-                    </Button>
-                </Space>
-            )
-        }
-    ]
 
     return (
         <Row
@@ -271,7 +169,7 @@ const DashboardAminProducts = () => {
                     <Button
                         size="large"
                         type="primary"
-                        icon={<CodeSandboxOutlined />}
+                        icon={<PlusCircleOutlined />}
                         onClick={() => setIsVisibleModal(!isVisibleModal)}
                     >
                         Thêm sản phẩm
@@ -280,7 +178,7 @@ const DashboardAminProducts = () => {
             </Col>
             <Col span={24}>
                 <Table
-                    columns={columns}
+                // columns={ }
                 />
             </Col>
             <Modal
@@ -292,7 +190,7 @@ const DashboardAminProducts = () => {
                         .validateFields()
                         .then((values) => {
                             form.resetFields();
-                            onCreate(values);
+                            handleSubmit(values);
                         })
                         .catch((info) => {
                             console.log('Validate Failed:', info);
@@ -306,13 +204,31 @@ const DashboardAminProducts = () => {
                 <Form
                     form={form}
                     layout="horizontal"
-                    // style={{
-                    //     padding: "0 5rem"
-                    // }}
                     labelCol={{ span: 6 }}
                     wrapperCol={{ span: 16 }}
                     labelAlign="right"
                 >
+                    <Form.Item
+                        label="Ảnh đại diện"
+                        name="image"
+                        rules={[{
+                            required: true,
+                            message: "Vui lòng chọn ảnh đại diện cho sản phẩm"
+                        }]}
+                    >
+                        <Upload
+                            name="image"
+                            listType="picture-card"
+                            className="avatar-uploader"
+                            maxCount={1}
+                            showUploadList={false}
+                            action='https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2'
+                            beforeUpload={beforeUpload}
+                            onChange={handleChange}
+                        >
+                            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+                        </Upload>
+                    </Form.Item>
                     <Form.Item
                         label="Tên sản phẩm"
                         rules={[{
@@ -410,34 +326,14 @@ const DashboardAminProducts = () => {
                             size="large"
                         />
                     </Form.Item>
-                    <Form.Item
-                        label="Ảnh đại diện"
-                        name="image"
-                        rules={[{
-                            required: true,
-                            message: "Vui lòng chọn ảnh đại diện cho sản phẩm"
-                        }]}
-                    >
-                        <Upload
-                            name="image"
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            maxCount={1}
-                            showUploadList={false}
-                            action='https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2'
-                            beforeUpload={beforeUpload}
-                            onChange={handleChange}
-                        >
-                            {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-                        </Upload>
 
-                    </Form.Item>
                     <Form.Item
                         label="Ảnh sản phẩm"
                         name="images_product"
                     >
                         <Dragger
-                            {...props}
+                            {...draggerProps}
+                            onChange={handleDraggerChange}
                         >
                             <p className="ant-upload-drag-icon">
                                 <InboxOutlined />

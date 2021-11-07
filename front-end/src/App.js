@@ -32,6 +32,7 @@ import { actFetchMe } from "./store/auth/action"
 function App() {
 
   const isDashBoardAdmin = useRouteMatch('/admin')
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -59,7 +60,7 @@ function App() {
         <Route exact path="/dien-thoai-di-dong">
           <ProductByCategory />
         </Route>
-        <Route exact path="/dien-thoai-di-dong/:slug">
+        <Route exact path="/product/:slug">
           <DetailProduct />
         </Route>
         <Route exact path="/checkout">

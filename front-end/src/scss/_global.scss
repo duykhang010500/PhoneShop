@@ -3,9 +3,9 @@ html {
 }
 body {
   background-color: #f4f4f4;
-  @media screen and (max-width: 767px) {
-    padding: 0 1rem;
-  }
+  // @media screen and (max-width: 767px) {
+  //   padding: 0 1rem;
+  // }
   overflow-x: hidden;
 }
 
@@ -82,7 +82,26 @@ a:hover {
 .icon {
   font-size: 3rem;
 }
+
 .ant-statistic-title {
   color: white;
   font-size: 1.6rem;
+}
+
+.banner-item {
+  display: block;
+  margin: 0.3rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+}
+
+.banner-item:hover img {
+  transform: scale(1.1);
+  transition: all ease-in-out 0.5s;
+}
+
+.box-sd {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }

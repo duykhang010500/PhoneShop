@@ -3,35 +3,68 @@ import {
     Row,
     Col,
     Typography,
-    Card
 } from 'antd'
 import Underline from '../common/Underline'
+import {
+    Link
+} from 'react-router-dom'
 
 const BrandFeature = () => {
     return (
-        <div className="container">
+        <div className="container brand-feature">
             <Typography.Title
                 level={4}
-
             >
                 THƯƠNG HIỆU NỔI BẬT
             </Typography.Title>
             <Underline />
-            <Row>
+            <Row
+                gutter={[12, 12]}
+            >
                 <Col
                     xs={24}
                     md={6}
                 >
-                    <Card
-                        cover={
-                            <img
-                                src="https://images.samsung.com/is/image/samsung/assets/vn/about-us/brand/logo/mo/360_197_1.png?$FB_TYPE_B_PNG$"
-                            />
-                        }
-                    >
-                    </Card>
-                </Col>
+                    <Link className="banner-item">
+                        <img
 
+                            src="https://cellphones.com.vn/media/icons/banner/banner-sis-apple-homepage.png"
+                        />
+                    </Link>
+                </Col>
+                <Col
+                    xs={24}
+                    md={6}
+                >
+                    <Link className="banner-item">
+                        <img
+
+                            src="https://cellphones.com.vn/media/icons/banner/banner-sis-samsung-homepage.png"
+                        />
+                    </Link>
+                </Col>
+                <Col
+                    xs={24}
+                    md={6}
+                >
+                    <Link className="banner-item">
+                        <img
+                            className="banner-item"
+                            src="https://cellphones.com.vn/media/icons/banner/banner-sis-asus-homepage.png"
+                        />
+                    </Link>
+                </Col>
+                <Col
+                    xs={24}
+                    md={6}
+                >
+                    <Link className="banner-item">
+                        <img
+                            className="banner-item"
+                            src="https://cellphones.com.vn/media/icons/banner/banner-sis-xiaomi-homepage.png"
+                        />
+                    </Link>
+                </Col>
             </Row>
         </div>
     )

@@ -70,7 +70,7 @@ const HeaderMenu = () => {
     }
 
     const currentUser = useSelector(state => state.Auth.currentUser)
-    console.log(currentUser)
+    // console.log(currentUser)
 
     // if (!currentUser) {
     //     return null;

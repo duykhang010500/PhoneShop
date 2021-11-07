@@ -4,6 +4,7 @@ import {
     Switch,
     Route
 } from 'react-router-dom'
+import { useAuthenticated } from '../../hooks/useAuthenticate'
 import DashboardUserChangePassword from './DashboardUserChangePassword'
 import DashboardUserInfo from './DashboardUserInfo'
 import DashboardUserOrders from './DashboardUserOrders'

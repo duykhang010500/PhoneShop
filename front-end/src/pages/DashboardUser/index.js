@@ -15,11 +15,8 @@ import {
 import {
     ReconciliationOutlined,
     UserOutlined,
-    SettingOutlined,
     LockOutlined
 } from '@ant-design/icons';
-
-
 
 const DashboardUser = () => {
 

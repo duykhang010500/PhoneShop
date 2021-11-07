@@ -6,8 +6,8 @@ import {
     Form,
     Input,
     Button,
-    message,
-    Typography
+    Typography,
+    message
 } from 'antd'
 
 import { Link, useHistory } from 'react-router-dom'
@@ -17,12 +17,6 @@ import { useNotAuthenticated } from '../hooks/useAuthenticate'
 export default function Login() {
 
     useNotAuthenticated()
-
-    message.config({
-        top: 70,
-        maxCount: 1,
-        duration: 2
-    })
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -34,6 +28,7 @@ export default function Login() {
         dispatch(actLogin(values)).then((res) => {
             if (res.ok) {
                 history.push('/')
+                message.success(res.message)
             } else {
                 message.error(res.message)
             }

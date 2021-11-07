@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { formatVND } from '../../utils/formatVND'
 
 import cls from 'classnames'
-import { Card, Badge } from 'antd'
+import { Card } from 'antd'
 
 export default function ProductItem({ product, isShowCategory }) {
 
@@ -19,11 +19,12 @@ export default function ProductItem({ product, isShowCategory }) {
 
     return (
         <li className={finalClass}>
-            {/* <Badge.Ribbon text="Hot" color="#fd475a"> */}
+
             <Card
                 hoverable
             >
-                <Link to='/dien-thoai-di-dong/iphone-15'>
+                <Link to={`product/${product.id}`}
+                >
                     <img src={product.avatar} alt="" className="product__item--thumb" />
                 </Link>
                 <div className="product__item-info">
@@ -37,14 +38,18 @@ export default function ProductItem({ product, isShowCategory }) {
                         </span>
                     </div>
                     <div className="product__item--rating">
-                        <Rate disabled value={product.rating} />
+                        <Rate
+                            disabled
+                            value={product.rating}
+                            style={{ fontSize: 15 }}
+
+                        />
                         <span className="product__item--rating-num">
-                            {product.ratingCount} đánh giá
+                            ({product.ratingCount})
                         </span>
                     </div>
                 </div>
             </Card>
-            {/* </Badge.Ribbon> */}
         </li>
     )
 }

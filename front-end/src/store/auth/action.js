@@ -46,7 +46,8 @@ export const actLogin = (formData) => async (dispatch) => {
         const currentUser = res.data.user
         dispatch(actSetCurrentUser(currentUser))
         return {
-            ok: true
+            ok: true,
+            message: 'Đăng nhập thành công'
         }
     } catch (err) {
         console.log(err.response.data)
@@ -67,6 +68,7 @@ export const actFetchMe = () => async (dispatch) => {
     try {
         const res = await authServices.getMe()
         console.log(res)
+
         const token = res.data.access_token
         dispatch(actSetToken(token))
         const currentUser = res.data.user
@@ -92,6 +94,23 @@ export const actChangePassword = (formData) => async (dispatch) => {
         return {
             ok: false,
             message: 'Mật khẩu hiện tại không đúng!'
+        }
+    }
+}
+
+export const actUpdateProfile = (formData) => async (dispatch) => {
+    try {
+        const res = await authServices.updateProfile(formData)
+        console.log(res)
+        return {
+            ok: true,
+            message: 'Cập nhật thông tin thành công!'
+        }
+    } catch (err) {
+        console.log(err)
+        return {
+            ok: false,
+            message: 'Có lỗi xảy ra!'
         }
     }
 }

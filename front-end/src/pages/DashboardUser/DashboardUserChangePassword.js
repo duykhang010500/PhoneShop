@@ -16,10 +16,12 @@ import {
     SaveOutlined
 } from '@ant-design/icons'
 import { actChangePassword } from '../../store/auth/action'
-
+import { useAuthenticated } from '../../hooks/useAuthenticate'
 
 
 const DashboardUserChangePassword = () => {
+    useAuthenticated()
+
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
     const handleSubmit = (formData) => {

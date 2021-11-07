@@ -9,7 +9,7 @@ import {
     Upload,
     Select,
     Avatar,
-    Image
+    message
 } from 'antd'
 
 import {
@@ -23,11 +23,27 @@ import {
     useSelector,
     useDispatch
 } from 'react-redux'
+
+import moment from 'moment'
+
+import {
+    beforeUpload,
+    getBase64
+} from '../../helpers/uploadHelper.js'
 import { useAuthenticated } from '../../hooks/useAuthenticate'
+import { actUpdateProfile } from '../../store/auth/action'
 
 const DashboardUserInfo = () => {
+
     useAuthenticated()
+
+    const [form] = Form.useForm()
+    const dispatch = useDispatch()
+
     const [isLoading, setIsLoading] = useState(false)
+
+    const [loading, setLoading] = useState(false)
+    const [imageUrl, setImageUrl] = useState("")
 
     const { Option } = Select
 
@@ -43,8 +59,40 @@ const DashboardUserInfo = () => {
         return null
     }
 
+    const handleChange = info => {
+        if (info.file.status === 'uploading') {
+            setLoading(true)
+            return;
+        }
+        if (info.file.status === 'done') {
+            getBase64(info.file.originFileObj, imageUrl => {
+                setImageUrl(imageUrl)
+                setLoading(false)
+            }
+            );
+            const url = info.file.response.data.display_url
+            form.setFieldsValue({
+                image: url
+            })
+        }
+    }
+
+    const handleChangeDate = (date, dateString) => {
+        form.setFieldsValue({
+            dob: dateString
+        })
+    }
+
     const handleSubmit = (values) => {
         console.log(values)
+        setIsLoading(true)
+        dispatch(actUpdateProfile(values)).then((res) => {
+            if (res.ok) {
+                message.success(res.message)
+            } else {
+                message.error(res.message)
+            }
+        }).finally(() => setIsLoading(false))
     }
 
     return (
@@ -54,33 +102,48 @@ const DashboardUserInfo = () => {
             <Form
                 layout="vertical"
                 initialValues={{
+                    image: currentUser.image,
                     email: currentUser.email,
                     name: currentUser.name,
                     sex: currentUser.sex,
-                    // dob: '2015-01-01'
+                    dob: currentUser.dob
                 }}
-                onFinish={handleSubmit}
+                form={form}
             >
                 <Row
                     gutter={[20, 5]}
                 >
-
                     <Col
                         span={24}
                     >
-                        <Upload
-                            name="avatar"
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        // beforeUpload={beforeUpload}
-                        // onChange={this.handleChange}
+                        <Form.Item
+                            name="image"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng chọn ảnh đại diện'
+                                }
+                            ]}
                         >
-                            {
-                                currentUser.image ? <Image /> : <Avatar icon={<UserOutlined />} />
-                            }
-                        </Upload>
+                            <Upload
+                                name="image"
+                                listType="picture-card"
+                                className="avatar-uploader"
+                                maxCount={1}
+                                showUploadList={false}
+                                action="https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2"
+                                beforeUpload={beforeUpload}
+                                onChange={handleChange}
+                            >
+                                {
+                                    imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
+                                        :
+                                        (
+                                            currentUser.image ? <img src={currentUser.image} /> : <Avatar icon={<UserOutlined />} />
+                                        )
+                                }
+                            </Upload>
+                        </Form.Item>
                     </Col>
                     <Col
                         span={12}
@@ -152,29 +215,44 @@ const DashboardUserInfo = () => {
                     </Col>
                     <Col span={12}>
                         <Form.Item
-                            label='Ngày sinh'
                             name="dob"
+                            style={{ display: "none" }}
                             rules={[
                                 {
-                                    required: true
+                                    required: true,
+                                    message: 'Vui lòng chọn ngày sinh'
                                 }
                             ]}
                         >
-                            <DatePicker
-                                style={{ width: "100%" }}
-                                size="large"
-                            />
+
                         </Form.Item>
+                        <DatePicker
+                            defaultValue={currentUser.dob ? moment(currentUser.dob, 'YYYY/MM/DD') : ''}
+                            format={'YYYY/MM/DD'}
+                            placeholder="Ngày tháng năm sinh"
+                            style={{ width: "100%", marginTop: '3rem' }}
+                            size="large"
+                            onChange={handleChangeDate}
+                        />
                     </Col>
                     <Col span={24}>
                         <Form.Item
                         >
                             <Button
                                 type="primary"
-                                htmlType="submit"
                                 loading={isLoading}
                                 size="large"
                                 icon={<SaveOutlined />}
+                                onClick={() => {
+                                    form
+                                        .validateFields()
+                                        .then((values) => {
+                                            handleSubmit(values);
+                                        })
+                                        .catch((info) => {
+                                            console.log('Validate Failed:', info);
+                                        });
+                                }}
                             >
                                 Cập nhật
                             </Button>

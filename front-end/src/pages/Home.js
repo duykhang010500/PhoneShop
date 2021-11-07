@@ -8,14 +8,10 @@ import BrandFeature from "../components/BrandFeature";
 export default function HomePage() {
     return (
         <section>
-            {/* <MenuHorizontal /> */}
-            <Carousel />
-            {/* <BrandFeature /> */}
-            <BestSeller title="BÁN CHẠY NHẤT" />
+            {/* <Carousel /> */}
+            <BrandFeature />
+            <BestSeller title="MỚI NHẤT" />
             <Ads />
-            <BestSeller title="Apple" />
-            <BestSeller title="Samsung" />
-            {/* <Subscription /> */}
         </section>
     )
 }

@@ -1,15 +1,11 @@
 import {
     Row,
     Col,
-    Input,
-    Space,
 } from 'antd'
 
 import HeaderLogo from './HeaderLogo'
 import HeaderSearch from './HeaderSearch'
 import HeaderMenu from './HeaderMenu'
-
-const { Search } = Input
 
 export default function Header() {
 

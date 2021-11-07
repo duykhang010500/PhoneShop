@@ -21,13 +21,16 @@ import {
     SaveOutlined
 } from '@ant-design/icons'
 
-
 const DashboardAdminCategories = () => {
 
     const [form] = Form.useForm()
     const [showFormAdd, setShowFormAdd] = useState(false)
 
-    const columns = [
+    const handleSubmit = (values) => {
+        console.log(values)
+    }
+
+    const columnsBrandTable = [
         {
             title: 'ID',
             dataIndex: 'id'
@@ -71,10 +74,6 @@ const DashboardAdminCategories = () => {
         }
     ]
 
-    const handleSubmit = (values) => {
-        console.log(values)
-    }
-
     return (
         <Row
             gutter={[16, 16]}
@@ -110,7 +109,7 @@ const DashboardAdminCategories = () => {
             </Col>
             <Col span={24}>
                 <Table
-                    columns={columns}
+                    columns={columnsBrandTable}
 
                 />
             </Col>
