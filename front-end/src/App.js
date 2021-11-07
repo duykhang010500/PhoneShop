@@ -31,6 +31,7 @@ import DashboardUser from "./pages/DashboardUser"
 import DashboardAdmin from "./pages/DashboardAdmin"
 import { actFetchMe, actGetAdmin } from "./store/auth/action"
 import { actGetListBrandAsync } from "./store/brand/action"
+import { actGetAllProductAsync } from "./store/products/action"
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
   useEffect(() => {
     // dispatch(actFetchMe())
     dispatch(actGetListBrandAsync())
+    dispatch(actGetAllProductAsync())
     dispatch(actGetAdmin())
   }, [dispatch])
 
