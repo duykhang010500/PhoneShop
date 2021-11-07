@@ -3,8 +3,10 @@ import { Typography } from 'antd'
 import Products from '../../utils/mockData'
 import Underline from '../common/Underline'
 
-export default function BestSeller({ title }) {
-    // console.log(Product)
+export default function BestSeller({ title, product }) {
+
+    console.log(product)
+
     return (
         <div className="container">
             <div className="product">
@@ -17,7 +19,7 @@ export default function BestSeller({ title }) {
                 <Underline />
                 <ul className="product__list">
                     {
-                        Products.map((product, index) => <ProductItem key={index} product={product} />)
+                        product.map((product, index) => <ProductItem key={index} product={product} />)
                     }
                 </ul>
             </div>

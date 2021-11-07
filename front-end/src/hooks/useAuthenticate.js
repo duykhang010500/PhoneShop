@@ -11,7 +11,7 @@ import {
 } from 'react-redux'
 
 export const useAuthenticated = () => {
-    const currentUser = useSelector((state) => state.Auth.currentUser)
+    const currentUser = useSelector((state) => state.Auth.token)
     const history = useHistory()
     useEffect(() => {
         if (!currentUser) {
@@ -21,7 +21,7 @@ export const useAuthenticated = () => {
 }
 
 export const useNotAuthenticated = () => {
-    const currentUser = useSelector((state) => state.Auth.currentUser)
+    const currentUser = useSelector((state) => state.Auth.token)
     const history = useHistory()
     useEffect(() => {
         if (currentUser) {

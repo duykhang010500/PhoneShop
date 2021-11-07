@@ -14,20 +14,28 @@ import {
 } from '@ant-design/icons'
 
 import { CheckCircleTwoTone } from '@ant-design/icons'
-export default function DetailProductInfo() {
+import {
+    convertNewPrice
+} from '../../helpers/priceFormat'
+import {
+    formatVND
+} from '../../utils/formatVND'
+export default function DetailProductInfo({ product }) {
     return (
         <Row gutter={[40, 40]}>
             <Col md={10} xs={24}>
-                <img src="https://hoanghamobile.com/i/preview/Uploads/2020/10/10/iphone%2011%20(3).png" alt="" />
+                <img src={product.image} alt="" />
             </Col>
             <Col md={14} xs={24}>
                 <Space direction="vertical" size="middle">
                     <Space size="middle">
                         <Typography.Title level={4} type="danger">
-                            30.000.000đ
+                            {
+                                formatVND(convertNewPrice(product.price, product.discount))
+                            }
                         </Typography.Title>
                         <Typography.Text strong italic>
-                            <del>Giá niêm yết: 30.000.000đ</del>
+                            <del>Giá niêm yết: {formatVND(product.price)}</del>
                         </Typography.Text>
                     </Space>
 
@@ -49,12 +57,11 @@ export default function DetailProductInfo() {
                         />
                     </Tooltip> */}
 
-
-                    <Typography.Text strong>
+                    {/* <Typography.Text strong>
                         Lựa chọn phiên bản
-                    </Typography.Text>
+                    </Typography.Text> */}
 
-                    <Radio.Group defaultValue="a" size="middle">
+                    {/* <Radio.Group defaultValue="a" size="middle">
                         <Space size="middle">
                             <Radio.Button value="a">
                                 64GB
@@ -81,7 +88,7 @@ export default function DetailProductInfo() {
                                 Đen
                             </Radio.Button>
                         </Space>
-                    </Radio.Group>
+                    </Radio.Group> */}
                     <Space direction="vertical">
                         <Typography.Text strong>
                             KHUYẾN MÃI

@@ -6,6 +6,9 @@ const productsServices = {
     },
     create(formData) {
         return api.callWithToken().post('/product', formData)
+    },
+    getDetailProduct(id) {
+        return api.call().get(`/product_s?id=${id}`)
     }
 }
 

@@ -11,7 +11,7 @@ export default function DetailProductListRating() {
         <Comment
             author={
                 <Typography.Text strong>
-                    Khang
+                    User
                 </Typography.Text>
             }
             avatar={

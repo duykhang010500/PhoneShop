@@ -39,10 +39,14 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    // dispatch(actFetchMe())
+
+    if (true) {
+      dispatch(actFetchMe())
+    } else {
+      // dispatch(actGetAdmin())
+    }
     dispatch(actGetListBrandAsync())
     dispatch(actGetAllProductAsync())
-    dispatch(actGetAdmin())
   }, [dispatch])
 
   return (
@@ -66,7 +70,7 @@ function App() {
         <Route exact path="/dien-thoai-di-dong">
           <ProductByCategory />
         </Route>
-        <Route exact path="/product/:slug">
+        <Route exact path="/product/:id">
           <DetailProduct />
         </Route>
         <Route exact path="/checkout">

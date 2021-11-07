@@ -1,4 +1,4 @@
-import { ACT_GET_ALL_PRODUCT } from "./action"
+import { ACT_GET_ALL_PRODUCT, ACT_GET_DETAIL_PRODUCT } from "./action"
 
 const initState = {
     list: [],
@@ -10,6 +10,11 @@ const productsReducer = (state = initState, action) => {
             return {
                 ...state,
                 list: action.payload.list
+            }
+        case ACT_GET_DETAIL_PRODUCT:
+            return {
+                ...state,
+                detailProduct: action.payload.product
             }
         default:
             return state

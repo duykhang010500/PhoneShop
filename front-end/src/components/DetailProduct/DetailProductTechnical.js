@@ -1,9 +1,17 @@
 
 import React from 'react'
-import { 
+import {
     Descriptions
 } from 'antd'
-export default function DetailProductTechnical() {
+import { convertProductInfo } from '../../helpers/convertInfo'
+export default function DetailProductTechnical({ product }) {
+
+    const technicalProduct = product.product_info
+    console.log(technicalProduct)
+    delete technicalProduct["id"]
+    delete technicalProduct["updated_at"]
+    delete technicalProduct["created_at"]
+
     return (
         <Descriptions
             title="Thông số kỹ thuật"
@@ -11,12 +19,15 @@ export default function DetailProductTechnical() {
             column={{ lg: 1, md: 1, sm: 1, xs: 1 }}
             layout="horizontal"
         >
-            <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
-            <Descriptions.Item label="Billing">Prepaid</Descriptions.Item>
-            <Descriptions.Item label="time">18:00:00</Descriptions.Item>
-            <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
-            <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
-            <Descriptions.Item label="Official">$60.00</Descriptions.Item>
+            {
+                Object.keys(technicalProduct).map((key) => {
+                    return (
+                        <Descriptions.Item label={convertProductInfo(key)}>
+                            {technicalProduct[key]}
+                        </Descriptions.Item>
+                    )
+                })
+            }
         </Descriptions>
     )
 }

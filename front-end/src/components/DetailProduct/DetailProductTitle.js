@@ -7,8 +7,8 @@ import {
 
 import { HomeOutlined } from '@ant-design/icons'
 
-export default function DetailProductTitle(){
-    return(
+export default function DetailProductTitle({ product }) {
+    return (
         <Space direction="vertical">
             <Breadcrumb>
                 <Breadcrumb.Item href="/">
@@ -19,7 +19,7 @@ export default function DetailProductTitle(){
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                     <Typography.Text strong>
-                        Iphone
+                        {product.brand.name}
                     </Typography.Text>
                 </Breadcrumb.Item>
             </Breadcrumb>
@@ -27,7 +27,7 @@ export default function DetailProductTitle(){
             <Space size="large">
                 <Space size="middle" wrap>
                     <Typography.Title level={4}>
-                        Iphone Xs Max256Gb
+                        {product.name}
                     </Typography.Title>
                     <Space>
                         <Rate disabled value={4.5} style={{ fontSize: "1.4rem" }} />
