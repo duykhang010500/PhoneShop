@@ -1,6 +1,7 @@
 import productsServices from "../../services/productsServices"
 export const ACT_GET_ALL_PRODUCT = 'ACT_GET_ALL_PRODUCT'
 export const ACT_GET_DETAIL_PRODUCT = 'ACT_GET_DETAIL_PRODUCT'
+export const ACT_GET_BEST_DISCOUNT = 'ACT_GET_BEST_DISCOUNT'
 
 export const actGetListProduct = (list) => {
     return {
@@ -13,6 +14,13 @@ export const actGetDetailProduct = (product) => {
     return {
         type: ACT_GET_DETAIL_PRODUCT,
         payload: { product }
+    }
+}
+
+export const actGetBestDiscount = (list) => {
+    return {
+        type: ACT_GET_BEST_DISCOUNT,
+        payload: { list }
     }
 }
 
@@ -51,6 +59,16 @@ export const actGetDetailProductAsync = (id) => async (dispatch) => {
         const detailProduct = res.data.data[0]
         console.log(detailProduct)
         dispatch(actGetDetailProduct(detailProduct))
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const actGetBestDiscountAsync = () => async (dispatch) => {
+    try {
+        const res = await productsServices.getBestDiscount()
+        const list = res.data.data
+        dispatch(actGetBestDiscount(list))
     } catch (err) {
         console.log(err)
     }

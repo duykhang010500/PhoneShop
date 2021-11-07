@@ -11,9 +11,15 @@ export default function DetailProductPost({ product }) {
             </Typography.Title>
             <Typography.Paragraph>
                 {
-                    product.desc ? product.desc : 'Đang cập nhật'
+                    product.desc ? <div
+                        dangerouslySetInnerHTML={{
+                            __html: product.desc
+                        }}
+                    >
+                    </div> : 'Đang cập nhật'
                 }
             </Typography.Paragraph>
+
         </div>
     )
 }

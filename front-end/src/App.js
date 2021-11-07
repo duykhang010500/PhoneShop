@@ -31,7 +31,6 @@ import DashboardUser from "./pages/DashboardUser"
 import DashboardAdmin from "./pages/DashboardAdmin"
 import { actFetchMe, actGetAdmin } from "./store/auth/action"
 import { actGetListBrandAsync } from "./store/brand/action"
-import { actGetAllProductAsync } from "./store/products/action"
 
 function App() {
 
@@ -39,14 +38,12 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-
-    if (true) {
+    if (localStorage.getItem('r') == 1) {
       dispatch(actFetchMe())
     } else {
-      // dispatch(actGetAdmin())
+      dispatch(actGetAdmin())
     }
     dispatch(actGetListBrandAsync())
-    dispatch(actGetAllProductAsync())
   }, [dispatch])
 
   return (

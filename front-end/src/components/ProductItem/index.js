@@ -17,7 +17,6 @@ export default function ProductItem({ product, isShowCategory }) {
 
     return (
         <li className={finalClass}>
-
             <Card hoverable>
                 <Link to={`product/${product.id}`}>
                     <img src={product.image} alt="" className="product__item--thumb" />

@@ -45,6 +45,7 @@ export const actLogin = (formData) => async (dispatch) => {
         }
         const currentUser = res.data.user
         dispatch(actSetCurrentUser(currentUser))
+        localStorage.setItem('r', 1)
         return {
             ok: true,
             message: 'Đăng nhập thành công'
@@ -67,7 +68,7 @@ export const actLogin = (formData) => async (dispatch) => {
 export const actFetchMe = () => async (dispatch) => {
     try {
         const res = await authServices.getMe()
-        console.log(res)
+        // console.log(res)
 
         const token = res.data.access_token
         dispatch(actSetToken(token))
@@ -75,6 +76,7 @@ export const actFetchMe = () => async (dispatch) => {
         dispatch(actSetCurrentUser(currentUser))
 
     } catch (err) {
+        localStorage.removeItem('r')
         console.log(err)
         dispatch(actSetToken(''))
         dispatch(actSetCurrentUser(null))
@@ -127,6 +129,7 @@ export const actAdminLogin = (formData) => async (dispatch) => {
         }
         const currentUser = res.data.admin
         dispatch(actSetCurrentUser(currentUser))
+        localStorage.setItem('r', 2)
         return {
             ok: true,
             message: 'Đăng nhập thành công'
@@ -158,6 +161,7 @@ export const actGetAdmin = () => async (dispatch) => {
 
     } catch (err) {
         console.log(err)
+        localStorage.removeItem('r')
         dispatch(actSetToken(''))
         dispatch(actSetCurrentUser(null))
     }

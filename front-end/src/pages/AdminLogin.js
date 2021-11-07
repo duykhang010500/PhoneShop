@@ -27,12 +27,11 @@ export default function Login() {
         dispatch(actAdminLogin(values)).then(res => {
             if (res.ok) {
                 message.success(res.message)
+                history.push('/admin')
             } else {
                 message.error(res.message)
             }
         }).finally(() => setIsLoading(false))
-
-
     }
 
 

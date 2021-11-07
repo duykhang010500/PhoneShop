@@ -96,9 +96,14 @@ const DashboardAdminCategories = () => {
             key: 'slug'
         },
         {
-            title: 'Trạng thái',
-            dataIndex: 'status',
+            title: 'Mô tả',
+            dataIndex: 'desc',
+            key: 'desc'
         },
+        // {
+        //     title: 'Trạng thái',
+        //     dataIndex: 'status',
+        // },
         {
             title: 'Hành động',
             key: 'action',

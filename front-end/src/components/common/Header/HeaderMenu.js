@@ -66,6 +66,7 @@ const HeaderMenu = () => {
         e.preventDefault()
         dispatch(actSetToken(''))
         dispatch(actSetCurrentUser(null))
+        localStorage.removeItem('r')
         history.push('/')
     }
 

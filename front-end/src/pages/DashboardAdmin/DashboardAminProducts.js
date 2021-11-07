@@ -17,7 +17,9 @@ import {
     Upload,
     message,
     InputNumber,
-    Avatar
+    Avatar,
+    Tooltip,
+    Popconfirm
 } from 'antd'
 import { useQuill } from 'react-quilljs';
 import {
@@ -53,6 +55,10 @@ const DashboardAminProducts = () => {
     const [isVisibleModal, setIsVisibleModal] = useState(false)
     const [loading, setLoading] = useState(false)
     const [imageUrl, setImageUrl] = useState("")
+
+    useEffect(() => {
+        dispatch(actGetAllProductAsync())
+    }, [dispatch])
 
     //QUILL JS
     const { quill, quillRef } = useQuill({ theme, placeholder, modules });
@@ -180,49 +186,39 @@ const DashboardAminProducts = () => {
             key: 'price'
         },
         {
-            title: 'Khuyến mại',
+            title: 'Khuyến mại (%)',
             dataIndex: 'discount',
             key: 'discount'
         },
         {
             title: 'Hành động',
             key: 'action',
-            // render: (text, record) => (
-            //     <Space>
-            //         <Tooltip title="Xóa">
-            //             <Popconfirm
-            //                 placement="topRight"
-            //                 title={`Xóa hãng ${record.name}`}
-            //                 onConfirm={() => handleDeleteBrand(record.id)}
-            //             >
-            //                 <Button
-            //                     type="primary"
-            //                     danger
-            //                     icon={<DeleteOutlined />}
-            //                 >
-            //                 </Button>
-            //             </Popconfirm>
-            //         </Tooltip>
+            render: (text, record) => (
+                <Space>
+                    <Tooltip title="Xóa">
+                        <Popconfirm
+                            placement="topRight"
+                            title={`Xóa điện thoai ${record.name}`}
+                        >
+                            <Button
+                                type="primary"
+                                danger
+                                icon={<DeleteOutlined />}
+                            >
+                            </Button>
+                        </Popconfirm>
+                    </Tooltip>
 
-            //         <Tooltip title="Cập nhật">
-            //             <Button
-            //                 type="primary"
-            //                 icon={<FormOutlined />}
-            //                 type="primary"
-            //                 onClick={() => {
-            //                     setShowFormUpdate(true)
-            //                     setIdSelected(record.id)
-            //                     form.setFieldsValue({
-            //                         name: record.name,
-            //                         slug: record.slug,
-            //                         desc: record.desc
-            //                     })
-            //                 }}
-            //             >
-            //             </Button>
-            //         </Tooltip>
-            //     </Space>
-            // )
+                    <Tooltip title="Cập nhật">
+                        <Button
+                            type="primary"
+                            icon={<FormOutlined />}
+                            type="primary"
+                        >
+                        </Button>
+                    </Tooltip>
+                </Space>
+            )
         }
     ]
 
@@ -285,7 +281,6 @@ const DashboardAminProducts = () => {
                 <Table
                     columns={columns}
                     dataSource={listProduct}
-
                 />
             </Col>
             <Modal

@@ -1,12 +1,11 @@
 import ProductItem from '../ProductItem'
 import { Typography } from 'antd'
-import Products from '../../utils/mockData'
+
 import Underline from '../common/Underline'
 
-export default function BestSeller({ title, product }) {
+export default function NewListProduct({ title, product }) {
 
-    console.log(product)
-
+    // console.log(product)
     return (
         <div className="container">
             <div className="product">

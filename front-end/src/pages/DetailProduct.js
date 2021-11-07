@@ -23,7 +23,7 @@ import { actGetDetailProductAsync } from '../store/products/action';
 export default function DetailProduct() {
 
     const { id } = useParams()
-    console.log(id)
+    // console.log(id)
     const dispatch = useDispatch()
 
     useEffect(() => {

@@ -14,7 +14,8 @@ import {
     Badge,
     Row,
     Space,
-    Col
+    Col,
+    Typography
 } from 'antd';
 
 import {
@@ -26,8 +27,12 @@ import {
     NotificationOutlined,
     UserOutlined,
 } from '@ant-design/icons';
-import DashboardAdminRoutes from './DashboardAdminRoutes';
 
+import {
+    useSelector
+} from 'react-redux'
+
+import DashboardAdminRoutes from './DashboardAdminRoutes';
 
 
 const { Header, Sider, Content } = Layout;
@@ -38,6 +43,12 @@ const DashboardAdmin = () => {
 
     const [isCollapsed, setIsCollapsed] = useState(false)
     const { SubMenu } = Menu
+
+
+    const currentUser = useSelector(state => state.Auth.currentUser)
+    if (!currentUser) {
+        return null
+    }
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -108,11 +119,18 @@ const DashboardAdmin = () => {
                                 <Badge
                                 // dot
                                 >
-                                    <Avatar
-                                        shape="circle"
-                                        icon={<UserOutlined />}
+                                    <Space>
+                                        <Avatar
+                                            shape="circle"
+                                            icon={<UserOutlined />}
+                                        />
+                                        <Typography.Text strong>
+                                            {
+                                                currentUser.name
+                                            }
+                                        </Typography.Text>
+                                    </Space>
 
-                                    />
                                 </Badge>
                             </Space>
                         </Col>

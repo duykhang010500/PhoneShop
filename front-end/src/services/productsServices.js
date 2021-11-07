@@ -9,6 +9,9 @@ const productsServices = {
     },
     getDetailProduct(id) {
         return api.call().get(`/product_s?id=${id}`)
+    },
+    getBestDiscount() {
+        return api.call().get('/home/products?sort=price-discount')
     }
 }
 
