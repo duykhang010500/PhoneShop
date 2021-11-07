@@ -10,6 +10,9 @@ import {
     Drawer,
     Form,
     Input,
+    message,
+    Tooltip,
+    Popconfirm
 
 } from 'antd'
 
@@ -21,20 +24,67 @@ import {
     SaveOutlined
 } from '@ant-design/icons'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { actCreateBrandAsync, actDeleteBrandAsync, actGetListBrandAsync, actUpdateBrandAsync } from '../../store/brand/action'
+
 const DashboardAdminCategories = () => {
 
+    const dispatch = useDispatch()
+    const [isLoading, setIsLoading] = useState(false)
+    const [idSelected, setIdSelected] = useState("")
     const [form] = Form.useForm()
     const [showFormAdd, setShowFormAdd] = useState(false)
+    const [showFormUpdate, setShowFormUpdate] = useState(false)
+
+    const brands = useSelector(state => state.Brands.list)
 
     const handleSubmit = (values) => {
+        setIsLoading(true)
+        dispatch(actCreateBrandAsync(values)).then((res) => {
+            if (res.ok) {
+                message.success(res.message)
+                dispatch(actGetListBrandAsync())
+            } else {
+                message.error(res.message)
+            }
+        }).finally(() => {
+            setShowFormAdd(false)
+            setIsLoading(false)
+        })
+    }
+
+    const handleDeleteBrand = (id) => {
+        setIsLoading(true)
+        dispatch(actDeleteBrandAsync(id)).then((res) => {
+            if (res.ok) {
+                message.success(res.message)
+            } else {
+                message.error(res.message)
+            }
+        }).finally(() => {
+            dispatch(actGetListBrandAsync())
+            setIsLoading(false)
+        })
+    }
+
+    const handleUpdate = (values) => {
+        console.log(idSelected)
         console.log(values)
+        setIsLoading(true)
+        dispatch(actUpdateBrandAsync(idSelected, values)).then((res) => {
+            if (res.ok) {
+                message.success(res.message)
+            } else {
+                message.error(res.message)
+            }
+        }).finally(() => {
+            setIsLoading(false)
+            setShowFormUpdate(false)
+            dispatch(actGetListBrandAsync())
+        })
     }
 
     const columnsBrandTable = [
-        {
-            title: 'ID',
-            dataIndex: 'id'
-        },
         {
             title: 'Tên hãng',
             dataIndex: 'name',
@@ -48,27 +98,44 @@ const DashboardAdminCategories = () => {
         {
             title: 'Trạng thái',
             dataIndex: 'status',
-        }
-        ,
+        },
         {
             title: 'Hành động',
             key: 'action',
             render: (text, record) => (
                 <Space>
-                    <Button
-                        type="primary"
-                        danger
-                        icon={<DeleteOutlined />}
-                    >
+                    <Tooltip title="Xóa">
+                        <Popconfirm
+                            placement="topRight"
+                            title={`Xóa hãng ${record.name}`}
+                            onConfirm={() => handleDeleteBrand(record.id)}
+                        >
+                            <Button
+                                type="primary"
+                                danger
+                                icon={<DeleteOutlined />}
+                            >
+                            </Button>
+                        </Popconfirm>
+                    </Tooltip>
 
-                    </Button>
-                    <Button
-                        type="primary"
-                        icon={<FormOutlined />}
-                        type="primary"
-                    >
-
-                    </Button>
+                    <Tooltip title="Cập nhật">
+                        <Button
+                            type="primary"
+                            icon={<FormOutlined />}
+                            type="primary"
+                            onClick={() => {
+                                setShowFormUpdate(true)
+                                setIdSelected(record.id)
+                                form.setFieldsValue({
+                                    name: record.name,
+                                    slug: record.slug,
+                                    desc: record.desc
+                                })
+                            }}
+                        >
+                        </Button>
+                    </Tooltip>
                 </Space>
             )
         }
@@ -110,7 +177,8 @@ const DashboardAdminCategories = () => {
             <Col span={24}>
                 <Table
                     columns={columnsBrandTable}
-
+                    dataSource={brands}
+                    loading={isLoading}
                 />
             </Col>
             <Drawer
@@ -139,13 +207,67 @@ const DashboardAdminCategories = () => {
                     >
                         <Input />
                     </Form.Item>
+                    <Form.Item
+                        label="Mô tả"
+                        name="desc"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item>
                         <Button
                             type="primary"
                             htmlType="submit"
                             icon={<SaveOutlined />}
+                            loading={isLoading}
                         >
                             Tạo mới
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Drawer>
+            <Drawer
+                title="Cập nhật thông tin"
+                placement="right"
+                closable={true}
+                onClose={() => setShowFormUpdate(false)}
+                visible={showFormUpdate}
+
+            >
+                <Form
+                    layout="vertical"
+                    onFinish={handleUpdate}
+                    form={form}
+                >
+                    <Form.Item
+                        label="Tên hãng"
+                        name="name"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Đường dẫn"
+                        name="slug"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Mô tả"
+                        name="desc"
+                        rules={[{ required: true }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item>
+                        <Button
+                            type="primary"
+                            htmlType="submit"
+                            icon={<SaveOutlined />}
+                            loading={isLoading}
+                        >
+                            Cập nhật
                         </Button>
                     </Form.Item>
                 </Form>

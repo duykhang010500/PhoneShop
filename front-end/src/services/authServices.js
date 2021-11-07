@@ -15,6 +15,12 @@ const authServices = {
     },
     updateProfile(formData) {
         return api.callWithToken().put('/user/update-profile', formData)
+    },
+    adminLogin(formData) {
+        return api.call().post('/admin/login', formData)
+    },
+    getAdmin() {
+        return api.callWithToken().post('/admin/refresh')
     }
 }
 

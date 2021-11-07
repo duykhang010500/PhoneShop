@@ -114,3 +114,51 @@ export const actUpdateProfile = (formData) => async (dispatch) => {
         }
     }
 }
+
+//Admin Role
+
+export const actAdminLogin = (formData) => async (dispatch) => {
+    try {
+        const res = await authServices.adminLogin(formData)
+        console.log(res)
+        const token = res.data.access_token
+        if (token) {
+            dispatch(actSetToken(token))
+        }
+        const currentUser = res.data.admin
+        dispatch(actSetCurrentUser(currentUser))
+        return {
+            ok: true,
+            message: 'Đăng nhập thành công'
+        }
+    } catch (err) {
+        console.log(err.response.data)
+        const hashError = {
+            "Unauthorized": "Sai email hoặc mật khẩu!"
+        }
+
+        const labelError = hashError[err.response.data.error]
+
+        return {
+            ok: false,
+            message: labelError
+        }
+    }
+}
+
+export const actGetAdmin = () => async (dispatch) => {
+    try {
+        const res = await authServices.getAdmin()
+        // console.log(res)
+
+        const token = res.data.access_token
+        dispatch(actSetToken(token))
+        const currentUser = res.data.admin
+        dispatch(actSetCurrentUser(currentUser))
+
+    } catch (err) {
+        console.log(err)
+        dispatch(actSetToken(''))
+        dispatch(actSetCurrentUser(null))
+    }
+}

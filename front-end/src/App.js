@@ -8,7 +8,8 @@ import {
 } from "react-router-dom"
 
 import {
-  useDispatch
+  useDispatch,
+  useSelector
 } from 'react-redux'
 
 import './scss/index.scss'
@@ -25,18 +26,21 @@ import Register from "./pages/Register"
 import ProductByCategory from "./pages/ProductByCategory"
 import Cart from './pages/Cart'
 import Checkout from "./pages/Checkout"
+import AdminLogin from './pages/AdminLogin'
 import DashboardUser from "./pages/DashboardUser"
 import DashboardAdmin from "./pages/DashboardAdmin"
-import { actFetchMe } from "./store/auth/action"
+import { actFetchMe, actGetAdmin } from "./store/auth/action"
+import { actGetListBrandAsync } from "./store/brand/action"
 
 function App() {
 
   const isDashBoardAdmin = useRouteMatch('/admin')
-
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(actFetchMe())
+    // dispatch(actFetchMe())
+    dispatch(actGetListBrandAsync())
+    dispatch(actGetAdmin())
   }, [dispatch])
 
   return (
@@ -71,6 +75,9 @@ function App() {
         </Route>
         <Route path="/admin">
           <DashboardAdmin />
+        </Route>
+        <Route path='/login/admin' exact>
+          <AdminLogin />
         </Route>
         <Route path="/*">
           <PageNotFound />
