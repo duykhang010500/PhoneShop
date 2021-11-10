@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Button,
     Col,
@@ -18,9 +18,32 @@ import {
     CreditCardOutlined
 } from '@ant-design/icons'
 
-const Cart = () => {
-    return (
+import { useSelector, useDispatch } from 'react-redux'
+import { actDeleteCart, actDeleteItem, actUpdateItem } from '../store/cart/action'
+import { convertNewPrice, formatVND } from '../helpers/priceFormat'
 
+const Cart = () => {
+
+    const dispatch = useDispatch()
+    const [totalPrice, setTotalPrice] = useState(0)
+    const cart = useSelector(state => state.Cart.cart)
+
+    const handleChangeQuantity = (value, idProduct) => {
+        console.log(value, idProduct)
+        dispatch(actUpdateItem(idProduct, value))
+    }
+
+    useEffect(() => {
+        const totalPrice = () => {
+            const total = cart.reduce((prev, item) => {
+                return prev + (convertNewPrice(item.price * item.quantity, item.discount))
+            }, 0)
+            setTotalPrice(total)
+        }
+        totalPrice()
+    }, [cart])
+
+    return (
         <div className="container cart-page">
             <Breadcrumb
                 style={{
@@ -38,103 +61,95 @@ const Cart = () => {
                     <Typography.Text strong>Giỏ hàng</Typography.Text>
                 </Breadcrumb.Item>
             </Breadcrumb>
-            <Typography.Title
-                level={4}
-            >
-                Giỏ hàng của bạn có 1 sản phẩm
-            </Typography.Title>
-            {/* 
-            <Row
-                justify="space-between"
-                className="cart-item"
-                align="middle"
-            >
+            <Row justify="space-between">
                 <Col>
-                    Ảnh
-
+                    <Typography.Title level={4}>
+                        {
+                            `Giỏ hàng của bạn có ${cart.length} sản phẩm`
+                        }
+                    </Typography.Title>
                 </Col>
                 <Col>
-                    Tên
-                </Col>
-                <Col>
-                    <Typography.Text>
-                        Đơn giá
-                    </Typography.Text>
-                </Col>
-                <Col>
-                    Số lượng
-                </Col>
-                <Col>
-                    Thành tiền
-                </Col>
-                <Col>
-                    Xóa
-                </Col>
-            </Row> */}
-
-            <Row
-                justify="space-between"
-                className="cart-item"
-                align="middle"
-            >
-                <Col>
-                    <Avatar
-                        src="https://cdn.tgdd.vn/Products/Images/42/249427/xiaomi-11-lite-5g-ne-pink-600x600.jpg"
-                        size="large"
-                        shape="square"
-                    />
-
-                </Col>
-                <Col>
-                    <Typography.Text
-                        strong
-                        style={{ fontSize: "1.6rem" }}
-                    >
-                        {/* Iphone 12 Pro Max 256Gb */}
-                        Điện thoại Xiaomi 11 Lite 5G NE
-                    </Typography.Text>
-                </Col>
-                <Col>
-                    <Typography.Text
-                        strong
+                    <Typography.Title
+                        level={4}
                         type="danger"
+                        onClick={() => dispatch(actDeleteCart())}
+                        style={{ cursor: "pointer" }}
                     >
-                        1000000đ
-                    </Typography.Text>
-                </Col>
-                <Col>
-                    <InputNumber
-                        min={1}
-                        max={10}
-                        // value={2}
-                        size="large"
-                        defaultValue={1}
-                        style={{ border: "1px solid silver" }}
-                    />
-                </Col>
-                <Col>
-                    <Typography.Text
-                        strong
-                        type="danger"
-                    >
-                        10000000đ
-                    </Typography.Text>
-                </Col>
-                <Col>
-                    <Tooltip title="Xóa khỏi giỏ hàng">
-                        <Button
-                            icon={<DeleteOutlined />}
-                            size="large"
-                            danger
-                            shape="circle"
-                        >
-
-                        </Button>
-                    </Tooltip>
+                        Xóa giỏ hàng
+                    </Typography.Title>
                 </Col>
             </Row>
 
 
+            {
+                cart.map((item, index) => {
+                    return (
+                        <Row
+                            key={index}
+                            // justify="space-between"
+                            className="cart-item"
+                            align="middle"
+                        >
+                            <Col span={4}>
+                                <Avatar
+                                    src={item.image}
+                                    size="large"
+                                    shape="square"
+                                />
+
+                            </Col>
+                            <Col span={8}>
+                                <Typography.Text
+                                    strong
+                                    style={{ fontSize: "1.6rem" }}
+                                >
+                                    {/* Iphone 12 Pro Max 256Gb */}
+                                    {item.name}
+                                </Typography.Text>
+                            </Col>
+                            <Col span={4}>
+                                <Space direction="vertical">
+                                    <Typography.Text
+                                        strong
+                                        type="danger"
+                                    >
+                                        {formatVND(item.price)}
+                                    </Typography.Text>
+                                    <Typography.Text
+
+                                    >
+                                        Giảm {item.discount} %
+                                    </Typography.Text>
+                                </Space>
+                            </Col>
+                            <Col span={4}>
+                                <InputNumber
+                                    min={1}
+                                    max={10}
+                                    onChange={(value) => handleChangeQuantity(value, item.id)}
+                                    size="large"
+                                    defaultValue={item.quantity}
+                                    style={{ border: "1px solid silver" }}
+                                />
+                            </Col>
+
+                            <Col span={4}>
+                                <Tooltip title="Xóa khỏi giỏ hàng">
+                                    <Button
+                                        icon={<DeleteOutlined />}
+                                        size="large"
+                                        danger
+                                        shape="circle"
+                                        onClick={() => dispatch(actDeleteItem(item.id))}
+                                    >
+                                    </Button>
+                                </Tooltip>
+                            </Col>
+                        </Row>
+                    )
+                })
+            }
             <Row
                 justify="center"
                 className="cart-total-price"
@@ -150,10 +165,12 @@ const Cart = () => {
                         type="danger"
                         strong
                     >
-                        10000000đ
+                        {formatVND(totalPrice)}
+
                     </Typography.Text>
                 </Col>
             </Row>
+
             <Row
                 justify="center"
             >

@@ -1,13 +1,9 @@
-
 import React from 'react'
-import {
-    Descriptions
-} from 'antd'
+import { Descriptions } from 'antd'
 import { convertProductInfo } from '../../helpers/convertInfo'
 export default function DetailProductTechnical({ product }) {
 
     const technicalProduct = product.product_info
-    console.log(technicalProduct)
     delete technicalProduct["id"]
     delete technicalProduct["updated_at"]
     delete technicalProduct["created_at"]
@@ -20,9 +16,12 @@ export default function DetailProductTechnical({ product }) {
             layout="horizontal"
         >
             {
-                Object.keys(technicalProduct).map((key) => {
+                Object.keys(technicalProduct).map((key, index) => {
                     return (
-                        <Descriptions.Item label={convertProductInfo(key)}>
+                        <Descriptions.Item
+                            key={index}
+                            label={convertProductInfo(key)}
+                        >
                             {technicalProduct[key]}
                         </Descriptions.Item>
                     )

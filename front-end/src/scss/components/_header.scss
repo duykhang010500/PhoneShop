@@ -1,8 +1,4 @@
 .header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 999;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   &-wrapper {
@@ -20,18 +16,5 @@
   }
   .menu-icon {
     font-size: 2.5rem;
-  }
-  .anticon-menu {
-    font-size: 2rem;
-  }
-}
-
-.ant-input-search-button {
-  border-radius: 0 2rem 2rem 0 !important;
-  background-color: #40a9ff !important;
-  border: none;
-  transition: all 0.2s ease-out;
-  &:hover {
-    background-color: #40a9ff !important;
   }
 }

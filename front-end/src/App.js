@@ -1,18 +1,13 @@
-import React, {
-  useEffect
-} from "react"
+import React, { useEffect } from "react"
+
 import {
   Switch,
   Route,
   useRouteMatch,
 } from "react-router-dom"
 
-import {
-  useDispatch,
-  useSelector
-} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import './scss/index.scss'
 import { BackTop } from 'antd'
 import { UpCircleTwoTone } from '@ant-design/icons'
 import CoreValue from "./components/CoreValue"
@@ -29,13 +24,14 @@ import Checkout from "./pages/Checkout"
 import AdminLogin from './pages/AdminLogin'
 import DashboardUser from "./pages/DashboardUser"
 import DashboardAdmin from "./pages/DashboardAdmin"
+
 import { actFetchMe, actGetAdmin } from "./store/auth/action"
-import { actGetListBrandAsync } from "./store/brand/action"
+import { actGetListBrandAsync } from "./store/brands/actions"
 
 function App() {
 
-  const isDashBoardAdmin = useRouteMatch('/admin')
   const dispatch = useDispatch()
+  const isDashBoardAdmin = useRouteMatch('/admin')
 
   useEffect(() => {
     if (localStorage.getItem('r') == 1) {
@@ -64,7 +60,7 @@ function App() {
         <Route exact path="/cart">
           <Cart />
         </Route>
-        <Route exact path="/dien-thoai-di-dong">
+        <Route exact path="/brand/:id">
           <ProductByCategory />
         </Route>
         <Route exact path="/product/:id">

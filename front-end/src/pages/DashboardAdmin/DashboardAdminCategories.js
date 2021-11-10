@@ -25,7 +25,13 @@ import {
 } from '@ant-design/icons'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { actCreateBrandAsync, actDeleteBrandAsync, actGetListBrandAsync, actUpdateBrandAsync } from '../../store/brand/action'
+
+import {
+    actCreateBrandAsync,
+    actDeleteBrandAsync,
+    actGetListBrandAsync,
+    actUpdateBrandAsync
+} from '../../store/brands/actions'
 
 const DashboardAdminCategories = () => {
 

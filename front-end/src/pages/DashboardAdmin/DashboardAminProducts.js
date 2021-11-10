@@ -1,8 +1,7 @@
-import React, {
-    useState,
-    useEffect
-} from 'react'
+import React, { useState, useEffect } from 'react'
+
 import axios from 'axios'
+
 import {
     Breadcrumb,
     Col,
@@ -21,7 +20,7 @@ import {
     Tooltip,
     Popconfirm
 } from 'antd'
-import { useQuill } from 'react-quilljs';
+
 import {
     HomeOutlined,
     CodeSandboxOutlined,
@@ -32,19 +31,15 @@ import {
     DeleteOutlined,
     FormOutlined
 } from '@ant-design/icons'
+import { useQuill } from 'react-quilljs';
 
-import {
-    useDispatch, useSelector
-} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
-import {
-    modules,
-    placeholder,
-    theme,
-} from '../../helpers/textEditorHelper'
+import { modules, placeholder, theme } from '../../helpers/textEditorHelper'
 
 import { beforeUpload, draggerProps, getBase64 } from '../../helpers/uploadHelper';
-import { actCreateProductAsync, actGetAllProductAsync } from '../../store/products/action';
+
+import { actCreateProductAsync, actGetAllProductAsync } from '../../store/products/actions';
 
 const DashboardAminProducts = () => {
 

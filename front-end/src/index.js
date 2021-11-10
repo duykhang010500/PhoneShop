@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './assets/less/app.less'
+import './configs/less/app.less'
+
+import './scss/index.scss'
 import 'quill/dist/quill.snow.css';
 import './configs/messageConfig'
 

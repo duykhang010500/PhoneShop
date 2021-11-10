@@ -38,21 +38,22 @@ const HeaderMenu = () => {
 
     const dispatch = useDispatch()
 
+    const currentUser = useSelector(state => state.Auth.currentUser)
+    const cart = useSelector(state => state.Cart.cart)
+
     const menu = (
         <Menu>
-            <Menu.Item icon={<IdcardOutlined />}>
+            <Menu.Item icon={<IdcardOutlined />} key="1">
                 <Link to="/user">
                     Trang cá nhân
                 </Link>
             </Menu.Item>
-            <Menu.Item icon={<FileSyncOutlined />}>
-
+            <Menu.Item icon={<FileSyncOutlined />} key="2">
                 <Link to='/user/orders'>
                     Đơn hàng
                 </Link>
-
             </Menu.Item>
-            <Menu.Item style={{ textAlign: 'center' }}>
+            <Menu.Item style={{ textAlign: 'center' }} key="3">
                 <Button danger onClick={handleLogout} icon={<LogoutOutlined />}>
                     Đăng xuất
                 </Button>
@@ -70,32 +71,29 @@ const HeaderMenu = () => {
         history.push('/')
     }
 
-    const currentUser = useSelector(state => state.Auth.currentUser)
-    // console.log(currentUser)
-
-    // if (!currentUser) {
-    //     return null;
-    // }
 
     return (
 
         <Menu mode="horizontal" overflowedIndicator={<MenuOutlined />}>
-
-            <Menu.Item icon={<NotificationOutlined className="menu-icon" />}>
+            <Menu.Item
+                icon={<NotificationOutlined
+                    className="menu-icon" />}
+                key="4"
+            >
                 <Link to='/news'>
                     Tin tức
                 </Link>
             </Menu.Item>
             {
                 !currentUser ? (
-                    <Menu.Item icon={<UserOutlined className="menu-icon" />}>
+                    <Menu.Item icon={<UserOutlined className="menu-icon" />} key="5">
                         <Link to="/login">
                             Đăng nhập
                         </Link>
                     </Menu.Item>
                 ) :
                     (
-                        <Menu.Item>
+                        <Menu.Item key="6">
                             <Dropdown overlay={menu} placement="bottomLeft" arrow>
                                 <Link to="/user">
 
@@ -109,14 +107,14 @@ const HeaderMenu = () => {
                         </Menu.Item>
                     )
             }
-            <Menu.Item icon={
-                <Badge count={1} size="small" showZero className="cart-count">
+            <Menu.Item
+                icon={<Badge count={cart.length} size="small" showZero className="cart-count">
                     <ShoppingCartOutlined className="menu-icon" />
-                </Badge>
-            }
+                </Badge>}
+                key="7"
             >
                 <Popover
-                    title={`1 sản phẩm`}
+                    title={`${cart.length} sản phẩm`}
                     trigger="hover"
                     content={<Cart />}
                 >

@@ -27,5 +27,8 @@ export const useNotAuthenticated = () => {
         if (currentUser) {
             history.push('/')
         }
+        return () => {
+
+        }
     }, [history, currentUser])
 }

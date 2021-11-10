@@ -3,6 +3,16 @@ const convertNewPrice = (price, discount) => {
     return Math.floor(newPrice / 1000) * 1000
 }
 
-export {
-    convertNewPrice
+const formatVND = (money) => {
+    const price = money.toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    })
+    return price
 }
+
+export {
+    convertNewPrice,
+    formatVND
+}
+

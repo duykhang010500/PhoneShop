@@ -1,3 +1,8 @@
 .cart {
   width: 25rem;
+  &-info {
+    max-height: 24rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }

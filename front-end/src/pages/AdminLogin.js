@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { actAdminLogin, actLogin } from '../store/auth/action'
+import { actAdminLogin } from '../store/auth/action'
 
 import {
     Form,
@@ -16,11 +16,10 @@ import { useNotAuthenticated } from '../hooks/useAuthenticate'
 export default function Login() {
 
     useNotAuthenticated()
+    const history = useHistory()
+    const dispatch = useDispatch()
 
     const [isLoading, setIsLoading] = useState(false)
-
-    const dispatch = useDispatch()
-    const history = useHistory()
 
     const handleSubmit = (values) => {
         setIsLoading(true)
@@ -33,7 +32,6 @@ export default function Login() {
             }
         }).finally(() => setIsLoading(false))
     }
-
 
     return (
         <div className="login-page">

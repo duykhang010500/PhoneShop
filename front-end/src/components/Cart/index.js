@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Empty,
     Button,
@@ -14,49 +14,88 @@ import {
     ShoppingCartOutlined,
     CreditCardOutlined,
     DeleteOutlined
-
-
 } from '@ant-design/icons'
+
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+
+
+import {
+    formatVND
+} from '../../helpers/priceFormat'
+import { actDeleteItem } from '../../store/cart/action'
 
 const Cart = () => {
 
-    function handleDelete() {
-        console.log('Delete')
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.Cart.cart)
+
+    const [total, setTotal] = useState(0)
+
+    function handleDelete(id) {
+        console.log('Delete ', id)
     }
+
+    useEffect(() => {
+        const getTotal = () => {
+            const total = cart.reduce((prev, item) => {
+                return prev + (item.price * item.quantity)
+            }, 0)
+            setTotal(total)
+        }
+        getTotal()
+    }, [cart])
 
     return (
         <div className="cart">
-            {/* <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> */}
-            <Row
-                justify="space-between"
-                align="top"
-                style={{ marginBottom: "1rem" }}
+            <div className="cart-info">
+                {
+                    (cart.length != 0) ? cart.map((item, index) => {
+                        return (
+                            <Row
+                                key={index}
+                                justify="space-between"
+                                align="top"
+                                style={{ marginBottom: "1rem" }}
+                            >
+                                <Col span={8}>
+                                    <Link to={`/product/${item.id}`}>
+                                        <Avatar
+                                            size="large"
+                                            shape="square"
+                                            src={item.image}
+                                        />
+                                    </Link>
+                                </Col>
+                                <Col span={14}>
+                                    <Link to={`/product/${item.id}`}>
+                                        <Typography.Text
+                                            strong
+                                            style={{ fontSize: '1.3rem' }}
+                                        >
+                                            {item.name}
+                                        </Typography.Text>
+                                    </Link>
+                                </Col>
+                                <Col span={2}>
+                                    <DeleteOutlined
+                                        style={{ color: "red", cursor: "pointer" }}
+                                        onClick={() => dispatch(actDeleteItem(item.id))}
+                                    />
+                                </Col>
+                            </Row>
+                        )
+                    }) :
+                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
 
-            >
-                <Col span={8}>
-                    <Avatar
-                        size="large"
-                        shape="square"
-                        src="https://cdn.tgdd.vn/Products/Images/42/249427/xiaomi-11-lite-5g-ne-pink-600x600.jpg"
-                    />
-                </Col>
-                <Col span={14}>
-                    <Typography.Text strong>Điện thoại Xiaomi 11 Lite 5G NE</Typography.Text>
-                </Col>
-                <Col span={2}>
-                    <DeleteOutlined
-                        style={{ color: "red", cursor: "pointer" }}
-                        onClick={handleDelete}
-                    />
-                </Col>
-            </Row>
-
+                }
+            </div>
             <Divider />
             <Space
                 direction="vertical"
                 style={{ width: "100%" }}
             >
-                <Row
+                {/* <Row
                     justify="space-between"
                 >
                     <Typography.Text
@@ -70,9 +109,12 @@ const Cart = () => {
                         style={{ fontSize: "1.6rem" }}
 
                     >
-                        10000000đ
+                        {
+
+                            formatVND(total)
+                        }
                     </Typography.Text>
-                </Row>
+                </Row> */}
                 <Button
                     style={{ width: "100%", backgroundColor: "#40a9ff", border: "none" }}
                     type="primary"
@@ -84,15 +126,7 @@ const Cart = () => {
                     Đến giỏ hàng
 
                 </Button>
-                <Button
-                    style={{ width: "100%", backgroundColor: "#fa8c16", border: "none" }}
-                    danger
-                    type="primary"
-                    icon={<CreditCardOutlined />}
-                    size="large"
-                >
-                    Thanh toán ngay
-                </Button>
+
             </Space>
         </div>
 

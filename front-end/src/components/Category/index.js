@@ -7,9 +7,7 @@ import {
     Breadcrumb,
 } from 'antd'
 
-
 import { HomeOutlined } from '@ant-design/icons'
-
 import CategoryFilter from './CategoryFilter'
 import CategoryListProduct from './CategoryListProduct'
 

@@ -1,12 +1,10 @@
-import { Rate } from 'antd';
+import { Rate, Card } from 'antd';
 import { Link } from 'react-router-dom'
-import { formatVND } from '../../utils/formatVND'
-
 import cls from 'classnames'
-import { Card } from 'antd'
 
 import {
-    convertNewPrice
+    convertNewPrice,
+    formatVND
 } from '../../helpers/priceFormat'
 
 export default function ProductItem({ product, isShowCategory }) {
@@ -18,7 +16,7 @@ export default function ProductItem({ product, isShowCategory }) {
     return (
         <li className={finalClass}>
             <Card hoverable>
-                <Link to={`product/${product.id}`}>
+                <Link to={`/product/${product.id}`}>
                     <img src={product.image} alt="" className="product__item--thumb" />
                 </Link>
                 <div className="product__item-info">

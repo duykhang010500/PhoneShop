@@ -7,7 +7,7 @@ import {
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import authReducer from './auth/reducer'
-import brandsReducer from './brand/reducer'
+import brandsReducer from './brands/reducer'
 import productsReducer from './products/reducer'
 import cartReducer from './cart/reducer'
 

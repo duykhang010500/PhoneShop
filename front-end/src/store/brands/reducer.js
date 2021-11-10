@@ -1,4 +1,4 @@
-import { ACT_SET_LIST_BRAND } from "./action"
+import { ACT_SET_LIST_BRAND } from "./actions"
 
 const initState = {}
 

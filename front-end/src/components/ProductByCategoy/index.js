@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductItem from '../ProductItem'
 
-import Products from '../../utils/mockData'
+// import Products from '../../utils/mockData'
 const ProductByCategoy = () => {
     return (
         <div className="product">
@@ -12,7 +12,6 @@ const ProductByCategoy = () => {
                             isShowCategory={true}
                             key={index}
                             product={product}
-
                         />)
                 }
             </ul>

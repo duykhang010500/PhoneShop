@@ -19,17 +19,11 @@ import {
     SaveOutlined
 } from '@ant-design/icons'
 
-import {
-    useSelector,
-    useDispatch
-} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import moment from 'moment'
 
-import {
-    beforeUpload,
-    getBase64
-} from '../../helpers/uploadHelper.js'
+import { beforeUpload, getBase64 } from '../../helpers/uploadHelper.js'
 import { useAuthenticated } from '../../hooks/useAuthenticate'
 import { actUpdateProfile } from '../../store/auth/action'
 
@@ -131,7 +125,7 @@ const DashboardUserInfo = () => {
                                 className="avatar-uploader"
                                 maxCount={1}
                                 showUploadList={false}
-                                action="https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2"
+                                action="https://api.imgbb.com/1/upload?key=8c37ca908e1a1a4f5db86e4555a008c2"
                                 beforeUpload={beforeUpload}
                                 onChange={handleChange}
                             >

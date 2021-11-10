@@ -17,11 +17,10 @@ import { useNotAuthenticated } from '../hooks/useAuthenticate'
 export default function Login() {
 
     useNotAuthenticated()
-
+    const history = useHistory()
+    const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
 
-    const dispatch = useDispatch()
-    const history = useHistory()
 
     const handleSubmit = (values) => {
         setIsLoading(true)
@@ -37,7 +36,6 @@ export default function Login() {
         })
 
     }
-
 
     return (
         <div className="login-page">

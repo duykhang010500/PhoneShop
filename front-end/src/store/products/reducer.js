@@ -1,4 +1,8 @@
-import { ACT_GET_ALL_PRODUCT, ACT_GET_BEST_DISCOUNT, ACT_GET_DETAIL_PRODUCT } from "./action"
+import {
+    ACT_GET_ALL_PRODUCT,
+    ACT_GET_BEST_DISCOUNT,
+    ACT_GET_DETAIL_PRODUCT
+} from "./actions"
 
 const initState = {
     list: [],

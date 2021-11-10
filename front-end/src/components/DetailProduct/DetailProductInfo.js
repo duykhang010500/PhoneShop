@@ -13,14 +13,19 @@ import {
     HeartOutlined
 } from '@ant-design/icons'
 
+import {
+    useDispatch
+} from 'react-redux'
+
 import { CheckCircleTwoTone } from '@ant-design/icons'
 import {
-    convertNewPrice
+    convertNewPrice, formatVND
 } from '../../helpers/priceFormat'
-import {
-    formatVND
-} from '../../utils/formatVND'
+
+import { actAddToCart } from '../../store/cart/action'
+
 export default function DetailProductInfo({ product }) {
+    const dispatch = useDispatch()
     return (
         <Row gutter={[40, 40]}>
             <Col md={10} xs={24}>
@@ -40,55 +45,11 @@ export default function DetailProductInfo({ product }) {
                     </Space>
 
                     <Typography.Text strong>
-                        <i class="fas fa-shipping-fast"></i>
+                        <i className="fas fa-shipping-fast"></i>
                         &nbsp;
                         Miễn phí vận chuyển toàn quốc
                     </Typography.Text>
-                    {/* <Tooltip title="Xóa khỏi danh sách yêu thích">
-                        <HeartFilled
-                            style={{ color: "#FF4136", fontSize: "3rem" }}
-                            onClick={() => console.log('Xóa khỏi danh sách yêu thích')}
-                        />
-                    </Tooltip>
-                    <Tooltip title="Thêm vào danh sách yêu thích">
-                        <HeartOutlined
-                            style={{ color: "#FF4136", fontSize: "3rem" }}
-                            onClick={() => console.log('Thêm vào danh sách yêu thích')}
-                        />
-                    </Tooltip> */}
 
-                    {/* <Typography.Text strong>
-                        Lựa chọn phiên bản
-                    </Typography.Text> */}
-
-                    {/* <Radio.Group defaultValue="a" size="middle">
-                        <Space size="middle">
-                            <Radio.Button value="a">
-                                64GB
-                            </Radio.Button>
-                            <Radio.Button value="b">
-                                256GB
-                            </Radio.Button>
-                            <Radio.Button value="c">
-                                512GB
-                            </Radio.Button>
-                        </Space>
-                    </Radio.Group>
-
-                    <Typography.Text strong>
-                        Lựa chọn màu sắc
-                    </Typography.Text>
-
-                    <Radio.Group defaultValue="h" size="middle">
-                        <Space size="middle">
-                            <Radio.Button value="h">
-                                Đỏ
-                            </Radio.Button>
-                            <Radio.Button value="g" >
-                                Đen
-                            </Radio.Button>
-                        </Space>
-                    </Radio.Group> */}
                     <Space direction="vertical">
                         <Typography.Text strong>
                             KHUYẾN MÃI
@@ -110,7 +71,11 @@ export default function DetailProductInfo({ product }) {
                         <Button type="primary" size="large" danger>
                             Mua ngay
                         </Button>
-                        <Button type="primary" size="large">
+                        <Button
+                            type="primary"
+                            size="large"
+                            onClick={() => dispatch(actAddToCart(product))}
+                        >
                             Thêm vào giỏ hàng
                         </Button>
                     </Space>

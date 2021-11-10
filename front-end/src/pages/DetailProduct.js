@@ -18,12 +18,11 @@ import DetailProductPost from '../components/DetailProduct/DetailProductPost';
 import DetailProductTechnical from '../components/DetailProduct/DetailProductTechnical';
 import DetailProductRating from '../components/DetailProduct/DetailProductRating';
 import DetailProductListRating from '../components/DetailProduct/DetailProductListRating';
-import { actGetDetailProductAsync } from '../store/products/action';
+import { actGetDetailProductAsync } from '../store/products/actions';
 
 export default function DetailProduct() {
 
     const { id } = useParams()
-    // console.log(id)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -32,41 +31,45 @@ export default function DetailProduct() {
 
     const product = useSelector(state => state.Products.detailProduct)
     if (!product) {
-        return null
-    }
-    return (
-        <section className="detail__product">
-            <div className="container">
-                <DetailProductTitle product={product} />
-                <Divider />
-                <Row>
-                    <Col xs={24} md={18}>
-                        <DetailProductInfo product={product} />
-                    </Col>
+        return (
+            <div>Đang chờ</div>
+        )
 
-                    <Col xs={24} md={6}>
-                        <DetailProductWarranty />
-                    </Col>
-                </Row>
-                <Divider />
-                <Row gutter={[40, 40]}>
-                    <Col xs={24} md={14}>
-                        <DetailProductPost product={product} />
-                    </Col>
-                    <Col xs={24} md={10}>
-                        <DetailProductTechnical product={product} />
-                    </Col>
-                </Row>
-                <Divider />
-                <Typography.Title level={4}>
-                    Đánh giá và nhận xét Iphone Xs Max 256GB
-                </Typography.Title>
-                <Divider style={{ border: "none" }} />
-                <DetailProductRating />
-                <Row>
-                    <DetailProductListRating />
-                </Row>
-            </div>
-        </section>
-    )
+    } else {
+        return (
+            <section className="detail__product">
+                <div className="container">
+                    <DetailProductTitle product={product} />
+                    <Divider />
+                    <Row>
+                        <Col xs={24} md={18}>
+                            <DetailProductInfo product={product} />
+                        </Col>
+
+                        <Col xs={24} md={6}>
+                            <DetailProductWarranty />
+                        </Col>
+                    </Row>
+                    <Divider />
+                    <Row gutter={[40, 40]}>
+                        <Col xs={24} md={14}>
+                            <DetailProductPost product={product} />
+                        </Col>
+                        <Col xs={24} md={10}>
+                            <DetailProductTechnical product={product} />
+                        </Col>
+                    </Row>
+                    <Divider />
+                    <Typography.Title level={4}>
+                        Đánh giá và nhận xét Iphone Xs Max 256GB
+                    </Typography.Title>
+                    <Divider style={{ border: "none" }} />
+                    <DetailProductRating />
+                    <Row>
+                        <DetailProductListRating />
+                    </Row>
+                </div>
+            </section>
+        )
+    }
 }

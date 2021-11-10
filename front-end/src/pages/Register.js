@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
-import {
-    useDispatch
-} from 'react-redux'
-
-import {
-    useHistory
-} from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import {
     Form,
@@ -23,9 +18,7 @@ import {
     UserOutlined
 } from '@ant-design/icons'
 
-import {
-    actRegister
-} from '../store/auth/action'
+import { actRegister } from '../store/auth/action'
 import { useNotAuthenticated } from '../hooks/useAuthenticate'
 
 const Register = () => {
