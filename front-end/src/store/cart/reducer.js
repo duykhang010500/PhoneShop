@@ -1,6 +1,5 @@
 import { ACT_ADD_TO_CART, ACT_DELETE_CART, ACT_DELETE_ITEM, ACT_UPDATE_ITEM } from "./action"
 
-
 const getCart = () => {
     const cart = localStorage.getItem('cart')
     if (cart) {
@@ -16,7 +15,6 @@ const initState = {
     totalItem: 0
 }
 
-
 const cartReducer = (state = initState, action) => {
     switch (action.type) {
         case ACT_ADD_TO_CART: {
@@ -31,12 +29,11 @@ const cartReducer = (state = initState, action) => {
                     cart: [...state.cart, { ...action.payload.product, quantity: 1 }]
                 }
             } else {
-                alert('Sản phẩm này có trong giỏ hàng')
+                alert('Sản phẩm này đã có trong giỏ hàng!')
             }
         }
         case ACT_DELETE_ITEM: {
             let newCart = [...state.cart]
-            console.log(newCart)
             newCart.forEach((item, index) => {
                 if (item.id === action.payload.productId) {
                     newCart.splice(index, 1)

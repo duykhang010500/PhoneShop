@@ -16,7 +16,6 @@ import DetailProductRatingForm from './DetailProductRatingForm';
 
 export default function DetailProductRating() {
     const [showFormRating, setShowFormRating] = useState(false)
-
     return (
         <>
             <Row gutter={[10, 10]} align="middle">

@@ -16,132 +16,142 @@ import {
     MailOutlined,
     PlusOutlined,
     UserOutlined,
-    SaveOutlined
+    SaveOutlined,
+    LoadingOutlined
 } from '@ant-design/icons'
 
 import { useSelector, useDispatch } from 'react-redux'
-
 import moment from 'moment'
-
 import { beforeUpload, getBase64 } from '../../helpers/uploadHelper.js'
 import { useAuthenticated } from '../../hooks/useAuthenticate'
-import { actUpdateProfile } from '../../store/auth/action'
+import { actFetchMe, actUpdateProfile } from '../../store/auth/action'
 
 const DashboardUserInfo = () => {
-
     useAuthenticated()
-
     const [form] = Form.useForm()
-    const dispatch = useDispatch()
-
     const [isLoading, setIsLoading] = useState(false)
+    const [isImageChange, setIsImageChange] = useState(false)
 
-    const [loading, setLoading] = useState(false)
+    // const [fileList, setFileList] = useState([])
+    //Set preview avatar on change
     const [imageUrl, setImageUrl] = useState("")
 
+    //Set avt has been uploaded
+    const [avatar, setAvatar] = useState("")
+
+    //Destructing item antd
     const { Option } = Select
 
-    const uploadButton = (
-        <div>
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    );
-
+    //CurrentUser
+    const dispatch = useDispatch()
     const currentUser = useSelector(state => state.Auth.currentUser)
     if (!currentUser) {
         return null
     }
 
-    const handleChange = info => {
-        if (info.file.status === 'uploading') {
-            setLoading(true)
-            return;
-        }
-        if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, imageUrl => {
-                setImageUrl(imageUrl)
-                setLoading(false)
+    //Upload Button
+    const uploadButton = (
+        <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Tải ảnh</div>
+        </div>
+    );
+
+    //Change Avatar
+    const handleChange = async (info) => {
+
+        try {
+            if (info.file.status === 'uploading') {
+                setIsImageChange(true)
+                return
             }
-            );
-            const url = info.file.response.data.display_url
-            form.setFieldsValue({
-                image: url
-            })
+            if (info.file.status === 'done') {
+                getBase64(info.file.originFileObj, imageUrl => {
+                    setIsImageChange(false)
+                    setImageUrl(imageUrl)
+                })
+                const url = info.file.response.data.display_url
+                // form.setFieldsValue({
+                //     image: url
+                // })
+                setAvatar(url)
+            }
+        } catch (err) {
+            console.log(err)
         }
+
     }
 
-    const handleChangeDate = (date, dateString) => {
-        form.setFieldsValue({
-            dob: dateString
-        })
-    }
+    //Submit form update profile
+    const handleSubmit = (fieldsValue) => {
+        const newFieldsValue = {
+            ...fieldsValue,
+            'dob': fieldsValue['dob'].format('YYYY-MM-DD'),
+            'image': avatar || currentUser.image
+        }
 
-    const handleSubmit = (values) => {
-        console.log(values)
+        console.log(newFieldsValue)
         setIsLoading(true)
-        dispatch(actUpdateProfile(values)).then((res) => {
+        dispatch(actUpdateProfile(newFieldsValue)).then((res) => {
             if (res.ok) {
                 message.success(res.message)
+                dispatch(actFetchMe())
             } else {
                 message.error(res.message)
             }
         }).finally(() => setIsLoading(false))
     }
 
+
+
+    //rendering
     return (
-        <div
-            style={{ backgroundColor: "#fff", padding: "3rem" }}
-        >
+        <div className="box-sd" style={{ backgroundColor: "#fff", padding: "3rem" }}>
             <Form
                 layout="vertical"
                 initialValues={{
-                    image: currentUser.image,
+                    // image: currentUser.image,
                     email: currentUser.email,
                     name: currentUser.name,
                     sex: currentUser.sex,
-                    dob: currentUser.dob
+                    dob: currentUser.dob ? moment(currentUser.dob) : null
                 }}
                 form={form}
             >
-                <Row
-                    gutter={[20, 5]}
-                >
-                    <Col
-                        span={24}
-                    >
+                <Row gutter={[20, 5]} justify="space-between">
+                    <Col span={24}>
                         <Form.Item
-                            name="image"
+                            label="Ảnh đại diện"
+                            // valuePropName="fileList"
+                            name="avt"
                             rules={[
                                 {
-                                    required: true,
-                                    message: 'Vui lòng chọn ảnh đại diện'
+                                    required: true
                                 }
                             ]}
                         >
                             <Upload
                                 name="image"
                                 listType="picture-card"
-                                className="avatar-uploader"
-                                maxCount={1}
                                 showUploadList={false}
                                 action="https://api.imgbb.com/1/upload?key=8c37ca908e1a1a4f5db86e4555a008c2"
                                 beforeUpload={beforeUpload}
                                 onChange={handleChange}
+                            // fileList={[]}
                             >
                                 {
-                                    imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-                                        :
-                                        (
-                                            currentUser.image ? <img src={currentUser.image} /> : <Avatar icon={<UserOutlined />} />
-                                        )
+                                    isImageChange ? <LoadingOutlined style={{ color: 'skyblue' }} /> : (
+                                        imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%', height: '100%' }} />
+                                            :
+                                            (
+                                                currentUser.image ? <img src={currentUser.image} style={{ width: '100%', height: '100%' }} /> : <Avatar icon={<UserOutlined />} />
+                                            )
+                                    )
                                 }
                             </Upload>
                         </Form.Item>
                     </Col>
-                    <Col
-                        span={12}
-                    >
+                    <Col span={12} >
                         <Form.Item
                             label='Email'
                             name='email'
@@ -150,15 +160,11 @@ const DashboardUserInfo = () => {
                                     required: true
                                 }
                             ]}
-
                         >
                             <Input
-                                // value="Your email"
                                 disabled
                                 prefix={<MailOutlined />}
                                 size="large"
-                                defaultValue="usertest@gmail.com"
-
                             />
                         </Form.Item>
                     </Col>
@@ -175,7 +181,7 @@ const DashboardUserInfo = () => {
                             <Input
                                 prefix={<UserOutlined />}
                                 size="large"
-                                defaultValue="User Test"
+
                             />
                         </Form.Item>
                     </Col>
@@ -209,8 +215,8 @@ const DashboardUserInfo = () => {
                     </Col>
                     <Col span={12}>
                         <Form.Item
+                            label="Ngày sinh"
                             name="dob"
-                            style={{ display: "none" }}
                             rules={[
                                 {
                                     required: true,
@@ -218,20 +224,16 @@ const DashboardUserInfo = () => {
                                 }
                             ]}
                         >
-
+                            <DatePicker
+                                format={'DD/MM/YYYY'}
+                                placeholder="Ngày tháng năm sinh"
+                                style={{ width: "100%" }}
+                                size="large"
+                            />
                         </Form.Item>
-                        <DatePicker
-                            defaultValue={currentUser.dob ? moment(currentUser.dob, 'YYYY/MM/DD') : ''}
-                            format={'YYYY/MM/DD'}
-                            placeholder="Ngày tháng năm sinh"
-                            style={{ width: "100%", marginTop: '3rem' }}
-                            size="large"
-                            onChange={handleChangeDate}
-                        />
                     </Col>
                     <Col span={24}>
-                        <Form.Item
-                        >
+                        <Form.Item>
                             <Button
                                 type="primary"
                                 loading={isLoading}

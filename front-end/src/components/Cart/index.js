@@ -69,12 +69,21 @@ const Cart = () => {
                                 </Col>
                                 <Col span={14}>
                                     <Link to={`/product/${item.id}`}>
-                                        <Typography.Text
-                                            strong
-                                            style={{ fontSize: '1.3rem' }}
-                                        >
-                                            {item.name}
-                                        </Typography.Text>
+                                        <Space direction="vertical">
+                                            <Typography.Text
+                                                strong
+                                                style={{ fontSize: '1.3rem' }}
+                                            >
+                                                {item.name}
+                                            </Typography.Text>
+                                            <Typography.Text
+                                                strong
+                                                style={{ fontSize: '1.3rem' }}
+                                                type="danger"
+                                            >
+                                                {item.price} đ
+                                            </Typography.Text>
+                                        </Space>
                                     </Link>
                                 </Col>
                                 <Col span={2}>
@@ -91,9 +100,8 @@ const Cart = () => {
                 }
             </div>
             <Divider />
-            <Space
-                direction="vertical"
-                style={{ width: "100%" }}
+            <Row
+                justify="center"
             >
                 {/* <Row
                     justify="space-between"
@@ -116,18 +124,18 @@ const Cart = () => {
                     </Typography.Text>
                 </Row> */}
                 <Button
-                    style={{ width: "100%", backgroundColor: "#40a9ff", border: "none" }}
                     type="primary"
+                    danger
                     icon={<ShoppingCartOutlined />}
                     size="large"
                     href="/cart"
                 >
 
-                    Đến giỏ hàng
+                    Xem giỏ hàng
 
                 </Button>
 
-            </Space>
+            </Row>
         </div>
 
     )

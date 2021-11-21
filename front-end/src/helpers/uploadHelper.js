@@ -1,6 +1,4 @@
-import {
-    message
-} from 'antd'
+import { message } from 'antd'
 
 function getBase64(img, callback) {
     const reader = new FileReader();

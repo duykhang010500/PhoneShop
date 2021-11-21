@@ -18,8 +18,6 @@ import {
 
 import Underline from '../components/common/Underline'
 
-
-
 import {
     HomeOutlined,
     MailOutlined,
@@ -29,10 +27,47 @@ import {
     EditOutlined
 } from '@ant-design/icons'
 
+import { useDispatch } from 'react-redux'
+
+import { useSelector } from 'react-redux'
+import { convertNewPrice, formatVND } from '../helpers/priceFormat'
+import { actMakeNewOrder } from '../store/orders/action'
 
 const Checkout = () => {
+
+    const dispatch = useDispatch()
+    const cart = useSelector(state => state.Cart.cart)
+    console.log(cart)
     const { Option } = Select
     const { Meta } = Card
+
+    const [form] = Form.useForm()
+
+    const handleSubmitForm = () => {
+        console.log('Submit')
+        form.validateFields().then((values) => finalSubmit(values))
+    }
+
+    const finalSubmit = (values) => {
+        // console.log(values)
+        const finalCart = cart.map(item => ({
+            product_id: item.id,
+            product_quantity: item.quantity,
+            product_color: item.color
+
+        }))
+
+        const formatOrder = { ...values, address: values.ward + ', ' + values.district + ', ' + values.province }
+        delete formatOrder.ward
+        delete formatOrder.district
+        delete formatOrder.province
+
+        const newOrder = { ...formatOrder, cart: finalCart }
+        console.log(newOrder)
+        dispatch(actMakeNewOrder(newOrder))
+
+    }
+
     return (
         <div className="container checkout-page">
             <Breadcrumb
@@ -53,20 +88,16 @@ const Checkout = () => {
                     </Typography.Text>
                 </Breadcrumb.Item>
             </Breadcrumb>
-            <Row
-                gutter={[32, 16]}
-            >
-                <Col span={14}
-                >
-                    <Typography.Title
-                        level={3}
-                    >
+            <Row gutter={[32, 16]}>
+                <Col span={14}>
+                    <Typography.Title level={3}>
                         Thông tin nhận hàng
                     </Typography.Title>
                     <Underline />
                     <Form
                         layout="vertical"
                         className="checkout-form"
+                        form={form}
                     >
                         <Row
                             gutter={[16, 16]}
@@ -84,7 +115,7 @@ const Checkout = () => {
                                 </Form.Item>
                                 <Form.Item
                                     label="Họ và tên"
-                                    name="username"
+                                    name="name"
                                     rules={[{ required: true, message: 'Please input your username!' }]}
                                 >
                                     <Input
@@ -94,7 +125,7 @@ const Checkout = () => {
                                 </Form.Item>
                                 <Form.Item
                                     label="Số điên thoại"
-                                    name="username"
+                                    name="phone"
                                     rules={[{ required: true, message: 'Please input your username!' }]}
                                 >
                                     <Input
@@ -107,24 +138,34 @@ const Checkout = () => {
                                         size="large"
                                         allowClear
                                     >
+                                        <Option key="Hà nội">
+                                            Hà Nội
+                                        </Option>
                                     </Select>
                                 </Form.Item>
-                                <Form.Item name="province" label="Quận/Huyện" rules={[{ required: true }]}>
+                                <Form.Item name="district" label="Quận/Huyện" rules={[{ required: true }]}>
                                     <Select
                                         size="large"
                                         allowClear
                                     >
+                                        <Option key="Hà nội">
+                                            Hà Nội
+                                        </Option>
                                     </Select>
                                 </Form.Item>
-                                <Form.Item name="province" label="Phường/Xã" rules={[{ required: true }]}>
+                                <Form.Item name="ward" label="Phường/Xã" rules={[{ required: true }]}>
                                     <Select
                                         size="large"
                                         allowClear
                                     >
+                                        <Option key="Hà nội">
+                                            Hà Nội
+                                        </Option>
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
                                     label="Ghi chú"
+                                    name="note"
                                 >
                                     <Input.TextArea
                                         size="large"
@@ -135,14 +176,15 @@ const Checkout = () => {
                             </Col>
                             <Col span={12}>
                                 <Form.Item
-                                    label="Vận chuyển"
-                                    name="username"
+                                    label="Phương thức thanh toán"
+                                    name="method"
                                     rules={[{ required: true, message: 'Please input your username!' }]}
                                 >
                                     <Input
                                         size="large"
-                                        defaultValue="Chuyển phát nhanh, miễn phí"
-                                        disabled
+                                    // defaultValue="Ship COD"
+
+                                    // disabled
                                     />
                                 </Form.Item>
                             </Col>
@@ -175,49 +217,47 @@ const Checkout = () => {
                     </Row>
                     <Underline />
                     <Row>
-                        <Col span={24}>
-                            <Card
-                                style={{ width: "100%" }}
-                            >
-                                <Meta
-                                    avatar={
-                                        <Badge
-                                            count={1}
-                                            size="small"
+                        {
+                            cart.map((item, index) => {
+                                return (
+
+                                    <Col span={24} key={index}>
+                                        <Card
+                                            style={{ width: "100%" }}
                                         >
-                                            {/* <Avatar
-                                                size="large"
-                                                shape="square"
-                                                src="https://cdn.cellphones.com.vn/media/catalog/product/cache/7/thumbnail/220x175/9df78eab33525d08d6e5fb8d27136e95/m/a/macbook-air-gold-select-201810_4.jpg"
-                                            /> */}
-                                            <Avatar
-                                                size="large"
-                                                shape="square"
-                                                src="https://cdn.tgdd.vn/Products/Images/42/249427/xiaomi-11-lite-5g-ne-pink-600x600.jpg"
+                                            <Meta
+                                                avatar={
+                                                    <Badge
+                                                        count={item.quantity}
+                                                        size="small"
+                                                    >
+                                                        <Avatar
+                                                            size="large"
+                                                            shape="square"
+                                                            src={item.image}
+                                                        />
+                                                    </Badge>
+                                                }
+
+                                                title={`${item.name} (${item.color})`}
+                                                description={<>
+                                                    <Typography.Text
+                                                        strong
+                                                        style={{ fontSize: "1.6rem" }}
+                                                        type="danger"
+                                                    >
+
+                                                        {formatVND(item.price)}
+                                                    </Typography.Text>
+                                                </>
+                                                }
                                             />
-                                        </Badge>
-                                    }
-                                    // title="Iphone 5"
-                                    title=" Điện thoại Xiaomi 11 Lite 5G NE"
-                                    description={<>
-                                        <Typography.Text
-                                            style={{ display: "block" }}
-                                        >
-                                            Số lượng: 1
-                                        </Typography.Text>
-                                        <Typography.Text
-                                            strong
-                                            style={{ fontSize: "1.6rem" }}
-                                            type="danger"
-                                        >
-                                            {/* 5000000đ */}
-                                            1000000đ
-                                        </Typography.Text>
-                                    </>
-                                    }
-                                />
-                            </Card>
-                        </Col>
+                                        </Card>
+                                    </Col>
+                                )
+                            })
+                        }
+
                         <Divider />
                         <Col span={24}
                             style={{
@@ -237,25 +277,6 @@ const Checkout = () => {
                                 style={{ width: "100%" }}
                             >
                                 <Row
-                                    // size="large"
-                                    justify="space-between"
-                                    wrap={false}
-                                >
-                                    <Input
-                                        placeholder="Nhập mã khuyến mại"
-                                        size="large"
-                                        style={{ width: "75%" }}
-                                        prefix={<FileOutlined />}
-                                    />
-                                    <Button
-                                        type="primary"
-                                        size="large"
-                                    >
-                                        Áp dụng
-                                    </Button>
-                                </Row>
-
-                                <Row
                                     justify="space-between"
                                 >
                                     <Col>
@@ -271,25 +292,6 @@ const Checkout = () => {
                                             strong
                                         >
                                             10000000đ
-                                        </Typography.Text>
-
-                                    </Col>
-                                </Row>
-                                <Row
-                                    justify="space-between"
-                                >
-                                    <Col>
-                                        <Typography.Text
-                                            strong
-                                        >
-                                            Khuyến mại
-                                        </Typography.Text>
-
-                                    </Col>
-                                    <Col>
-                                        <Typography.Text
-                                            strong
-                                        >90000đ
                                         </Typography.Text>
 
                                     </Col>
@@ -336,8 +338,10 @@ const Checkout = () => {
                                 </Row>
                                 <Button
                                     size="large"
-                                    type="dashed"
+                                    type="primary"
+                                    danger
                                     style={{ width: "100%" }}
+                                    onClick={handleSubmitForm}
                                 >
                                     Đặt hàng ngay
                                 </Button>

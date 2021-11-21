@@ -61,7 +61,7 @@ const Cart = () => {
                     <Typography.Text strong>Giỏ hàng</Typography.Text>
                 </Breadcrumb.Item>
             </Breadcrumb>
-            <Row justify="space-between">
+            <Row justify="space-between" style={{ marginBottom: '2rem' }}>
                 <Col>
                     <Typography.Title level={4}>
                         {
@@ -69,7 +69,7 @@ const Cart = () => {
                         }
                     </Typography.Title>
                 </Col>
-                <Col>
+                {/* <Col>
                     <Typography.Title
                         level={4}
                         type="danger"
@@ -78,16 +78,40 @@ const Cart = () => {
                     >
                         Xóa giỏ hàng
                     </Typography.Title>
+                </Col> */}
+            </Row>
+            <Row style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '1rem', fontWeight: 500 }}>
+                <Col span={10}>
+                    Sản phẩm
+                </Col>
+                <Col span={4}>
+                    Đơn giá
+                </Col>
+                <Col span={4}>
+                    Số lượng
+                </Col>
+                <Col span={4}>
+                    Thành tiền
+                </Col>
+                <Col span={2}>
+
+                    <Button
+                        icon={<DeleteOutlined />}
+                        size="middle"
+                        danger
+                        shape="circle"
+                        onClick={() => dispatch(actDeleteCart())}
+                    >
+                    </Button>
+
                 </Col>
             </Row>
-
 
             {
                 cart.map((item, index) => {
                     return (
                         <Row
                             key={index}
-                            // justify="space-between"
                             className="cart-item"
                             align="middle"
                         >
@@ -99,12 +123,11 @@ const Cart = () => {
                                 />
 
                             </Col>
-                            <Col span={8}>
+                            <Col span={6}>
                                 <Typography.Text
                                     strong
                                     style={{ fontSize: "1.6rem" }}
                                 >
-                                    {/* Iphone 12 Pro Max 256Gb */}
                                     {item.name}
                                 </Typography.Text>
                             </Col>
@@ -116,9 +139,7 @@ const Cart = () => {
                                     >
                                         {formatVND(item.price)}
                                     </Typography.Text>
-                                    <Typography.Text
-
-                                    >
+                                    <Typography.Text>
                                         Giảm {item.discount} %
                                     </Typography.Text>
                                 </Space>
@@ -133,12 +154,17 @@ const Cart = () => {
                                     style={{ border: "1px solid silver" }}
                                 />
                             </Col>
-
                             <Col span={4}>
+                                <Typography.Text>
+                                    10000đ
+                                </Typography.Text>
+                            </Col>
+
+                            <Col span={2}>
                                 <Tooltip title="Xóa khỏi giỏ hàng">
                                     <Button
                                         icon={<DeleteOutlined />}
-                                        size="large"
+                                        size="middle"
                                         danger
                                         shape="circle"
                                         onClick={() => dispatch(actDeleteItem(item.id))}

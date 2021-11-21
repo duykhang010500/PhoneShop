@@ -17,8 +17,9 @@ export default function DetailProductPost({ product }) {
 
     return (
         <div >
-            <Typography.Title level={4}>
-                Bài viết đánh giá
+            <Typography.Title
+                level={4}>
+                Đặc điểm nổi bật
             </Typography.Title>
             <Typography.Paragraph
                 id="desc" className={isShowMore ? 'hide-desc' : ''}

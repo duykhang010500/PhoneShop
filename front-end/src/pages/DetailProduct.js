@@ -30,11 +30,11 @@ export default function DetailProduct() {
     }, [dispatch, id])
 
     const product = useSelector(state => state.Products.detailProduct)
+
     if (!product) {
         return (
             <div>Đang chờ</div>
         )
-
     } else {
         return (
             <section className="detail__product">

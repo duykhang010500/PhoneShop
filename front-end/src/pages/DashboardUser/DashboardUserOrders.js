@@ -9,17 +9,12 @@ const DashboardUserOrder = () => {
         {
             title: 'Mã đơn hàng',
             // dataIndex: 'name',
-            key: 'name',
+            key: 'orderId',
         },
         {
             title: 'Ngày mua',
             // dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: 'Sản phẩm',
-            // dataIndex: 'address',
-            key: 'address',
+            key: 'date',
         },
         {
             title: 'Tổng tiền'

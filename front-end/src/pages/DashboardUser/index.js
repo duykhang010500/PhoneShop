@@ -31,9 +31,10 @@ const DashboardUser = () => {
                     md={6}
                 >
                     <Menu
-                        style={{ width: 256 }}
+                        className="box-sd"
                         selectedKeys={[location.pathname]}
                         mode="inline"
+                        style={{ height: '100%', padding: '1rem 1rem' }}
                     >
                         <Menu.Item
                             key="/user"

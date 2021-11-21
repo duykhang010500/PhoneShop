@@ -37,9 +37,9 @@ import {
 const HeaderMenu = () => {
 
     const dispatch = useDispatch()
-
     const currentUser = useSelector(state => state.Auth.currentUser)
     const cart = useSelector(state => state.Cart.cart)
+
 
     const menu = (
         <Menu>
@@ -71,9 +71,7 @@ const HeaderMenu = () => {
         history.push('/')
     }
 
-
     return (
-
         <Menu mode="horizontal" overflowedIndicator={<MenuOutlined />}>
             <Menu.Item
                 icon={<NotificationOutlined

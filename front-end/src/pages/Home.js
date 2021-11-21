@@ -23,7 +23,7 @@ export default function HomePage() {
     // console.log(descListDiscount)
     return (
         <section>
-            {/* <Carousel /> */}
+            <Carousel />
             <BrandFeature />
             <BestDiscount
                 title="GIẢM GIÁ TỐT"

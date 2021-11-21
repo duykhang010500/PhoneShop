@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import {
     Row,
     Col,
@@ -13,9 +12,7 @@ import {
     message,
     Tooltip,
     Popconfirm
-
 } from 'antd'
-
 import {
     HomeOutlined,
     PlusCircleOutlined,
@@ -23,18 +20,14 @@ import {
     FormOutlined,
     SaveOutlined
 } from '@ant-design/icons'
-
 import { useSelector, useDispatch } from 'react-redux'
-
 import {
     actCreateBrandAsync,
     actDeleteBrandAsync,
     actGetListBrandAsync,
     actUpdateBrandAsync
 } from '../../store/brands/actions'
-
 const DashboardAdminCategories = () => {
-
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
     const [idSelected, setIdSelected] = useState("")
@@ -42,8 +35,10 @@ const DashboardAdminCategories = () => {
     const [showFormAdd, setShowFormAdd] = useState(false)
     const [showFormUpdate, setShowFormUpdate] = useState(false)
 
+    //Get list brand
     const brands = useSelector(state => state.Brands.list)
 
+    //Create Brand
     const handleSubmit = (values) => {
         setIsLoading(true)
         dispatch(actCreateBrandAsync(values)).then((res) => {
@@ -59,6 +54,7 @@ const DashboardAdminCategories = () => {
         })
     }
 
+    //Delete brand
     const handleDeleteBrand = (id) => {
         setIsLoading(true)
         dispatch(actDeleteBrandAsync(id)).then((res) => {
@@ -73,6 +69,7 @@ const DashboardAdminCategories = () => {
         })
     }
 
+    //Update Brand
     const handleUpdate = (values) => {
         console.log(idSelected)
         console.log(values)
@@ -90,6 +87,7 @@ const DashboardAdminCategories = () => {
         })
     }
 
+    //Columns in table
     const columnsBrandTable = [
         {
             title: 'Tên hãng',
@@ -106,10 +104,6 @@ const DashboardAdminCategories = () => {
             dataIndex: 'desc',
             key: 'desc'
         },
-        // {
-        //     title: 'Trạng thái',
-        //     dataIndex: 'status',
-        // },
         {
             title: 'Hành động',
             key: 'action',
@@ -129,7 +123,6 @@ const DashboardAdminCategories = () => {
                             </Button>
                         </Popconfirm>
                     </Tooltip>
-
                     <Tooltip title="Cập nhật">
                         <Button
                             type="primary"
@@ -152,10 +145,9 @@ const DashboardAdminCategories = () => {
         }
     ]
 
+    //render
     return (
-        <Row
-            gutter={[16, 16]}
-        >
+        <Row gutter={[16, 16]}>
             <Col span={24}>
                 <Breadcrumb
                     style={{
@@ -185,11 +177,13 @@ const DashboardAdminCategories = () => {
                     </Button>
                 </Space>
             </Col>
+
             <Col span={24}>
                 <Table
                     columns={columnsBrandTable}
                     dataSource={brands}
                     loading={isLoading}
+                    rowKey={(record) => record.id}
                 />
             </Col>
             <Drawer
@@ -198,7 +192,6 @@ const DashboardAdminCategories = () => {
                 closable={true}
                 onClose={() => setShowFormAdd(false)}
                 visible={showFormAdd}
-
             >
                 <Form
                     layout="vertical"
@@ -243,7 +236,6 @@ const DashboardAdminCategories = () => {
                 closable={true}
                 onClose={() => setShowFormUpdate(false)}
                 visible={showFormUpdate}
-
             >
                 <Form
                     layout="vertical"
@@ -255,21 +247,21 @@ const DashboardAdminCategories = () => {
                         name="name"
                         rules={[{ required: true }]}
                     >
-                        <Input />
+                        <Input size="large" />
                     </Form.Item>
                     <Form.Item
                         label="Đường dẫn"
                         name="slug"
                         rules={[{ required: true }]}
                     >
-                        <Input />
+                        <Input size="large" />
                     </Form.Item>
                     <Form.Item
                         label="Mô tả"
                         name="desc"
                         rules={[{ required: true }]}
                     >
-                        <Input />
+                        <Input size="large" />
                     </Form.Item>
                     <Form.Item>
                         <Button
