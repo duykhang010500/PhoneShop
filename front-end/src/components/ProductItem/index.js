@@ -36,16 +36,6 @@ export default function ProductItem({ product, isShowCategory }) {
                                 </del>
                             </span>
                         </div>
-                        <div className="product__item--rating">
-                            <Rate
-                                disabled
-                                value={5}
-                                style={{ fontSize: 15 }}
-                            />
-                            <span className="product__item--rating-num">
-                                (1)
-                            </span>
-                        </div>
                     </div>
                 </Link>
 

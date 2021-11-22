@@ -11,24 +11,26 @@ import {
 } from 'react-redux'
 
 export const useAuthenticated = () => {
-    const currentUser = useSelector((state) => state.Auth.token)
+    const token = useSelector((state) => state.Auth.token)
+
     const history = useHistory()
     useEffect(() => {
-        if (!currentUser) {
+        if (!token) {
             history.push('/login')
         }
-    }, [history, currentUser])
+    }, [token])
 }
 
 export const useNotAuthenticated = () => {
-    const currentUser = useSelector((state) => state.Auth.token)
+    const token = useSelector((state) => state.Auth.token)
     const history = useHistory()
+
     useEffect(() => {
-        if (currentUser) {
+        if (token) {
             history.push('/')
         }
         return () => {
 
         }
-    }, [history, currentUser])
+    }, [token])
 }

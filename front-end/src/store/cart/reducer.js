@@ -31,6 +31,7 @@ const cartReducer = (state = initState, action) => {
             } else {
                 alert('Sản phẩm này đã có trong giỏ hàng!')
             }
+            break
         }
         case ACT_DELETE_ITEM: {
             let newCart = [...state.cart]

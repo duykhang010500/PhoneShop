@@ -21,6 +21,7 @@ import {
 const DashboardUser = () => {
 
     const location = useLocation()
+
     return (
         <div className="container"
             style={{ marginTop: "2rem" }}

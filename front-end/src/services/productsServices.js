@@ -2,13 +2,13 @@ import api from './api'
 
 const productsServices = {
     getAll() {
-        return api.callWithToken().get('/product')
+        return api.callWithToken().get('/products')
     },
     create(formData) {
         return api.callWithToken().post('/product', formData)
     },
     getDetailProduct(id) {
-        return api.call().get(`/product_s?id=${id}`)
+        return api.call().get(`/product?id=${id}`)
     },
     getBestDiscount() {
         return api.call().get('/home/products?sort=price-discount')

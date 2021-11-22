@@ -3,9 +3,6 @@ html {
 }
 body {
   background-color: #f4f4f4;
-  // @media screen and (max-width: 767px) {
-  //   padding: 0 1rem;
-  // }
   overflow-x: hidden;
 }
 
@@ -62,11 +59,11 @@ a:hover {
   font-size: 1.5rem;
 }
 
-.ant-tag {
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  font-weight: 500;
-}
+// .ant-tag {
+//   padding: 0.5rem 1rem;
+//   border-radius: 2rem;
+//   font-weight: 500;
+// }
 
 .underline {
   width: 8rem;

@@ -10,12 +10,14 @@ import authReducer from './auth/reducer'
 import brandsReducer from './brands/reducer'
 import productsReducer from './products/reducer'
 import cartReducer from './cart/reducer'
+import ordersReducer from './orders/reducer'
 
 const rootReducer = combineReducers({
     Auth: authReducer,
     Brands: brandsReducer,
     Products: productsReducer,
-    Cart: cartReducer
+    Cart: cartReducer,
+    Orders: ordersReducer
 })
 const store = createStore(rootReducer, applyMiddleware(thunk, logger))
 
