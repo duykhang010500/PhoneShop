@@ -5,6 +5,13 @@ const orderServices = {
     },
     getListOrder() {
         return api.callWithToken().get('/user/order')
+    },
+    getDetailOrder(orderCode) {
+        return api.callWithToken().get('user/order-detail', {
+            params: {
+                order_code: orderCode
+            }
+        })
     }
 }
 

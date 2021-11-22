@@ -26,7 +26,9 @@ const DashboardUser = () => {
         <div className="container"
             style={{ marginTop: "2rem" }}
         >
-            <Row>
+            <Row
+                gutter={[15, 15]}
+            >
                 <Col
                     xs={8}
                     md={6}

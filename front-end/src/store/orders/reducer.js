@@ -1,6 +1,7 @@
-import { ACT_GET_MY_ORDERS } from './action'
+import { ACT_GET_DETAIL_ORDERS, ACT_GET_MY_ORDERS } from './action'
 const initialState = {
-    listOrders: []
+    listOrders: [],
+    detailOrder: null
 }
 
 const ordersReducer = (state = initialState, action) => {
@@ -9,6 +10,11 @@ const ordersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 listOrders: action.payload.myOrders
+            }
+        case ACT_GET_DETAIL_ORDERS:
+            return {
+                ...state,
+                detailOrder: action.payload.orders
             }
         default:
             return state

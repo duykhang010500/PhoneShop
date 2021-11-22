@@ -37,7 +37,8 @@ const Checkout = () => {
 
     const dispatch = useDispatch()
     const cart = useSelector(state => state.Cart.cart)
-    console.log(cart)
+    // console.log(cart)
+
     const { Option } = Select
     const { Meta } = Card
 
@@ -311,7 +312,7 @@ const Checkout = () => {
                                         <Typography.Text
                                             strong
                                         >
-                                            Miễn phí
+                                            {formatVND(0)}
                                         </Typography.Text>
 
                                     </Col>
