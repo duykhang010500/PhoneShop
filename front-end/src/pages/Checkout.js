@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import {
     Breadcrumb,
     Typography,
@@ -27,30 +28,105 @@ import {
     EditOutlined
 } from '@ant-design/icons'
 
-import { useDispatch } from 'react-redux'
-
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { convertNewPrice, formatVND } from '../helpers/priceFormat'
 import { actMakeNewOrder } from '../store/orders/action'
+import { actDeleteCart } from '../store/cart/action'
+
 
 const Checkout = () => {
 
-    const dispatch = useDispatch()
-    const cart = useSelector(state => state.Cart.cart)
-    // console.log(cart)
-
+    //Destructing Item antd
     const { Option } = Select
     const { Meta } = Card
 
+    const dispatch = useDispatch()
     const [form] = Form.useForm()
+
+    const [isLoading, setIsLoading] = useState(false)
+
+    //Get Cart
+    const cart = useSelector(state => state.Cart.cart)
+    const [totalPrice, setTotalPrice] = useState(0)
+
+    //State province
+    const [listProvince, setListProvince] = useState([])
+    const [provinceCode, setProvinceCode] = useState(null)
+
+    //State district
+    const [listDistrict, setListDistrict] = useState([])
+    const [districtCode, setDistrictCode] = useState(null)
+
+    //State ward
+    const [listWard, setListWard] = useState([])
+
+    //Get address
+    useEffect(() => {
+        getListProvince()
+    }, [])
+
+    const getListProvince = () => {
+        fetch('https://provinces.open-api.vn/api/p/')
+            .then(res => res.json())
+            .then(data => setListProvince(data))
+    }
+
+    const handleChangeProvince = (value, option) => {
+        form.setFieldsValue({
+            district: undefined,
+            ward: undefined
+        })
+        setProvinceCode(option.key)
+        setListDistrict([])
+        setListWard([])
+    }
+
+    const getListDistrict = () => {
+        if (!provinceCode || listDistrict.length) {
+            return
+        }
+        fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
+            .then(res => res.json())
+            .then(data => setListDistrict(data.districts))
+    }
+
+    const handleChangeDistrict = (value, option) => {
+        form.setFieldsValue({
+            ward: undefined
+        })
+        setDistrictCode(option.key)
+        setListWard([])
+    }
+
+    const getListWard = () => {
+        if (!districtCode || listWard.length) {
+            return
+        }
+        fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+            .then(res => res.json())
+            .then(data => setListWard(data.wards))
+    }
+
+    useEffect(() => {
+        const totalPrice = () => {
+            const total = cart.reduce((prev, item) => {
+                return prev + (convertNewPrice(item.price * item.quantity, item.discount))
+            }, 0)
+            setTotalPrice(total)
+        }
+        totalPrice()
+    }, [cart])
 
     const handleSubmitForm = () => {
         console.log('Submit')
         form.validateFields().then((values) => finalSubmit(values))
     }
 
+    const history = useHistory()
+
     const finalSubmit = (values) => {
-        // console.log(values)
+        console.log(values)
+        setIsLoading(true)
         const finalCart = cart.map(item => ({
             product_id: item.id,
             product_quantity: item.quantity,
@@ -58,14 +134,21 @@ const Checkout = () => {
 
         }))
 
-        const formatOrder = { ...values, address: values.ward + ', ' + values.district + ', ' + values.province }
+        const formatOrder = { ...values, address: values.detailAddress + ', ' + values.ward + ', ' + values.district + ', ' + values.province, method: 'Tiền mặt' }
         delete formatOrder.ward
         delete formatOrder.district
         delete formatOrder.province
+        delete formatOrder.detailAddress
 
         const newOrder = { ...formatOrder, cart: finalCart }
+
         console.log(newOrder)
-        dispatch(actMakeNewOrder(newOrder))
+        dispatch(actMakeNewOrder(newOrder)).then(() => {
+            setIsLoading(false)
+            dispatch(actDeleteCart())
+            history.push('/orderSuccess')
+
+        })
 
     }
 
@@ -134,36 +217,86 @@ const Checkout = () => {
                                         prefix={<PhoneOutlined />}
                                     />
                                 </Form.Item>
-                                <Form.Item name="province" label="Tỉnh/Thành phố" rules={[{ required: true }]}>
+
+                            </Col>
+                            <Col span={12}>
+                                <Form.Item
+                                    name="province"
+                                    label="Tỉnh/Thành phố"
+                                    rules={[{ required: true, message: 'Please input your username!' }]}
+                                >
                                     <Select
+                                        placeholder="Chọn Tỉnh/Thành phố"
                                         size="large"
-                                        allowClear
+                                        onChange={(value, option) => handleChangeProvince(value, option)}
                                     >
-                                        <Option key="Hà nội">
-                                            Hà Nội
-                                        </Option>
+                                        {
+                                            listProvince.map((item) =>
+                                                <Option
+                                                    key={item.code}
+                                                    value={item.name}
+                                                >
+                                                    {item.name}
+                                                </Option>)
+                                        }
                                     </Select>
                                 </Form.Item>
-                                <Form.Item name="district" label="Quận/Huyện" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="district"
+                                    label="Tỉnh/Thành phố"
+                                    rules={[{ required: true, message: 'Please input your username!' }]}
+                                >
                                     <Select
+                                        placeholder="Chọn Quận/Huyện"
                                         size="large"
-                                        allowClear
+                                        onFocus={getListDistrict}
+                                        onSelect={(value, option) => handleChangeDistrict(value, option)}
                                     >
-                                        <Option key="Hà nội">
-                                            Hà Nội
-                                        </Option>
+                                        {
+                                            listDistrict.map((item) =>
+                                                <Option
+                                                    key={item.code}
+                                                    value={item.name}
+                                                >
+                                                    {item.name}
+                                                </Option>)
+                                        }
                                     </Select>
                                 </Form.Item>
-                                <Form.Item name="ward" label="Phường/Xã" rules={[{ required: true }]}>
+                                <Form.Item
+                                    name="ward"
+                                    label="Tỉnh/Thành phố"
+                                    rules={[{ required: true, message: 'Please input your username!' }]}
+                                >
                                     <Select
+                                        placeholder="Chọn Phường/Xã"
                                         size="large"
-                                        allowClear
+                                        onFocus={getListWard}
                                     >
-                                        <Option key="Hà nội">
-                                            Hà Nội
-                                        </Option>
+                                        {
+                                            listWard.map((item) =>
+                                                <Option
+                                                    key={item.code}
+                                                    value={item.name}
+                                                >
+                                                    {item.name}
+                                                </Option>
+                                            )
+                                        }
                                     </Select>
                                 </Form.Item>
+                                <Form.Item
+                                    name="detailAddress"
+                                    label="Đường, số nhà"
+                                    rules={[{ required: true, message: 'Please input your username!' }]}
+                                >
+                                    <Input
+                                        placeholder="Số đường, địa chỉ"
+                                        size="large"
+                                    />
+                                </Form.Item>
+                            </Col>
+                            <Col span={24}>
                                 <Form.Item
                                     label="Ghi chú"
                                     name="note"
@@ -172,20 +305,6 @@ const Checkout = () => {
                                         size="large"
                                         showCount
                                         maxLength={100}
-                                    />
-                                </Form.Item>
-                            </Col>
-                            <Col span={12}>
-                                <Form.Item
-                                    label="Phương thức thanh toán"
-                                    name="method"
-                                    rules={[{ required: true, message: 'Please input your username!' }]}
-                                >
-                                    <Input
-                                        size="large"
-                                    // defaultValue="Ship COD"
-
-                                    // disabled
                                     />
                                 </Form.Item>
                             </Col>
@@ -248,7 +367,7 @@ const Checkout = () => {
                                                         type="danger"
                                                     >
 
-                                                        {formatVND(item.price)}
+                                                        {formatVND(convertNewPrice(item.price, item.discount))}
                                                     </Typography.Text>
                                                 </>
                                                 }
@@ -292,7 +411,9 @@ const Checkout = () => {
                                         <Typography.Text
                                             strong
                                         >
-                                            10000000đ
+                                            {
+                                                formatVND(totalPrice)
+                                            }
                                         </Typography.Text>
 
                                     </Col>
@@ -323,7 +444,8 @@ const Checkout = () => {
                                     <Col>
                                         <Typography.Text
                                             strong
-                                        >Tổng cộng
+                                        >
+                                            Tổng cộng
                                         </Typography.Text>
 
                                     </Col>
@@ -332,7 +454,10 @@ const Checkout = () => {
                                             strong
                                             type="danger"
                                             style={{ fontSize: "2rem" }}
-                                        >10000000đ
+                                        >
+                                            {
+                                                formatVND(totalPrice)
+                                            }
                                         </Typography.Text>
 
                                     </Col>
@@ -343,6 +468,7 @@ const Checkout = () => {
                                     danger
                                     style={{ width: "100%" }}
                                     onClick={handleSubmitForm}
+                                    loading={isLoading}
                                 >
                                     Đặt hàng ngay
                                 </Button>
@@ -357,9 +483,7 @@ const Checkout = () => {
                                     </Typography.Text>
                                 </Row>
                             </Space>
-
                         </Col>
-
                     </Row>
                 </Col>
             </Row>

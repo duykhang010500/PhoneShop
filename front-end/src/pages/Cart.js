@@ -29,7 +29,6 @@ const Cart = () => {
     const cart = useSelector(state => state.Cart.cart)
 
     const handleChangeQuantity = (value, idProduct) => {
-        console.log(value, idProduct)
         dispatch(actUpdateItem(idProduct, value))
     }
 
@@ -69,16 +68,6 @@ const Cart = () => {
                         }
                     </Typography.Title>
                 </Col>
-                {/* <Col>
-                    <Typography.Title
-                        level={4}
-                        type="danger"
-                        onClick={() => dispatch(actDeleteCart())}
-                        style={{ cursor: "pointer" }}
-                    >
-                        Xóa giỏ hàng
-                    </Typography.Title>
-                </Col> */}
             </Row>
             <Row style={{ backgroundColor: '#fff', padding: '1rem', borderRadius: '1rem', fontWeight: 500 }}>
                 <Col span={10}>
@@ -94,7 +83,6 @@ const Cart = () => {
                     Thành tiền
                 </Col>
                 <Col span={2}>
-
                     <Button
                         icon={<DeleteOutlined />}
                         size="middle"
@@ -103,7 +91,6 @@ const Cart = () => {
                         onClick={() => dispatch(actDeleteCart())}
                     >
                     </Button>
-
                 </Col>
             </Row>
 
@@ -139,7 +126,7 @@ const Cart = () => {
                                     >
                                         {formatVND(item.price)}
                                     </Typography.Text>
-                                    <Typography.Text>
+                                    <Typography.Text style={{ fontSize: '1.3rem', fontWeight: '500' }}>
                                         Giảm {item.discount} %
                                     </Typography.Text>
                                 </Space>
@@ -155,8 +142,10 @@ const Cart = () => {
                                 />
                             </Col>
                             <Col span={4}>
-                                <Typography.Text>
-                                    10000đ
+                                <Typography.Text strong type="danger">
+                                    {
+                                        formatVND(item.quantity * (convertNewPrice(item.price, item.discount)))
+                                    }
                                 </Typography.Text>
                             </Col>
 

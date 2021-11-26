@@ -24,6 +24,7 @@ import Checkout from "./pages/Checkout"
 import AdminLogin from './pages/AdminLogin'
 import DashboardUser from "./pages/DashboardUser"
 import DashboardAdmin from "./pages/DashboardAdmin"
+import OrderSuccess from "./pages/OrderSuccess"
 
 import { actFetchMe, actGetAdmin } from "./store/auth/action"
 import { actGetListBrandAsync } from "./store/brands/actions"
@@ -59,6 +60,9 @@ function App() {
         </Route>
         <Route exact path="/cart">
           <Cart />
+        </Route>
+        <Route exact path="/orderSuccess">
+          <OrderSuccess />
         </Route>
         <Route exact path="/brand/:id">
           <ProductByCategory />

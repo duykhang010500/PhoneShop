@@ -8,33 +8,32 @@ import HeaderSearch from './HeaderSearch'
 import HeaderMenu from './HeaderMenu'
 
 export default function Header() {
-
     return (
         <div className="header-wrapper">
-            <div className="container">
-                <header className="header">
+            <header className="header">
+                <div className="container">
                     <Row justify="space-between" align="middle" gutter={[10, 10]}>
                         <Col
-                            md={4}
                             xs={22}
+                            md={4}
                         >
                             <HeaderLogo />
                         </Col>
                         <Col
-                            md={10}
                             xs={24}
+                            md={10}
                         >
                             <HeaderSearch />
                         </Col>
                         <Col
-                            md={10}
                             xs={2}
+                            md={10}
                         >
                             <HeaderMenu />
                         </Col>
                     </Row>
-                </header>
-            </div>
+                </div>
+            </header>
         </div>
     )
 }

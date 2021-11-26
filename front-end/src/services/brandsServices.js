@@ -1,10 +1,10 @@
 import api from "./api"
 const brandsServices = {
     getList() {
-        return api.callWithToken().get('/brand')
+        return api.callWithToken().get('/brands')
     },
     createBrand(formData) {
-        return api.callWithToken().post('/brand', formData)
+        return api.callWithToken().post('/brands', formData)
     },
     deleteBrand(id) {
         return api.callWithToken().delete(`/brand?id=${id}`)

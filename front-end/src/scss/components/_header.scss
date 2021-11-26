@@ -1,18 +1,14 @@
 .header {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
   &-wrapper {
     width: 100%;
     background-color: #fff;
-    // margin-bottom: 2rem;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
   }
   .logo {
     font-size: 2rem;
-    font-weight: 500;
-    color: #1a2b5f;
-    span {
-      color: #ffc87a;
-    }
+    font-weight: 600;
+    color: #fb5231;
   }
   .menu-icon {
     font-size: 2.5rem;
