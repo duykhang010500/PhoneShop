@@ -55,8 +55,8 @@ export const actCreateProductAsync = (formData) => async (dispatch) => {
 export const actGetDetailProductAsync = (id) => async (dispatch) => {
     try {
         const res = await productsServices.getDetailProduct(id)
-        // console.log(res)
-        const detailProduct = res.data.data[0]
+        console.log(res)
+        const detailProduct = res.data.data
         console.log(detailProduct)
         dispatch(actGetDetailProduct(detailProduct))
     } catch (err) {

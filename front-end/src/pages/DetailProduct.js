@@ -19,6 +19,7 @@ import DetailProductTechnical from '../components/DetailProduct/DetailProductTec
 import DetailProductRating from '../components/DetailProduct/DetailProductRating';
 import DetailProductListRating from '../components/DetailProduct/DetailProductListRating';
 import { actGetDetailProductAsync } from '../store/products/actions';
+import { actGetMyWishListAsync } from '../store/wishList/action';
 
 export default function DetailProduct() {
 
@@ -27,9 +28,12 @@ export default function DetailProduct() {
 
     useEffect(() => {
         dispatch(actGetDetailProductAsync(id))
+        dispatch(actGetMyWishListAsync())
     }, [dispatch, id])
 
+
     const product = useSelector(state => state.Products.detailProduct)
+    const myWishList = useSelector(state => state.WishList)
 
     if (!product) {
         return (

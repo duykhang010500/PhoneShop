@@ -54,8 +54,29 @@
   }
 }
 
+.product__image {
+  &-thumb {
+    border-radius: 1rem;
+    padding: 1rem;
+    border: 1px solid silver;
+    margin-bottom: 1rem;
+  }
+  &-sub {
+    display: flex;
+    // max-width: 500px;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+    img {
+      cursor: pointer;
+      margin-right: 1rem;
+    }
+  }
+}
+
 .hide-desc {
-  max-height: 500px;
+  max-height: 650px;
   overflow: hidden;
 }
 

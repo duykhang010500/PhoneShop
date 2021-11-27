@@ -15,7 +15,8 @@ import {
 import {
     ReconciliationOutlined,
     UserOutlined,
-    LockOutlined
+    LockOutlined,
+    HeartOutlined
 } from '@ant-design/icons';
 
 const DashboardUser = () => {
@@ -34,7 +35,6 @@ const DashboardUser = () => {
                     md={6}
                 >
                     <Menu
-                        className="box-sd"
                         selectedKeys={[location.pathname]}
                         mode="inline"
                         style={{ height: '100%', padding: '1rem 1rem' }}
@@ -55,6 +55,15 @@ const DashboardUser = () => {
                             <Link
                                 to='/user/orders'>
                                 Đơn hàng của bạn
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item
+                            key="/user/wishlist"
+                            icon={<HeartOutlined style={{ fontSize: "2rem" }} />}
+                        >
+                            <Link
+                                to='/user/wishlist'>
+                                Danh sách yêu thích
                             </Link>
                         </Menu.Item>
                         <Menu.Item

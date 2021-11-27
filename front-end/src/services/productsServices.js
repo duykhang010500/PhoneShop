@@ -8,7 +8,7 @@ const productsServices = {
         return api.callWithToken().post('/product', formData)
     },
     getDetailProduct(id) {
-        return api.call().get(`/product?id=${id}`)
+        return api.call().get(`/product?slug=${id}`)
     },
     getBestDiscount() {
         return api.call().get('/home/products?sort=price-discount')

@@ -43,14 +43,14 @@ const DashboardUserOrder = () => {
     const [showModal, setShowModal] = useState(false)
     const [detailId, setDetailId] = useState(null)
     const [totalPrice, setTotalPrice] = useState(0)
-    const [isFetchDetailProduct, setIsFetchDetailProduct] = useState(false)
+
 
     const handleShowDetailOrder = (orderCode) => {
         setShowModal(true)
         setDetailId(orderCode)
-        setIsFetchDetailProduct(true)
+        setIsLoading(true)
         dispatch(actGetDetailOrdersAsync(orderCode)).then(() => {
-            setIsFetchDetailProduct(false)
+            setIsLoading(false)
         })
     }
 
@@ -114,7 +114,9 @@ const DashboardUserOrder = () => {
             key: 'action',
             render: (order) => {
                 return (
-                    <Tooltip title="Xem chi tiết">
+                    <Tooltip
+                        title="Xem chi tiết"
+                    >
                         <Button
                             icon={<EyeOutlined />}
                             type="primary"
@@ -127,14 +129,6 @@ const DashboardUserOrder = () => {
         }
     ]
 
-    if (isFetchDetailProduct) {
-        return <Table
-            columns={columns}
-            dataSource={myOrders}
-            loading={isLoading}
-            rowKey={(record) => record.order_code}
-        />
-    }
 
     return (
         <div>

@@ -6,7 +6,6 @@ import {
     Radio,
     Button,
     Tooltip,
-    Image
 } from 'antd'
 
 import {
@@ -15,7 +14,7 @@ import {
 } from '@ant-design/icons'
 
 import {
-    useDispatch
+    useDispatch, useSelector
 } from 'react-redux'
 
 import { CheckCircleTwoTone } from '@ant-design/icons'
@@ -24,15 +23,29 @@ import {
 } from '../../helpers/priceFormat'
 
 import { actAddToCart } from '../../store/cart/action'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { actAddToWishList, actDeleteItemInWishList } from '../../store/wishList/action'
 
 export default function DetailProductInfo({ product }) {
+
     const dispatch = useDispatch()
+    console.log(product.id)
+    // const currentUserId = useSelector(state => state.auth.currentUser.id)
+    const myWishList = useSelector(state => state.WishList)
 
     const [productColor, setProductColor] = useState('')
+    const [isLiked, setIsLiked] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        if (myWishList.find(item => item.product_id == product.id)) {
+            setIsLiked(true)
+        } else {
+            setIsLiked(false)
+        }
+    }, [myWishList])
 
     const handleChangeColor = (e) => {
-        console.log(e.target.value)
         setProductColor(e.target.value)
     }
 
@@ -41,28 +54,80 @@ export default function DetailProductInfo({ product }) {
             alert('Vui lòng chọn màu sắc sản phẩm')
             return
         }
-        // console.log(product)
         const productWithColor = { ...product, color }
         console.log(productWithColor)
         dispatch(actAddToCart(productWithColor))
     }
 
+    const handleLikeProduct = (id) => {
+        console.log(id)
+        setIsLiked(true)
+        setIsLoading(true)
+        dispatch(actAddToWishList(id))
+    }
+
+    const handleUnLikeProduct = (id) => {
+        setIsLiked(false)
+        setIsLoading(true)
+        dispatch(actDeleteItemInWishList(id))
+
+    }
+
     return (
         <Row gutter={[40, 40]}>
-            <Col md={10} xs={24}>
-                <img src={product.image} />
+            <Col
+                xs={24}
+                md={10}
+            >
+                <div className="product__image">
+                    <div className="product__image-thumb">
+                        <img src={product.image} />
+                    </div>
+                    <div className="product__image-sub">
+                        <img style={{ width: 50, height: 50, border: '1px solid red' }} src={product.image} />
+                    </div>
+                </div>
+
             </Col>
             <Col md={14} xs={24}>
                 <Space direction="vertical" size="middle">
-                    <Space size="middle">
-                        <Typography.Title level={4} type="danger">
-                            {
-                                formatVND(convertNewPrice(product.price, product.discount))
-                            }
-                        </Typography.Title>
-                        <Typography.Text strong italic>
-                            <del>Giá niêm yết: {formatVND(product.price)}</del>
-                        </Typography.Text>
+                    <Space size="middle" direction="vertical">
+                        <Space direction="horizontal">
+                            <Typography.Title level={4} type="danger">
+                                {
+                                    formatVND(convertNewPrice(product.price, product.discount))
+                                }
+                            </Typography.Title>
+                            <Typography.Text strong italic>
+                                <del>Giá niêm yết: {formatVND(product.price)}</del>
+                            </Typography.Text>
+                        </Space>
+                        {
+                            isLiked ? (
+                                <Space>
+                                    <Tooltip title="Bỏ thích">
+                                        <HeartFilled
+                                            style={{ cursor: 'pointer', color: 'rgb(255, 66, 78)', fontSize: '1.8rem' }}
+                                            onClick={() => handleUnLikeProduct(product.id)}
+
+                                        />
+                                    </Tooltip>
+                                    <Typography.Text strong>
+                                        Đã thích
+                                    </Typography.Text>
+                                </Space>
+                            ) : (
+                                <Space>
+                                    <Tooltip title="Yêu thích">
+                                        <HeartOutlined
+                                            style={{ cursor: 'pointer', fontSize: '1.8rem' }}
+                                            onClick={() => handleLikeProduct(product.id)}
+                                        />
+                                    </Tooltip>
+                                    Thích
+                                </Space>
+                            )
+                        }
                     </Space>
                     <Typography.Text strong>
                         <i className="fas fa-shipping-fast"></i>
@@ -79,11 +144,15 @@ export default function DetailProductInfo({ product }) {
                         </Typography.Text>
                         <Typography.Text>
                             <CheckCircleTwoTone twoToneColor="#52c41a" /> &nbsp;
-                            Giảm ngay 20% Ốp lưng chính hãng khi mua kèm iPhone
+                            Giảm ngay 20% Ốp lưng chính hãng khi mua kèm điện thoại
                         </Typography.Text>
                         <Typography.Text>
                             <CheckCircleTwoTone twoToneColor="#52c41a" /> &nbsp;
                             Giảm đến 300.000đ khi mua bảo hành (rơi vỡ + vào nước) kèm máy
+                        </Typography.Text>
+                        <Typography.Text>
+                            <CheckCircleTwoTone twoToneColor="#52c41a" /> &nbsp;
+                            Giảm thêm 200.000đ cho khách hàng đã từng mua hàng tại đây
                         </Typography.Text>
                     </Space>
 
