@@ -14,7 +14,7 @@ import {
 import { IoMdPaperPlane } from "react-icons/io";
 import DetailProductRatingForm from './DetailProductRatingForm';
 
-export default function DetailProductRating() {
+export default function DetailProductRating({ product }) {
     const [showFormRating, setShowFormRating] = useState(false)
     return (
         <>
@@ -89,7 +89,7 @@ export default function DetailProductRating() {
                         {
                             showFormRating ?
                                 <Button
-                                    danger
+                                    // danger
                                     type="primary"
                                     size="large"
                                     onClick={() => setShowFormRating(!showFormRating)}>
@@ -97,7 +97,7 @@ export default function DetailProductRating() {
                                 </Button>
                                 :
                                 <Button
-                                    danger
+                                    // danger
                                     type="primary"
                                     size="large"
                                     icon={<IoMdPaperPlane
@@ -111,7 +111,7 @@ export default function DetailProductRating() {
                 </Col>
             </Row>
             <Divider style={{ border: "none" }} />
-            <DetailProductRatingForm showFormRating={showFormRating} />
+            <DetailProductRatingForm product={product} showFormRating={showFormRating} />
             <Divider />
         </>
     )

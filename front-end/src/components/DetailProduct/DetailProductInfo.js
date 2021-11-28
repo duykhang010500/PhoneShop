@@ -29,8 +29,8 @@ import { actAddToWishList, actDeleteItemInWishList } from '../../store/wishList/
 export default function DetailProductInfo({ product }) {
 
     const dispatch = useDispatch()
-    console.log(product.id)
-    // const currentUserId = useSelector(state => state.auth.currentUser.id)
+
+
     const myWishList = useSelector(state => state.WishList)
 
     const [productColor, setProductColor] = useState('')
@@ -60,6 +60,10 @@ export default function DetailProductInfo({ product }) {
     }
 
     const handleLikeProduct = (id) => {
+        if (!localStorage.getItem('token')) {
+            alert('Vui lòng đăng nhập để sử dụng tính năng này')
+            return
+        }
         console.log(id)
         setIsLiked(true)
         setIsLoading(true)

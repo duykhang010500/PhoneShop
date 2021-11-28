@@ -41,8 +41,8 @@ export default function DetailProduct() {
         )
     } else {
         return (
-            <section className="detail__product">
-                <div className="container">
+            <div className="container">
+                <section className="detail__product">
                     <DetailProductTitle product={product} />
                     <Divider />
                     <Row>
@@ -68,12 +68,12 @@ export default function DetailProduct() {
                         Đánh giá và nhận xét Iphone Xs Max 256GB
                     </Typography.Title>
                     <Divider style={{ border: "none" }} />
-                    <DetailProductRating />
+                    <DetailProductRating product={product} />
                     <Row>
-                        <DetailProductListRating />
+                        <DetailProductListRating product={product} />
                     </Row>
-                </div>
-            </section>
+                </section>
+            </div>
         )
     }
 }

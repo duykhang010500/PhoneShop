@@ -40,7 +40,6 @@ const HeaderMenu = () => {
     const currentUser = useSelector(state => state.Auth.currentUser)
     const cart = useSelector(state => state.Cart.cart)
 
-
     const menu = (
         <Menu>
             <Menu.Item icon={<IdcardOutlined />} key="1">

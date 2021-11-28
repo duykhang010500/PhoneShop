@@ -76,6 +76,9 @@ function App() {
         <Route path="/user">
           <DashboardUser />
         </Route>
+        <Route path="/cc">
+          <ProductByCategory />
+        </Route>
         <Route path="/admin">
           <DashboardAdmin />
         </Route>

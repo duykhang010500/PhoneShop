@@ -10,7 +10,7 @@ import { HomeOutlined } from '@ant-design/icons'
 export default function DetailProductTitle({ product }) {
     return (
         <Space direction="vertical">
-            <Breadcrumb>
+            {/* <Breadcrumb>
                 <Breadcrumb.Item href="/">
                     <HomeOutlined /> Trang chủ
                 </Breadcrumb.Item>
@@ -22,7 +22,7 @@ export default function DetailProductTitle({ product }) {
                         {product.brand.name}
                     </Typography.Text>
                 </Breadcrumb.Item>
-            </Breadcrumb>
+            </Breadcrumb> */}
 
             <Space size="large">
                 <Space size="middle" wrap>
@@ -30,9 +30,13 @@ export default function DetailProductTitle({ product }) {
                         {product.name}
                     </Typography.Title>
                     <Space>
-                        <Rate disabled value={4.5} style={{ fontSize: "1.4rem" }} />
+                        {
+                            product.ratings != 0 ?
+                                <Rate disabled value={0} style={{ fontSize: "1.4rem" }} /> :
+                                <Rate disabled value={0} style={{ fontSize: "1.4rem" }} />
+                        }
                         <Typography.Text strong>
-                            4 đánh giá
+                            {product.ratings.length} đánh giá
                         </Typography.Text>
                     </Space>
                 </Space>

@@ -18,17 +18,16 @@ export default function HomePage() {
     }, [dispatch])
 
     const listNew = useSelector(state => state.Products.list)
-    const listDiscount = useSelector(state => state.Products.listBestDiscount)
+    // const listDiscount = useSelector(state => state.Products.listBestDiscount)
     // const descListDiscount = listDiscount.slice().reverse()
     // console.log(descListDiscount)
     return (
-        <section>
+        <section style={{ marginTop: 150 }}>
             {/* <Carousel /> */}
             <BrandFeature />
-            {/* <BestDiscount
-                title="GIẢM GIÁ TỐT"
-                product={descListDiscount}
-            /> */}
+            <BestDiscount
+                product={listNew}
+            />
             <Ads />
             <NewListProduct
                 title="SẢN PHẨM MỚI NHẤT"

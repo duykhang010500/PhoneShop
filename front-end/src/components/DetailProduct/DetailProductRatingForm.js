@@ -10,15 +10,18 @@ import {
     message,
     Button
 } from 'antd'
-
+import { useDispatch } from 'react-redux'
 import { IoMdPaperPlane } from "react-icons/io";
+import { actRatingProductAsync } from '../../store/products/actions';
 
 
-export default function DetailProductRatingForm({ showFormRating }) {
+export default function DetailProductRatingForm({ product, showFormRating }) {
+
+    const dispatch = useDispatch()
     const [str, setStr] = useState('')
     const [star, setStar] = useState(0)
 
-
+    console.log('product in rating', product)
     function handleChangeStar(e) {
         setStar(e)
     }
@@ -29,10 +32,17 @@ export default function DetailProductRatingForm({ showFormRating }) {
     }
 
     function handleSubmit() {
-        console.log(star)
-        console.log(str)
-        setStar(0)
-        setStr('')
+        console.log('đánh giá product có id là: ', product.id)
+        // console.log(star)
+        // console.log(str)
+        const form = {}
+        const formData = { ...form, star, content: str }
+        console.log(formData)
+
+
+        dispatch(actRatingProductAsync(product.id, formData))
+        // setStar(0)
+        // setStr('')
     }
 
     return (

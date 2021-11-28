@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { actGetMyWishListAsync } from '../../store/wishList/action'
-
+import { convertNewPrice, formatVND } from '../../helpers/priceFormat'
+import { Link } from 'react-router-dom'
 const DashboardUserWishList = () => {
+
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
         setIsLoading(true)
         dispatch(actGetMyWishListAsync()).then(() => {
@@ -17,37 +19,43 @@ const DashboardUserWishList = () => {
 
     if (isLoading) {
         return <div>
-            Đang tải
+            Đang tải danh sách yêu thích
         </div>
     } else {
         return (
             <div className="wishlist-page">
-                {
-                    myWishList.map((item, index) => {
-                        return (
-                            <Row
-                                justify="space-between"
-                                style={{ backgroundColor: '#fff', marginBottom: 2, padding: 20 }}
-                            >
-                                <Col span={6}>
-                                    <img src={item.product.image}
-                                        style={{ width: 130, height: 130 }}
-                                    />
-                                </Col>
-                                <Col span={10}>
-                                    {
-                                        item.product.name
-                                    }
-                                </Col>
-                                <Col span={8}>
-                                    {
-                                        item.product.price
-                                    }
-                                </Col>
-                            </Row>
-                        )
-                    })
-                }
+                <ul className="wishlist">
+                    {
+                        myWishList.map((item, index) => {
+                            return (
+                                <li className="wishlist__item" key={index}>
+                                    <Link to={`/product/${item.product.slug}`}>
+                                        <div className="wishlist__item-thumb">
+                                            <img src={item.product.image} alt="" />
+                                        </div>
+                                    </Link>
+                                    <div className="wishlist__item-info">
+                                        <Link to={`/product/${item.product.slug}`}>
+                                            <div className="wishlist__item-name">
+                                                {item.product.name}
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div className="wishlist__item-price">
+                                        <div className="wishlist__item-price--new">
+                                            {formatVND(convertNewPrice(item.product.price, item.product.discount))}
+                                        </div>
+                                        <div className="wishlist__item-price--old">
+                                            {formatVND(item.product.price)}
+                                            <span>-{item.product.discount}%</span>
+                                        </div>
+                                    </div>
+                                    <button className="btn-close">×</button>
+                                </li>
+                            )
+                        })
+                    }
+                </ul>
             </div>
         )
     }

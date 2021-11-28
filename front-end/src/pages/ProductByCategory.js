@@ -32,7 +32,7 @@ const ProductByCategory = () => {
                         <CategoryFilter />
                     </Col>
                     <Col xs={16} md={18}>
-                        <CategoryListProduct />
+                        {/* <CategoryListProduct /> */}
                     </Col>
                 </Row>
             </div>

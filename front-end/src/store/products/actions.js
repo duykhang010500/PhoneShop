@@ -73,3 +73,12 @@ export const actGetBestDiscountAsync = () => async (dispatch) => {
         console.log(err)
     }
 }
+
+export const actRatingProductAsync = (id, formData) => async (dispatch) => {
+    try {
+        const res = await productsServices.ratingProduct(id, formData)
+        console.log(res)
+    } catch (err) {
+        console.log(err)
+    }
+}
