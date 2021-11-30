@@ -9,7 +9,7 @@ const wishlistServices = {
     deleteItemInWithList(id) {
         return api.callWithToken().delete('/wishlist', {
             params: {
-                id
+                product_id: id
             }
         })
     },

@@ -1,0 +1,9 @@
+.banner {
+  .ant-carousel .slick-dots {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .slick-dots li button:before {
+    content: ' ';
+  }
+}

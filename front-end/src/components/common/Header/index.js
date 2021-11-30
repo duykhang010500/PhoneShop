@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Select, Input, Avatar } from 'antd'
-import { Link } from 'react-router-dom'
+import { Select, Input, Avatar, Button } from 'antd'
+import { Link, useHistory } from 'react-router-dom'
 import {
     QuestionCircleOutlined,
     GiftOutlined,
@@ -15,7 +15,8 @@ import { useSelector } from 'react-redux';
 import HeaderLogo from './HeaderLogo'
 import HeaderSearch from './HeaderSearch'
 import HeaderMenu from './HeaderMenu'
-
+import { actSetCurrentUser, actSetToken } from '../../../store/auth/action';
+import { useDispatch } from 'react-redux';
 
 export default function Header() {
 
@@ -34,6 +35,17 @@ export default function Header() {
         window.addEventListener('scroll', scrollFixed)
         console.log('scroll')
     }, [])
+
+    const dispatch = useDispatch()
+    const history = useHistory()
+
+    function handleLogout(e) {
+        e.preventDefault()
+        dispatch(actSetToken(''))
+        dispatch(actSetCurrentUser(null))
+        localStorage.removeItem('r')
+        history.push('/')
+    }
 
     const { Search } = Input
 
@@ -62,6 +74,7 @@ export default function Header() {
                                     &nbsp;Khuyến mại
                                 </Link>
                             </div>
+                            <Button onClick={handleLogout}>Logout</Button>
                         </div>
                     </div>
                 </div>
@@ -92,8 +105,6 @@ export default function Header() {
                                 <Link to="/login">
                                     <UserOutlined />&nbsp;Đăng nhập
                                 </Link>
-                                {/* <Avatar />
-                                Tài khoản */}
                             </div>
                             <div className="header__menu-actions--item">
                                 <Link to="/cart">

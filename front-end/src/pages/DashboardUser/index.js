@@ -25,7 +25,7 @@ const DashboardUser = () => {
 
     return (
         <div className="container"
-            style={{ marginTop: "2rem" }}
+            style={{ marginTop: "14rem" }}
         >
             <Row
                 gutter={[15, 15]}

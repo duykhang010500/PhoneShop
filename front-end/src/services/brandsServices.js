@@ -7,10 +7,10 @@ const brandsServices = {
         return api.callWithToken().post('/brands', formData)
     },
     deleteBrand(id) {
-        return api.callWithToken().delete(`/brand?id=${id}`)
+        return api.callWithToken().delete(`/brand?slug=${id}`)
     },
     updateBrand(id, formData) {
-        return api.callWithToken().put(`/brand?id=${id}`, formData)
+        return api.callWithToken().put(`/brand?slug=${id}`, formData)
     }
 }
 

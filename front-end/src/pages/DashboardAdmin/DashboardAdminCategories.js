@@ -49,6 +49,7 @@ const DashboardAdminCategories = () => {
                 message.error(res.message)
             }
         }).finally(() => {
+            form.resetFields()
             setShowFormAdd(false)
             setIsLoading(false)
         })
@@ -109,28 +110,14 @@ const DashboardAdminCategories = () => {
             key: 'action',
             render: (text, record) => (
                 <Space>
-                    <Tooltip title="Xóa">
-                        <Popconfirm
-                            placement="topRight"
-                            title={`Xóa hãng ${record.name}`}
-                            onConfirm={() => handleDeleteBrand(record.id)}
-                        >
-                            <Button
-                                type="primary"
-                                danger
-                                icon={<DeleteOutlined />}
-                            >
-                            </Button>
-                        </Popconfirm>
-                    </Tooltip>
                     <Tooltip title="Cập nhật">
                         <Button
                             type="primary"
+                            className="btn-primary"
                             icon={<FormOutlined />}
-                            type="primary"
                             onClick={() => {
                                 setShowFormUpdate(true)
-                                setIdSelected(record.id)
+                                setIdSelected(record.slug)
                                 form.setFieldsValue({
                                     name: record.name,
                                     slug: record.slug,
@@ -140,6 +127,21 @@ const DashboardAdminCategories = () => {
                         >
                         </Button>
                     </Tooltip>
+                    <Tooltip title="Xóa">
+                        <Popconfirm
+                            placement="topRight"
+                            title={`Xóa hãng ${record.name}`}
+                            onConfirm={() => handleDeleteBrand(record.slug)}
+                        >
+                            <Button
+                                type="primary"
+                                danger
+                                icon={<DeleteOutlined />}
+                            >
+                            </Button>
+                        </Popconfirm>
+                    </Tooltip>
+
                 </Space>
             )
         }
@@ -170,6 +172,7 @@ const DashboardAdminCategories = () => {
                     <Button
                         size="large"
                         type="primary"
+                        className="btn-primary"
                         icon={<PlusCircleOutlined />}
                         onClick={() => setShowFormAdd(!showFormAdd)}
                     >
@@ -196,6 +199,7 @@ const DashboardAdminCategories = () => {
                 <Form
                     layout="vertical"
                     onFinish={handleSubmit}
+                    form={form}
                 >
                     <Form.Item
                         label="Tên hãng"

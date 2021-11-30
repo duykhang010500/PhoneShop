@@ -12,7 +12,7 @@ export const actAddToWishList = (product_id) => async (dispatch) => {
     }
 }
 
-export const actDeleteItemInWishList = (id) => async (dispatch) => {
+export const actDeleteItemInWishListAsync = (id) => async (dispatch) => {
     try {
         const res = await wishlistServices.deleteItemInWithList(id)
         console.log(res)

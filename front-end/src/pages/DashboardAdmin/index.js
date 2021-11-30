@@ -1,12 +1,6 @@
-import React, { useState } from 'react'
-
-import {
-    useLocation,
-    Link
-} from 'react-router-dom'
-
+import React, { useState, useEffect } from 'react'
+import { useLocation, Link } from 'react-router-dom'
 import './style.less'
-
 import {
     Layout,
     Menu,
@@ -17,7 +11,6 @@ import {
     Col,
     Typography
 } from 'antd';
-
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
@@ -28,23 +21,20 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 
-import {
-    useSelector
-} from 'react-redux'
-
+import { RiCoupon4Line } from "react-icons/ri";
 import DashboardAdminRoutes from './DashboardAdminRoutes';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { actGetListOrdersUserAsync } from '../../store/orders/action';
 
 const { Header, Sider, Content } = Layout;
 
 const DashboardAdmin = () => {
 
+
     const location = useLocation()
 
     const [isCollapsed, setIsCollapsed] = useState(false)
     const { SubMenu } = Menu
-
-
     const currentUser = useSelector(state => state.Auth.currentUser)
     if (!currentUser) {
         return null
@@ -84,12 +74,21 @@ const DashboardAdmin = () => {
                         <Link to='/admin/orders'>Quản lý đơn hàng</Link>
                     </Menu.Item>
                     <Menu.Item
-                        key="/admin/users"
+                        key="/admin/customer"
                         icon={<UserOutlined
                             style={{ fontSize: "2rem" }}
                         />}>
-                        <Link to='/admin/user'>
+                        <Link to='/admin/customer'>
                             Quản lý khách hàng
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item
+                        key="/admin/coupon"
+                        icon={<RiCoupon4Line
+                            style={{ fontSize: "2rem" }}
+                        />}>
+                        <Link to='/admin/coupon'>
+                            Quản lý khuyến mại
                         </Link>
                     </Menu.Item>
 

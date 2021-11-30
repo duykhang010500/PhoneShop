@@ -147,7 +147,6 @@ const Checkout = () => {
             setIsLoading(false)
             dispatch(actDeleteCart())
             history.push('/orderSuccess')
-
         })
 
     }

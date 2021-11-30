@@ -28,13 +28,14 @@ import OrderSuccess from "./pages/OrderSuccess"
 
 import { actFetchMe, actGetAdmin } from "./store/auth/action"
 import { actGetListBrandAsync } from "./store/brands/actions"
-
+import NProgress from 'nprogress'
 function App() {
 
   const dispatch = useDispatch()
   const isDashBoardAdmin = useRouteMatch('/admin')
 
   useEffect(() => {
+
     if (localStorage.getItem('r') == 1) {
       dispatch(actFetchMe())
     } else {
@@ -42,6 +43,17 @@ function App() {
     }
     dispatch(actGetListBrandAsync())
   }, [dispatch])
+
+  NProgress.configure({ showSpinner: false });
+  useEffect(() => {
+    NProgress.start()
+    // return () => {
+    //   NProgress.done()
+    // }
+  }, [])
+
+
+
 
   return (
     <div>

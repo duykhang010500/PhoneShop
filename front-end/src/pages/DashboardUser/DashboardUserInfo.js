@@ -137,7 +137,6 @@ const DashboardUserInfo = () => {
                                 action="https://api.imgbb.com/1/upload?key=8c37ca908e1a1a4f5db86e4555a008c2"
                                 beforeUpload={beforeUpload}
                                 onChange={handleChange}
-                            // fileList={[]}
                             >
                                 {
                                     isImageChange ? <LoadingOutlined style={{ color: 'skyblue' }} /> : (

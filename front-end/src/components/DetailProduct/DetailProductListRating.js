@@ -20,22 +20,20 @@ export default function DetailProductListRating({ product }) {
                                 key={idx}
                             >
                                 <Comment
-
                                     author={
                                         <Typography.Text strong>
-                                            User
+                                            {item.user_name}
                                         </Typography.Text>
                                     }
                                     avatar={
                                         <Avatar
-                                            src="https://image.lag.vn/upload/news/19/08/09/yasuo-bi-game-thu-phan-doi__1__LYDS.jpg"
-                                            alt="Khang Duy"
+                                            src={item.user_image}
                                         />
                                     }
                                     content={
                                         <>
                                             <Rate style={{ display: "block", fontSize: 13 }} disabled value={item.star} />
-                                            <Typography.Text style={{ fontSize: 16 }}>
+                                            <Typography.Text>
                                                 {item.content}
                                             </Typography.Text>
                                         </>

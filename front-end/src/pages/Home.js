@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-
 import Ads from "../components/Ads";
-import Carousel from '../components/Carousel'
+
 import NewListProduct from "../components/NewListProduct";
 import BrandFeature from "../components/BrandFeature";
 import BestDiscount from '../components/BestDiscount'
 import { actGetAllProductAsync, actGetBestDiscountAsync } from "../store/products/actions";
+import Banner from "../components/Banner";
+
 
 export default function HomePage() {
 
@@ -23,16 +24,16 @@ export default function HomePage() {
     // console.log(descListDiscount)
     return (
         <section style={{ marginTop: 150 }}>
-            {/* <Carousel /> */}
-            <BrandFeature />
+            <Banner />
             <BestDiscount
                 product={listNew}
             />
-            <Ads />
+            <BrandFeature />
             <NewListProduct
                 title="SẢN PHẨM MỚI NHẤT"
                 product={listNew}
             />
+            <Ads />
         </section>
     )
 }

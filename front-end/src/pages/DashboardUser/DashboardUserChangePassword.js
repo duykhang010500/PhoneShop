@@ -46,9 +46,9 @@ const DashboardUserChangePassword = () => {
                 layout="vertical"
                 onFinish={handleSubmit}
             >
-                <Row>
+                <Row justify="center">
                     <Col
-                        span={12}
+                        span={9}
                     >
                         <Form.Item
                             label="Mật khẩu hiện tại"
@@ -116,15 +116,14 @@ const DashboardUserChangePassword = () => {
                                 allowClear
                             />
                         </Form.Item>
-                        <Form.Item
-
-                        >
+                        <Form.Item>
                             <Button
                                 htmlType="submit"
                                 type="primary"
                                 loading={isLoading}
                                 size="large"
                                 icon={<SaveOutlined />}
+                                style={{ width: '100%' }}
                             >
                                 Lưu thay đổi
                             </Button>

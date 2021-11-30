@@ -74,6 +74,7 @@ export default function DetailProductRatingForm({ product, showFormRating }) {
                             onChange={handleChangeInput}
                         />
                         <Button
+                            danger
                             type="primary"
                             size="large"
                             style={{ marginTop: 10 }}

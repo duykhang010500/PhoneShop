@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Divider,
     Row,
@@ -25,9 +25,13 @@ export default function DetailProduct() {
 
     const { id } = useParams()
     const dispatch = useDispatch()
+    const [isFetching, setIsFetching] = useState(false)
 
     useEffect(() => {
-        dispatch(actGetDetailProductAsync(id))
+        setIsFetching(true)
+        dispatch(actGetDetailProductAsync(id)).then(() => {
+            setIsFetching(false)
+        })
         dispatch(actGetMyWishListAsync())
     }, [dispatch, id])
 

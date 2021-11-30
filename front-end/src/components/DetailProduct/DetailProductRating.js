@@ -89,16 +89,16 @@ export default function DetailProductRating({ product }) {
                         {
                             showFormRating ?
                                 <Button
-                                    // danger
                                     type="primary"
+                                    danger
                                     size="large"
                                     onClick={() => setShowFormRating(!showFormRating)}>
                                     Đóng
                                 </Button>
                                 :
                                 <Button
-                                    // danger
                                     type="primary"
+                                    danger
                                     size="large"
                                     icon={<IoMdPaperPlane
                                         style={{ fontSize: 18 }} />}

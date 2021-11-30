@@ -7,6 +7,13 @@ const productsServices = {
     create(formData) {
         return api.callWithToken().post('/product', formData)
     },
+    delete(slug) {
+        return api.callWithToken().delete('/product', {
+            params: {
+                slug
+            }
+        })
+    },
     getDetailProduct(id) {
         return api.call().get(`/product?slug=${id}`)
     },

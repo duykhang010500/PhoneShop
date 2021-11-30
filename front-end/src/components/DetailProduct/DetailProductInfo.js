@@ -24,12 +24,17 @@ import {
 
 import { actAddToCart } from '../../store/cart/action'
 import { useEffect, useState } from 'react'
-import { actAddToWishList, actDeleteItemInWishList } from '../../store/wishList/action'
+import { actAddToWishList, actDeleteItemInWishListAsync } from '../../store/wishList/action'
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination, Controller, Thumbs } from 'swiper';
+import 'swiper/swiper-bundle.css';
+import './styles.css';
+SwiperCore.use([Navigation, Pagination, Controller, Thumbs]);
 
 export default function DetailProductInfo({ product }) {
 
     const dispatch = useDispatch()
-
 
     const myWishList = useSelector(state => state.WishList)
 
@@ -60,7 +65,7 @@ export default function DetailProductInfo({ product }) {
     }
 
     const handleLikeProduct = (id) => {
-        if (!localStorage.getItem('token')) {
+        if (!localStorage.getItem('access_token')) {
             alert('Vui lòng đăng nhập để sử dụng tính năng này')
             return
         }
@@ -73,9 +78,16 @@ export default function DetailProductInfo({ product }) {
     const handleUnLikeProduct = (id) => {
         setIsLiked(false)
         setIsLoading(true)
-        dispatch(actDeleteItemInWishList(id))
+        dispatch(actDeleteItemInWishListAsync(id))
 
     }
+
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+    // Covert Array Image
+    const formatImg = product.images_product[0].split(',')
+    const galleryImage = [product.image, ...formatImg]
+    // console.log('ảnh đã format', galleryImage)
 
     return (
         <Row gutter={[40, 40]}>
@@ -83,15 +95,46 @@ export default function DetailProductInfo({ product }) {
                 xs={24}
                 md={10}
             >
-                <div className="product__image">
-                    <div className="product__image-thumb">
-                        <img src={product.image} />
+                <div className="gallery">
+                    <div className="swiper-top">
+                        <Swiper
+                            style={{ '--swiper-navigation-color': '#fff', '--swiper-pagination-color': '#fff' }}
+                            spaceBetween={10}
+                            navigation={true}
+                            loop
+                            thumbs={{ swiper: thumbsSwiper }}
+                            className="mySwiper2"
+                        >
+                            {
+                                galleryImage.map((item, index) => {
+                                    return (
+                                        <SwiperSlide key={index} className="item-gallery">
+                                            <img src={item} />
+                                        </SwiperSlide>
+                                    )
+                                })
+                            }
+                        </Swiper>
                     </div>
-                    <div className="product__image-sub">
-                        <img style={{ width: 50, height: 50, border: '1px solid red' }} src={product.image} />
-                    </div>
+                    <Swiper
+                        onSwiper={setThumbsSwiper}
+                        spaceBetween={10}
+                        slidesPerView={5}
+                        freeMode={true}
+                        watchSlidesProgress={true}
+                        className="mySwiper"
+                    >
+                        {
+                            galleryImage.map((item, index) => {
+                                return (
+                                    <SwiperSlide key={index} className="item-gallery">
+                                        <img src={item} />
+                                    </SwiperSlide>
+                                )
+                            })
+                        }
+                    </Swiper>
                 </div>
-
             </Col>
             <Col md={14} xs={24}>
                 <Space direction="vertical" size="middle">

@@ -18,7 +18,8 @@ import {
     InputNumber,
     Avatar,
     Tooltip,
-    Popconfirm
+    Popconfirm,
+    Typography
 } from 'antd'
 
 import {
@@ -39,7 +40,8 @@ import { modules, placeholder, theme } from '../../helpers/textEditorHelper'
 
 import { beforeUpload, draggerProps, getBase64 } from '../../helpers/uploadHelper';
 
-import { actCreateProductAsync, actGetAllProductAsync } from '../../store/products/actions';
+import { actCreateProductAsync, actDeleteProductAsync, actGetAllProductAsync } from '../../store/products/actions';
+import { convertNewPrice, formatVND } from '../../helpers/priceFormat'
 
 const DashboardAminProducts = () => {
 
@@ -49,32 +51,12 @@ const DashboardAminProducts = () => {
     const { Dragger } = Upload
     const [isVisibleModal, setIsVisibleModal] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [isFetchingProduct, setIsFetchingProduct] = useState(false)
     const [imageUrl, setImageUrl] = useState("")
 
     useEffect(() => {
         dispatch(actGetAllProductAsync())
     }, [dispatch])
-
-
-
-    // Upload avatar product
-    const handleChange = info => {
-        if (info.file.status === 'uploading') {
-            setLoading(true)
-            return;
-        }
-        if (info.file.status === 'done') {
-            getBase64(info.file.originFileObj, imageUrl => {
-                setImageUrl(imageUrl)
-                setLoading(false)
-            }
-            );
-            const url = info.file.response.data.display_url
-            form.setFieldsValue({
-                image: url
-            })
-        }
-    };
 
     //Button upload
     const uploadButton = (
@@ -120,6 +102,7 @@ const DashboardAminProducts = () => {
             title: 'Ảnh',
             render: (text, record) => (
                 <Avatar
+                    style={{ width: 50, height: 50 }}
                     shape="square"
                     src={record.image}
                 />
@@ -130,21 +113,41 @@ const DashboardAminProducts = () => {
             title: 'Tên sản phẩm',
             dataIndex: 'name',
             key: 'name',
+            render: (text, record) => (
+                <Typography.Text
+                    strong
+                >
+                    {record.name}
+                </Typography.Text>
+            )
         },
-        {
-            title: 'Đường dẫn',
-            dataIndex: 'slug',
-            key: 'slug'
-        },
+        // {
+        //     title: 'Đường dẫn',
+        //     dataIndex: 'slug',
+        //     key: 'slug'
+        // },
         {
             title: 'Giá',
             dataIndex: 'price',
-            key: 'price'
+            key: 'price',
+            render: (text, record) => (
+                <Typography.Text
+                    type="danger"
+                    strong
+                >
+                    {formatVND(record.price)}
+                </Typography.Text>
+            )
         },
         {
             title: 'Khuyến mại (%)',
             dataIndex: 'discount',
-            key: 'discount'
+            key: 'discount',
+            render: (text, record) => (
+                <Typography.Text strong>
+                    {record.discount}%
+                </Typography.Text>
+            )
         },
         {
             title: 'Hành động',
@@ -155,6 +158,7 @@ const DashboardAminProducts = () => {
                         <Popconfirm
                             placement="topRight"
                             title={`Xóa điện thoai ${record.name}`}
+                            onConfirm={() => handleDeleteProduct(record.slug)}
                         >
                             <Button
                                 type="primary"
@@ -168,7 +172,7 @@ const DashboardAminProducts = () => {
                         <Button
                             type="primary"
                             icon={<FormOutlined />}
-                            type="primary"
+                            className="btn-primary"
                         >
                         </Button>
                     </Tooltip>
@@ -176,6 +180,18 @@ const DashboardAminProducts = () => {
             )
         }
     ]
+
+    //Delete Product
+    const handleDeleteProduct = (slug) => {
+        console.log('Xóa ', slug)
+        setIsFetchingProduct(true)
+        dispatch(actDeleteProductAsync(slug)).then(() => {
+            message.success('Xóa sản phẩm thành công!')
+            dispatch(actGetAllProductAsync()).then(() => {
+                setIsFetchingProduct(false)
+            })
+        })
+    }
 
     //Create Product
     const handleSubmit = (values) => {
@@ -191,8 +207,26 @@ const DashboardAminProducts = () => {
         })
     }
 
-    const FormFixed = () => {
 
+    const FormFixed = () => {
+        // Upload avatar product
+        const handleChange = info => {
+            if (info.file.status === 'uploading') {
+                console.log('upload')
+                setLoading(true)
+                return;
+            }
+            if (info.file.status === 'done') {
+                getBase64(info.file.originFileObj, imageUrl => {
+                    setImageUrl(imageUrl)
+                    setLoading(false)
+                });
+                const url = info.file.response.data.display_url
+                form.setFieldsValue({
+                    image: url
+                })
+            }
+        };
         //QUILL JS
         const { quill, quillRef } = useQuill({ theme, placeholder, modules });
 
@@ -222,7 +256,7 @@ const DashboardAminProducts = () => {
         useEffect(() => {
             if (quill) {
                 quill.on('text-change', () => {
-                    console.log('Text change!');
+                    // console.log('Text change!');
                     console.log(quill.root.innerHTML);
                     form.setFieldsValue({
                         desc: quill.root.innerHTML
@@ -253,10 +287,8 @@ const DashboardAminProducts = () => {
                     <Upload
                         name="image"
                         listType="picture-card"
-                        className="avatar-uploader"
-                        maxCount={1}
                         showUploadList={false}
-                        action='https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2'
+                        action="https://api.imgbb.com/1/upload?key=8c37ca908e1a1a4f5db86e4555a008c2"
                         beforeUpload={beforeUpload}
                         onChange={handleChange}
                     >
@@ -550,20 +582,20 @@ const DashboardAminProducts = () => {
                         type="primary"
                         icon={<PlusCircleOutlined />}
                         onClick={() => setIsVisibleModal(!isVisibleModal)}
+                        className="btn-primary"
                     >
                         Thêm sản phẩm
                     </Button>
                 </Space>
             </Col>
-
             <Col span={24}>
                 <Table
                     columns={columns}
                     dataSource={listProduct}
                     rowKey={(record) => record.id}
+                    loading={isFetchingProduct}
                 />
             </Col>
-
             <Modal
                 title="Tạo sản phẩm"
                 visible={isVisibleModal}
@@ -576,7 +608,7 @@ const DashboardAminProducts = () => {
                             handleSubmit(values);
                         })
                         .catch((info) => {
-                            console.log('Validate Failed:', info);
+                            // console.log('Validate Failed:', info);
                         });
                 }}
                 width={800}

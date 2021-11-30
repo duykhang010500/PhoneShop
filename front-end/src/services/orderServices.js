@@ -12,7 +12,18 @@ const orderServices = {
                 order_code: orderCode
             }
         })
+    },
+    getListOrderUser() {
+        return api.callWithToken().get('/admin/order-user')
+    },
+    getDetailOrderUser(order_code) {
+        return api.callWithToken().get('/admin/order-user-detail', {
+            params: {
+                order_code
+            }
+        })
     }
+
 }
 
 export default orderServices

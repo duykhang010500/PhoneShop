@@ -52,6 +52,15 @@ export const actCreateProductAsync = (formData) => async (dispatch) => {
     }
 }
 
+export const actDeleteProductAsync = (slug) => async (dispatch) => {
+    try {
+        const res = await productsServices.delete(slug)
+        console.log(res)
+    } catch (err) {
+        throw err
+    }
+}
+
 export const actGetDetailProductAsync = (id) => async (dispatch) => {
     try {
         const res = await productsServices.getDetailProduct(id)

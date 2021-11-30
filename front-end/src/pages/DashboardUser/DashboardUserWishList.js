@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { actGetMyWishListAsync } from '../../store/wishList/action'
-import { convertNewPrice, formatVND } from '../../helpers/priceFormat'
 import { Link } from 'react-router-dom'
+import { Skeleton, Tooltip } from 'antd'
+
+import { actDeleteItemInWishListAsync, actGetMyWishListAsync } from '../../store/wishList/action'
+import { convertNewPrice, formatVND } from '../../helpers/priceFormat'
 const DashboardUserWishList = () => {
 
     const dispatch = useDispatch()
@@ -17,10 +19,19 @@ const DashboardUserWishList = () => {
 
     const myWishList = useSelector(state => state.WishList)
 
+    const handleRemoveProduct = (productId) => {
+        console.log(productId)
+        dispatch(actDeleteItemInWishListAsync(productId)).then(() => {
+            dispatch(actGetMyWishListAsync())
+        })
+    }
+
     if (isLoading) {
-        return <div>
-            Đang tải danh sách yêu thích
-        </div>
+        return <>
+            <Skeleton paragraph={3} />
+            <Skeleton paragraph={3} />
+            <Skeleton paragraph={3} />
+        </>
     } else {
         return (
             <div className="wishlist-page">
@@ -50,7 +61,11 @@ const DashboardUserWishList = () => {
                                             <span>-{item.product.discount}%</span>
                                         </div>
                                     </div>
-                                    <button className="btn-close">×</button>
+                                    <Tooltip title="Xóa">
+                                        <button className="btn-close" onClick={() => handleRemoveProduct(item.product_id)}>
+                                            ×
+                                        </button>
+                                    </Tooltip>
                                 </li>
                             )
                         })
