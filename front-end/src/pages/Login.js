@@ -16,11 +16,11 @@ import { useNotAuthenticated } from '../hooks/useAuthenticate'
 
 export default function Login() {
 
-    useNotAuthenticated()
     const history = useHistory()
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
 
+    const [form] = Form.useForm()
 
     const handleSubmit = (values) => {
         setIsLoading(true)
@@ -34,7 +34,6 @@ export default function Login() {
         }).finally(() => {
             setIsLoading(false)
         })
-
     }
 
     return (
@@ -47,6 +46,7 @@ export default function Login() {
                 className="login-form"
                 size="large"
                 onFinish={handleSubmit}
+                form={form}
             >
                 <Form.Item
                     name="email"
@@ -62,9 +62,8 @@ export default function Login() {
                     ]}
                 >
                     <Input
-                        prefix={<UserOutlined
-                            className="site-form-item-icon" />}
                         placeholder="Email"
+                        prefix={<UserOutlined />}
                         type="email"
                         allowClear
                     />
@@ -80,23 +79,27 @@ export default function Login() {
                     }]}
                 >
                     <Input
-                        prefix={<LockOutlined className="site-form-item-icon" />}
-                        type="password"
                         placeholder="Mật khẩu"
+                        prefix={<LockOutlined />}
+                        type="password"
                         allowClear
                     />
                 </Form.Item>
                 <Form.Item>
                     <Button
                         type="primary"
-                        htmlType="submit"
-                        className="login-form-button"
                         loading={isLoading}
+                        htmlType="submit"
+                        style={{ width: '100%', marginBottom: 10 }}
                     >
                         Đăng nhập
                     </Button>
                     Hoặc <Link to='/register'>
-                        <Typography.Text type="danger" strong>
+                        <Typography.Text
+                            type="danger"
+                            strong
+                            style={{ fontSize: 16 }}
+                        >
                             Đăng ký ngay
                         </Typography.Text>
                     </Link>

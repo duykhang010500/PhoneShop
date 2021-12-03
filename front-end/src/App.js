@@ -6,7 +6,7 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import { BackTop } from 'antd'
 import { UpCircleTwoTone } from '@ant-design/icons'
@@ -28,32 +28,22 @@ import OrderSuccess from "./pages/OrderSuccess"
 
 import { actFetchMe, actGetAdmin } from "./store/auth/action"
 import { actGetListBrandAsync } from "./store/brands/actions"
-import NProgress from 'nprogress'
+import { actGetColorsProductAsync } from "./store/products/actions"
+
 function App() {
 
   const dispatch = useDispatch()
   const isDashBoardAdmin = useRouteMatch('/admin')
 
   useEffect(() => {
-
     if (localStorage.getItem('r') == 1) {
       dispatch(actFetchMe())
     } else {
       dispatch(actGetAdmin())
     }
     dispatch(actGetListBrandAsync())
+    dispatch(actGetColorsProductAsync())
   }, [dispatch])
-
-  NProgress.configure({ showSpinner: false });
-  useEffect(() => {
-    NProgress.start()
-    // return () => {
-    //   NProgress.done()
-    // }
-  }, [])
-
-
-
 
   return (
     <div>

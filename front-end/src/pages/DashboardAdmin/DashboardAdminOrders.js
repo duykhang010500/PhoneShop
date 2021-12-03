@@ -8,8 +8,10 @@ import {
     Button,
     Tooltip,
     Tag,
-    Avatar,
-    Modal
+    Modal,
+    Form,
+    Radio,
+    Typography
 } from 'antd';
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -25,7 +27,7 @@ import {
 
 import { FaTruck } from "react-icons/fa"
 
-import { actGetDetailOrderUserAsync, actGetListOrdersUserAsync } from '../../store/orders/action';
+import { actGetDetailOrderUserAsync, actGetListOrdersUserAsync, actUpdateStatusOrder } from '../../store/orders/action';
 import { convertNewPrice, formatVND } from '../../helpers/priceFormat'
 
 const DashboardAdminOrders = () => {
@@ -39,13 +41,43 @@ const DashboardAdminOrders = () => {
         })
     }, [dispatch])
 
+    const [form] = Form.useForm()
     const [isLoading, setIsLoading] = useState(false)
     const [ordersSelected, setOrderSelected] = useState('')
+    const [showModalUpdate, setShowModalUpdate] = useState(false)
+    const [confirmLoading, setConfirmLoading] = useState(false)
 
     const listOrdersUser = useSelector((state) => state.Orders.listOrdersUser)
 
     const handleGetDetailOrders = (id) => {
         console.log(id)
+    }
+
+    // Cập nhật giá trị radio button trạng thái
+    const handleChangeStatusOrder = () => {
+        console.log('Change Status!', ordersSelected)
+        form
+            .validateFields()
+            .then((status) => handleSubmit(status))
+    }
+
+    // Cập nhật trạng thái đơn hàng
+    const handleSubmit = (status) => {
+        setConfirmLoading(true)
+        dispatch(actUpdateStatusOrder(ordersSelected.order_code, status))
+            .then(() => {
+                setConfirmLoading(false)
+                dispatch(actGetListOrdersUserAsync())
+            })
+            .finally(() => {
+                setShowModalUpdate(false)
+            })
+    }
+
+    // Đóng modal
+    const handleCloseModal = () => {
+        setShowModalUpdate(false)
+        Modal.destroyAll()
     }
 
     const columns = [
@@ -63,6 +95,14 @@ const DashboardAdminOrders = () => {
             title: 'Tổng tiền',
             dataIndex: 'total',
             key: 'total',
+            render: (price) => (
+                <Typography.Text
+                    strong
+                    type="danger"
+                >
+                    {formatVND(price)}
+                </Typography.Text>
+            )
         },
         ,
         {
@@ -96,7 +136,13 @@ const DashboardAdminOrders = () => {
                         <Button
                             type="primary"
                             icon={<EditOutlined />}
-                        // loading
+                            onClick={() => {
+                                setShowModalUpdate(true)
+                                setOrderSelected(record)
+                                form.setFieldsValue({
+                                    status: record.status
+                                })
+                            }}
                         >
                         </Button>
                     </Tooltip>
@@ -121,6 +167,7 @@ const DashboardAdminOrders = () => {
         <Row
             gutter={[20, 20]}
         >
+            {/* Đường dẫn */}
             <Col span={24}>
                 <Breadcrumb>
                     <Breadcrumb.Item href="/admin">
@@ -129,6 +176,35 @@ const DashboardAdminOrders = () => {
                     <Breadcrumb.Item>Quản lý đơn hàng</Breadcrumb.Item>
                 </Breadcrumb>
             </Col>
+
+            {/* Modal cập nhật trạng thái */}
+            <Modal
+                title={`Cập nhật trạng thái đơn hàng #${ordersSelected.order_code}`}
+                okText="Cập nhật"
+                visible={showModalUpdate}
+                onCancel={handleCloseModal}
+                onOk={handleChangeStatusOrder}
+                confirmLoading={confirmLoading}
+                destroyOnClose={true}
+            >
+                <Form
+                    form={form}
+                    name='form-update-status'
+                // preserve={false}
+                >
+                    <Form.Item
+                        name="status"
+                    >
+                        <Radio.Group>
+                            <Radio value={1}>Đang chờ xử lý</Radio>
+                            <Radio value={2}>Đang vận chuyển</Radio>
+                            <Radio value={3}>Đã hoàn thành</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                </Form>
+            </Modal>
+
+            {/* Bảng đơn hàng */}
             <Col span={24}>
                 <Table
                     loading={isLoading}

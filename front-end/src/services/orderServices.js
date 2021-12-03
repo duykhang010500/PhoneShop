@@ -22,6 +22,9 @@ const orderServices = {
                 order_code
             }
         })
+    },
+    updateStatusOrders(order_code, status) {
+        return api.callWithToken().post(`/admin/update-order?order_code=${order_code}`, status)
     }
 
 }

@@ -21,24 +21,24 @@ img {
   display: block;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-}
+// ::-webkit-scrollbar {
+//   width: 10px;
+// }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
+// /* Track */
+// ::-webkit-scrollbar-track {
+//   background: #f1f1f1;
+// }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: silver;
-}
+// /* Handle */
+// ::-webkit-scrollbar-thumb {
+//   background: silver;
+// }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: silver;
-}
+// /* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//   background: silver;
+// }
 
 .container {
   max-width: 120rem;
@@ -59,30 +59,14 @@ a:hover {
   font-size: 1.5rem;
 }
 
-// .ant-tag {
-//   padding: 0.5rem 1rem;
-//   border-radius: 2rem;
-//   font-weight: 500;
-// }
-
 .underline {
   width: 8rem;
   border-top: 4px solid black;
   margin-bottom: 2rem;
 }
 
-.ant-avatar-lg {
-  width: 7rem;
-  height: 7rem;
-}
-
 .icon {
   font-size: 3rem;
-}
-
-.ant-statistic-title {
-  color: white;
-  font-size: 1.6rem;
 }
 
 .banner-item {
@@ -98,14 +82,11 @@ a:hover {
   transition: all ease-in-out 0.5s;
 }
 
-.ant-card {
-  height: 100%;
-}
-
 .ads {
   overflow: hidden;
   cursor: pointer;
 }
+
 .ads:hover img {
   transform: scale(1.05);
   transition: all 0.5s ease-in-out;
@@ -123,18 +104,9 @@ a:hover {
 //   object-fit: contain;
 // }
 
-.ant-menu-title-content {
-  font-weight: 500;
-}
-.ant-form-item-label {
-  font-weight: 500;
-}
-
-.btn-primary {
-  background-color: #1890ff;
-  border: 1px solid #1890ff;
-  &:hover {
-    background-color: #1890ff;
-    border: 1px solid #1890ff;
-  }
-}
+// .ant-menu-title-content {
+//   font-weight: 500;
+// }
+// .ant-form-item-label {
+//   font-weight: 500;
+// }

@@ -22,6 +22,16 @@ const productsServices = {
     },
     ratingProduct(id, formData) {
         return api.callWithToken().post(`/ratings?id=${id}`, formData)
+    },
+    getRelatedListProduct(slug) {
+        return api.call().get('/related-products', {
+            params: {
+                slug
+            }
+        })
+    },
+    getColorsProduct() {
+        return api.call().get('/colors-product')
     }
 }
 

@@ -78,4 +78,13 @@ export const actGetDetailOrderUserAsync = (order_code) => async (dispatch) => {
     }
 }
 
+//Update status orders
+export const actUpdateStatusOrder = (order_code, status) => async (dispatch) => {
+    try {
+        const res = await orderServices.updateStatusOrders(order_code, status)
+        console.log(res)
+    } catch (err) {
+        throw err
+    }
+}
 

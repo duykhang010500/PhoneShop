@@ -1,7 +1,11 @@
 import productsServices from "../../services/productsServices"
+
+// action types
 export const ACT_GET_ALL_PRODUCT = 'ACT_GET_ALL_PRODUCT'
 export const ACT_GET_DETAIL_PRODUCT = 'ACT_GET_DETAIL_PRODUCT'
 export const ACT_GET_BEST_DISCOUNT = 'ACT_GET_BEST_DISCOUNT'
+export const ACT_GET_RELATED_LIST_PRODUCT = 'ACT_GET_RELATED_LIST_PRODUCT'
+export const ACT_GET_COLORS_PRODUCT = 'ACT_GET_COLORS_PRODUCT'
 
 export const actGetListProduct = (list) => {
     return {
@@ -89,5 +93,40 @@ export const actRatingProductAsync = (id, formData) => async (dispatch) => {
         console.log(res)
     } catch (err) {
         console.log(err)
+    }
+}
+
+// lấy danh sách sản phẩm tương tự
+const actGetRelatedListProduct = (list) => {
+    return {
+        type: ACT_GET_RELATED_LIST_PRODUCT,
+        payload: { list }
+    }
+}
+
+export const actGetRelatedListProductAsync = (slug) => async (dispatch) => {
+    try {
+        const res = await productsServices.getRelatedListProduct(slug)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+// lấy tất cả màu sắc của sản phẩm
+export const actGetColorsProduct = (list) => {
+    return {
+        type: ACT_GET_COLORS_PRODUCT,
+        payload: { list }
+    }
+}
+
+export const actGetColorsProductAsync = () => async (dispatch) => {
+    try {
+        const res = await productsServices.getColorsProduct()
+        const colorsProduct = res.data.data
+        dispatch(actGetColorsProduct(colorsProduct))
+
+    } catch (err) {
+        throw err
     }
 }

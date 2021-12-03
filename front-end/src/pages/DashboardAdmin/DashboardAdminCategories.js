@@ -27,7 +27,9 @@ import {
     actGetListBrandAsync,
     actUpdateBrandAsync
 } from '../../store/brands/actions'
+import { useAdmin } from '../../hooks/useAuthenticate'
 const DashboardAdminCategories = () => {
+    useAdmin()
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
     const [idSelected, setIdSelected] = useState("")

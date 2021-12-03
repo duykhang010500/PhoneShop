@@ -58,6 +58,8 @@ const DashboardAminProducts = () => {
         dispatch(actGetAllProductAsync())
     }, [dispatch])
 
+    const listOfColors = useSelector(state => state.Products.colorsProduct)
+
     //Button upload
     const uploadButton = (
         <div>
@@ -121,11 +123,6 @@ const DashboardAminProducts = () => {
                 </Typography.Text>
             )
         },
-        // {
-        //     title: 'Đường dẫn',
-        //     dataIndex: 'slug',
-        //     key: 'slug'
-        // },
         {
             title: 'Giá',
             dataIndex: 'price',
@@ -196,15 +193,15 @@ const DashboardAminProducts = () => {
     //Create Product
     const handleSubmit = (values) => {
         console.log(values)
-        dispatch(actCreateProductAsync(values)).then((res) => {
-            if (res.ok) {
-                message.success(res.message)
-            } else {
-                message.error(res.message)
-            }
-        }).finally(() => {
-            dispatch(actGetAllProductAsync())
-        })
+        // dispatch(actCreateProductAsync(values)).then((res) => {
+        //     if (res.ok) {
+        //         message.success(res.message)
+        //     } else {
+        //         message.error(res.message)
+        //     }
+        // }).finally(() => {
+        //     dispatch(actGetAllProductAsync())
+        // })
     }
 
 
@@ -329,6 +326,33 @@ const DashboardAminProducts = () => {
                                     </Option>
                                 )
                             })
+                        }
+                    </Select>
+                </Form.Item>
+
+                {/* Màu sắc */}
+                <Form.Item
+                    label="Màu sắc"
+                    name="color"
+                    rules={[{
+                        required: true,
+                        message: 'Vui lòng chọn màu sắc',
+                        type: 'array'
+                    }]}
+                >
+                    <Select
+                        mode="multiple"
+                        size="large"
+                    >
+                        {
+                            listOfColors.map((item) => (
+                                <Option
+                                    key={item.id}
+                                    value={item.id}
+                                >
+                                    {item.name}
+                                </Option>
+                            ))
                         }
                     </Select>
                 </Form.Item>
@@ -604,7 +628,7 @@ const DashboardAminProducts = () => {
                     form
                         .validateFields()
                         .then((values) => {
-                            form.resetFields();
+                            // form.resetFields();
                             handleSubmit(values);
                         })
                         .catch((info) => {

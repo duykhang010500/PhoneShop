@@ -20,6 +20,7 @@ import DetailProductRating from '../components/DetailProduct/DetailProductRating
 import DetailProductListRating from '../components/DetailProduct/DetailProductListRating';
 import { actGetDetailProductAsync } from '../store/products/actions';
 import { actGetMyWishListAsync } from '../store/wishList/action';
+import RelatedProductList from '../components/RelatedProductList';
 
 export default function DetailProduct() {
 
@@ -58,6 +59,8 @@ export default function DetailProduct() {
                             <DetailProductWarranty />
                         </Col>
                     </Row>
+                    <Divider />
+                    <RelatedProductList />
                     <Divider />
                     <Row gutter={[40, 40]}>
                         <Col xs={24} md={14}>
