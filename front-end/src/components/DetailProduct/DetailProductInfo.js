@@ -43,7 +43,7 @@ export default function DetailProductInfo({ product }) {
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        if (myWishList.find(item => item.product_id == product.id)) {
+        if (myWishList.find(item => item.product_id === product.id)) {
             setIsLiked(true)
         } else {
             setIsLiked(false)
@@ -109,7 +109,7 @@ export default function DetailProductInfo({ product }) {
                                 galleryImage.map((item, index) => {
                                     return (
                                         <SwiperSlide key={index} className="item-gallery">
-                                            <img src={item} />
+                                            <img src={item} alt={item} />
                                         </SwiperSlide>
                                     )
                                 })
@@ -128,7 +128,7 @@ export default function DetailProductInfo({ product }) {
                             galleryImage.map((item, index) => {
                                 return (
                                     <SwiperSlide key={index} className="item-gallery">
-                                        <img src={item} />
+                                        <img src={item} alt={item} />
                                     </SwiperSlide>
                                 )
                             })

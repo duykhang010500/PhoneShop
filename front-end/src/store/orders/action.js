@@ -71,7 +71,7 @@ export const actGetDetailOrderUserAsync = (order_code) => async (dispatch) => {
     try {
         const res = await orderServices.getDetailOrderUser(order_code)
         console.log('Order user: ', res)
-        const orders = res.data.data[0]
+        const orders = res.data.data
         dispatch(actGetDetailOrders(orders))
     } catch (err) {
         throw err
@@ -82,7 +82,7 @@ export const actGetDetailOrderUserAsync = (order_code) => async (dispatch) => {
 export const actUpdateStatusOrder = (order_code, status) => async (dispatch) => {
     try {
         const res = await orderServices.updateStatusOrders(order_code, status)
-        console.log(res)
+
     } catch (err) {
         throw err
     }

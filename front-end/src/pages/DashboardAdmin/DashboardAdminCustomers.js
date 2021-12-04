@@ -14,6 +14,9 @@ const DashboardAdminCustomers = () => {
         dispatch(actGetListCustomerAsync()).then(() => {
             setIsLoading(false)
         })
+        return () => {
+            setIsLoading(false)
+        }
     }, [dispatch])
 
     const listCustomer = useSelector(state => state.Customer.list)

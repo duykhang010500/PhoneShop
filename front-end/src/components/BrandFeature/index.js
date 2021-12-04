@@ -28,7 +28,7 @@ const BrandFeature = () => {
                     >
                         <Link to="" className="banner-item">
                             <img
-
+                                alt="Ảnh"
                                 src="https://cellphones.com.vn/media/icons/banner/banner-sis-apple-homepage.png"
                             />
                         </Link>
@@ -39,7 +39,7 @@ const BrandFeature = () => {
                     >
                         <Link to="" className="banner-item">
                             <img
-
+                                alt="Ảnh"
                                 src="https://cellphones.com.vn/media/icons/banner/banner-sis-samsung-homepage.png"
                             />
                         </Link>
@@ -50,6 +50,8 @@ const BrandFeature = () => {
                     >
                         <Link to="" className="banner-item">
                             <img
+                                alt="Ảnh"
+
                                 className="banner-item"
                                 src="https://cellphones.com.vn/media/icons/banner/banner-sis-asus-homepage.png"
                             />
@@ -61,6 +63,8 @@ const BrandFeature = () => {
                     >
                         <Link to="" className="banner-item">
                             <img
+                                alt="Ảnh"
+
                                 className="banner-item"
                                 src="https://cellphones.com.vn/media/icons/banner/banner-sis-xiaomi-homepage.png"
                             />

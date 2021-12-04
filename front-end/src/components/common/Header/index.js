@@ -74,7 +74,7 @@ export default function Header() {
                                     &nbsp;Khuyến mại
                                 </Link>
                             </div>
-                            {/* <Button onClick={handleLogout}>Logout</Button> */}
+                            <Button onClick={handleLogout}>Logout</Button>
                         </div>
                     </div>
                 </div>

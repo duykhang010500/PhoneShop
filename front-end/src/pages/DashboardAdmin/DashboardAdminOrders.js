@@ -11,7 +11,8 @@ import {
     Modal,
     Form,
     Radio,
-    Typography
+    Typography,
+    Avatar
 } from 'antd';
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -41,17 +42,42 @@ const DashboardAdminOrders = () => {
         })
     }, [dispatch])
 
+
+
+    // Lấy danh sách orders
+    const listOrdersUser = useSelector((state) => state.Orders.listOrdersUser)
+
+    // Lấy chi tiết orders
+    const detailOrders = useSelector(state => state.Orders.detailOrder)
+
     const [form] = Form.useForm()
     const [isLoading, setIsLoading] = useState(false)
     const [ordersSelected, setOrderSelected] = useState('')
     const [showModalUpdate, setShowModalUpdate] = useState(false)
     const [confirmLoading, setConfirmLoading] = useState(false)
+    const [showModalDetailOrders, setShowModalDetailOrders] = useState(false)
+    const [totalPrice, setTotalPrice] = useState(0)
 
-    const listOrdersUser = useSelector((state) => state.Orders.listOrdersUser)
 
-    const handleGetDetailOrders = (id) => {
+    // Lấy chi tiết đơn hàng của customer
+    const handleGetDetailOrdersUser = (id) => {
         console.log(id)
+        dispatch(actGetDetailOrderUserAsync(id)).then(() => {
+            setShowModalDetailOrders(true)
+        })
     }
+
+    useEffect(() => {
+        const getTotalPrice = () => {
+            const total = detailOrders.reduce((prev, item) => {
+                return prev + (item.product_price * item.product_quantity)
+            }, 0)
+            setTotalPrice(total)
+        }
+        if (detailOrders) {
+            getTotalPrice()
+        }
+    }, [detailOrders])
 
     // Cập nhật giá trị radio button trạng thái
     const handleChangeStatusOrder = () => {
@@ -154,7 +180,10 @@ const DashboardAdminOrders = () => {
                                 backgroundColor: "#52c41a",
                                 border: "none"
                             }}
-                            onClick={() => handleGetDetailOrders(record.order_code)}
+                            onClick={() => {
+                                setOrderSelected(record.order_code)
+                                handleGetDetailOrdersUser(record.order_code)
+                            }}
                         >
                         </Button>
                     </Tooltip>
@@ -178,6 +207,7 @@ const DashboardAdminOrders = () => {
             </Col>
 
             {/* Modal cập nhật trạng thái */}
+
             <Modal
                 title={`Cập nhật trạng thái đơn hàng #${ordersSelected.order_code}`}
                 okText="Cập nhật"
@@ -197,12 +227,110 @@ const DashboardAdminOrders = () => {
                     >
                         <Radio.Group>
                             <Radio value={1}>Đang chờ xử lý</Radio>
-                            <Radio value={2}>Đang vận chuyển</Radio>
+                            <Radio value={2}>Đang giao hàng</Radio>
                             <Radio value={3}>Đã hoàn thành</Radio>
                         </Radio.Group>
                     </Form.Item>
                 </Form>
             </Modal>
+
+
+            {/* Modal chi tiết đơn hàng  */}
+
+            <Modal
+                title={`Chi tiết đơn hàng #${ordersSelected}`}
+                visible={showModalDetailOrders}
+                onOk={() => setShowModalDetailOrders(false)}
+                onCancel={() => setShowModalDetailOrders(false)}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                destroyOnClose={true}
+            >
+                {
+                    !detailOrders ? (
+                        <span>Đang tải thông tin</span>
+                    ) : (
+                        <div className="order__detail">
+                            <div className="order__detail-customer">
+                                <div className="order__detail-customer--title">
+                                    Thông tin khách hàng
+                                </div>
+                                <div className="order__detail-customer--detail">
+                                    <div className="order__detail-customer--info">
+                                        <span>
+                                            Họ và tên: &nbsp;
+                                        </span>
+                                        {detailOrders[0].ship.name}
+                                    </div>
+                                    <div className="order__detail-customer--info">
+                                        <span>
+                                            Địa chỉ nhận hàng: &nbsp;
+                                        </span>
+                                        {detailOrders[0].ship.address}
+                                    </div>
+                                    <div className="order__detail-customer--info">
+                                        <span>
+                                            Số điện thoại: &nbsp;
+                                        </span>
+                                        {detailOrders[0].ship.phone}
+                                    </div>
+                                    <div className="order__detail-customer--info">
+                                        <span>
+                                            Ngày đặt hàng: &nbsp;
+                                        </span>
+                                        {detailOrders[0].ship.created_at}
+                                    </div>
+                                    <div className="order__detail-customer--info">
+                                        <span>
+                                            Ghi chú: &nbsp;
+                                        </span>
+                                        {detailOrders[0].ship.note}
+                                    </div>
+                                    <div className="order__detail-customer--info">
+                                        <span>
+                                            Thanh toán: &nbsp;
+                                        </span>
+                                        {detailOrders[0].ship.method}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="order__detail-product">
+                                <div className="order__detail-product--title">
+                                    Thông tin sản phẩm
+                                </div>
+                                {
+                                    detailOrders.map((item, index) => {
+                                        return (
+                                            <div key={index} className="order__detail-product--detail">
+                                                <div className="order__detail-product--info">
+                                                    <Avatar
+                                                        shape="square"
+                                                        src={item.product_image}
+                                                        style={{ width: 75, height: 75 }}
+                                                    />
+                                                    <div className="order__detail-product--name">
+                                                        {item.product_name} ({item.product_color})
+                                                    </div>
+                                                    <span className="order__detail-product--quantity">X {item.product_quantity}</span>
+                                                    <div className="order__detail-product--price">
+                                                        {formatVND(+item.product_price)}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <div className="order__detail-total">
+                                <span>Thành tiền: </span>
+                                <span className="total-price">
+                                    {formatVND(totalPrice)}
+                                </span>
+                            </div>
+                        </div>
+                    )
+                }
+            </Modal>
+
 
             {/* Bảng đơn hàng */}
             <Col span={24}>
@@ -210,6 +338,7 @@ const DashboardAdminOrders = () => {
                     loading={isLoading}
                     columns={columns}
                     dataSource={listOrdersUser}
+                    rowKey={(record) => record.order_code}
                 />
             </Col>
 

@@ -23,8 +23,8 @@ import {
 
 import { RiCoupon4Line } from "react-icons/ri";
 import DashboardAdminRoutes from './DashboardAdminRoutes';
-import { useDispatch, useSelector } from 'react-redux'
-import { actGetListOrdersUserAsync } from '../../store/orders/action';
+import { useSelector } from 'react-redux'
+
 import { useAdmin } from '../../hooks/useAuthenticate';
 
 const { Header, Sider, Content } = Layout;

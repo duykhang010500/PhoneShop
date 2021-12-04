@@ -1,7 +1,5 @@
 import ProductItem from '../ProductItem'
-import { Typography } from 'antd'
 
-import Underline from '../common/Underline'
 
 export default function BestDiscount({ title, product }) {
 
