@@ -29,6 +29,7 @@ export default function DetailProduct() {
     const [isFetching, setIsFetching] = useState(false)
 
     useEffect(() => {
+        window.scrollTo(0, 0)
         setIsFetching(true)
         dispatch(actGetDetailProductAsync(id)).then(() => {
             setIsFetching(false)
@@ -42,7 +43,10 @@ export default function DetailProduct() {
 
     if (!product) {
         return (
-            <div>Đang chờ</div>
+            <div style={{ marginTop: 200 }}>
+                <div>Đang chờ</div>
+
+            </div>
         )
     } else {
         return (
@@ -54,13 +58,12 @@ export default function DetailProduct() {
                         <Col xs={24} md={18}>
                             <DetailProductInfo product={product} />
                         </Col>
-
                         <Col xs={24} md={6}>
                             <DetailProductWarranty />
                         </Col>
                     </Row>
                     <Divider />
-                    <RelatedProductList />
+                    <RelatedProductList productSlug={product.slug} />
                     <Divider />
                     <Row gutter={[40, 40]}>
                         <Col xs={24} md={14}>

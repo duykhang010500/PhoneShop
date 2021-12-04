@@ -36,7 +36,7 @@ function App() {
   const isDashBoardAdmin = useRouteMatch('/admin')
 
   useEffect(() => {
-    if (localStorage.getItem('r') == 1) {
+    if (+localStorage.getItem('r') === 1) {
       dispatch(actFetchMe())
     } else {
       dispatch(actGetAdmin())

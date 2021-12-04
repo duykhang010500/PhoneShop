@@ -68,9 +68,9 @@ export const actDeleteProductAsync = (slug) => async (dispatch) => {
 export const actGetDetailProductAsync = (id) => async (dispatch) => {
     try {
         const res = await productsServices.getDetailProduct(id)
-        console.log(res)
+        // console.log(res)
         const detailProduct = res.data.data
-        console.log(detailProduct)
+        // console.log(detailProduct)
         dispatch(actGetDetailProduct(detailProduct))
     } catch (err) {
         console.log(err)
@@ -96,17 +96,22 @@ export const actRatingProductAsync = (id, formData) => async (dispatch) => {
     }
 }
 
-// lấy danh sách sản phẩm tương tự
-const actGetRelatedListProduct = (list) => {
+
+// lấy danh sách các sản phẩm tương tự
+
+const actGetRelatedProductList = (list) => {
     return {
         type: ACT_GET_RELATED_LIST_PRODUCT,
         payload: { list }
     }
 }
-
 export const actGetRelatedListProductAsync = (slug) => async (dispatch) => {
     try {
         const res = await productsServices.getRelatedListProduct(slug)
+        // console.log(res)
+        const relatedProductList = res.data.data.data
+        dispatch(actGetRelatedProductList(relatedProductList))
+
     } catch (err) {
         console.log(err)
     }

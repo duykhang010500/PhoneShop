@@ -21,24 +21,24 @@ img {
   display: block;
 }
 
-// ::-webkit-scrollbar {
-//   width: 10px;
-// }
+::-webkit-scrollbar {
+  width: 10px;
+}
 
-// /* Track */
-// ::-webkit-scrollbar-track {
-//   background: #f1f1f1;
-// }
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
 
-// /* Handle */
-// ::-webkit-scrollbar-thumb {
-//   background: silver;
-// }
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: silver;
+}
 
-// /* Handle on hover */
-// ::-webkit-scrollbar-thumb:hover {
-//   background: silver;
-// }
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: silver;
+}
 
 .container {
   max-width: 120rem;
