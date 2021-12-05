@@ -71,7 +71,8 @@
     }
 
     &--name {
-      font-weight: 500;
+      font-size: 1.6rem;
+      font-weight: 600;
       text-align: center;
       margin-top: 2rem;
       display: -webkit-box;
@@ -90,7 +91,7 @@
     &--price-new {
       font-size: 1.6rem;
       color: #fd475a;
-      font-weight: 600;
+      font-weight: bolder;
     }
 
     &--price-old {

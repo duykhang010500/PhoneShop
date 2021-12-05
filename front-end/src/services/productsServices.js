@@ -32,6 +32,9 @@ const productsServices = {
     },
     getColorsProduct() {
         return api.call().get('/colors-product')
+    },
+    searchProduct(keyWord) {
+        return api.call().get(`/search?data=${keyWord}`)
     }
 }
 

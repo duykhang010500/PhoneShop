@@ -6,6 +6,7 @@ export const ACT_GET_DETAIL_PRODUCT = 'ACT_GET_DETAIL_PRODUCT'
 export const ACT_GET_BEST_DISCOUNT = 'ACT_GET_BEST_DISCOUNT'
 export const ACT_GET_RELATED_LIST_PRODUCT = 'ACT_GET_RELATED_LIST_PRODUCT'
 export const ACT_GET_COLORS_PRODUCT = 'ACT_GET_COLORS_PRODUCT'
+export const ACT_SEARCH_PRODUCT = 'ACT_GET_SEARCH_PRODUCT'
 
 export const actGetListProduct = (list) => {
     return {
@@ -131,6 +132,26 @@ export const actGetColorsProductAsync = () => async (dispatch) => {
         const colorsProduct = res.data.data
         dispatch(actGetColorsProduct(colorsProduct))
 
+    } catch (err) {
+        throw err
+    }
+}
+
+// tìm kiếm sản phẩm
+
+const actSearchProduct = (list) => {
+    return {
+        type: ACT_SEARCH_PRODUCT,
+        payload: { list }
+    }
+}
+
+export const actSearchProductAsync = (keyWord) => async (dispatch) => {
+    try {
+        const res = await productsServices.searchProduct(keyWord)
+        console.log('Search result: ', res.data.data)
+        const resultSearch = res.data.data
+        dispatch(actSearchProduct(resultSearch))
     } catch (err) {
         throw err
     }

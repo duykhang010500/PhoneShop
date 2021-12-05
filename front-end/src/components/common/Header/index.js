@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Select, Input, Avatar, Button } from 'antd'
+import { Select, Input, Avatar, Button, message } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import {
     QuestionCircleOutlined,
@@ -7,18 +7,18 @@ import {
     UserOutlined,
     ShoppingCartOutlined,
     PhoneOutlined
-
 } from '@ant-design/icons'
 
 import { IoNewspaper } from "react-icons/io5";
 import { useSelector } from 'react-redux';
-import HeaderLogo from './HeaderLogo'
-import HeaderSearch from './HeaderSearch'
-import HeaderMenu from './HeaderMenu'
 import { actSetCurrentUser, actSetToken } from '../../../store/auth/action';
 import { useDispatch } from 'react-redux';
 
 export default function Header() {
+    const { Search } = Input
+    const dispatch = useDispatch()
+    const history = useHistory()
+
 
     const cart = useSelector(state => state.Cart.cart)
 
@@ -36,8 +36,6 @@ export default function Header() {
         // console.log('scroll')
     }, [])
 
-    const dispatch = useDispatch()
-    const history = useHistory()
 
     function handleLogout(e) {
         e.preventDefault()
@@ -47,7 +45,13 @@ export default function Header() {
         history.push('/')
     }
 
-    const { Search } = Input
+    function handleSearch(value) {
+        // console.log(value)
+        if (value === '') {
+            message.info('Vui lòng nhập từ khoá cần tìm!')
+        }
+        history.push('/search?q=' + value)
+    }
 
     return (
         <div className={isFixed ? "header-wrapper fixed" : 'header-wrapper'}>
@@ -88,7 +92,13 @@ export default function Header() {
                             </Link>
                         </div>
                         <div className="header__menu-search">
-                            <Search placeholder="Bạn cần tìm gì?" allowClear enterButton />
+                            <Search placeholder="Bạn cần tìm gì?"
+                                allowClear
+                                enterButton
+                                onSearch={handleSearch}
+                            // size="large"
+
+                            />
                         </div>
                         <div className="header__menu-actions">
                             <div className="header__menu-actions--item">

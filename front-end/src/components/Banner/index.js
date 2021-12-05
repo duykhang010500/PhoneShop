@@ -26,7 +26,19 @@ const Banner = () => {
                     <div>
                         <h3 style={contentStyle}>
 
-                            <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/11/21/web-1.jpg" alt="" />
+                            <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/11/15/lenovo-m10-01.jpg" alt="" />
+                        </h3>
+                    </div>
+                    <div>
+                        <h3 style={contentStyle}>
+
+                            <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/12/03/tua-n-le-giam-so-c-samsung-galaxy-a-1200x382.jpg" alt="" />
+                        </h3>
+                    </div>
+                    <div>
+                        <h3 style={contentStyle}>
+
+                            <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/12/02/huawei-band-6-freebuds-4i-01.jpg" alt="" />
                         </h3>
                     </div>
 

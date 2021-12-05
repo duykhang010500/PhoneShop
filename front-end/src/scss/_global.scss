@@ -61,7 +61,7 @@ a:hover {
 
 .underline {
   width: 8rem;
-  border-top: 4px solid black;
+  border-top: 3px solid black;
   margin-bottom: 2rem;
 }
 
@@ -95,6 +95,10 @@ a:hover {
 .box-sd {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px !important;
+}
+
+.text-center {
+  text-align: center;
 }
 
 // .ant-avatar > img {

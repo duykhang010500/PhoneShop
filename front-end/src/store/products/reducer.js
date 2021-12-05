@@ -3,7 +3,8 @@ import {
     ACT_GET_BEST_DISCOUNT,
     ACT_GET_COLORS_PRODUCT,
     ACT_GET_DETAIL_PRODUCT,
-    ACT_GET_RELATED_LIST_PRODUCT
+    ACT_GET_RELATED_LIST_PRODUCT,
+    ACT_SEARCH_PRODUCT
 } from "./actions"
 
 const initState = {
@@ -11,7 +12,8 @@ const initState = {
     listBestDiscount: [],
     detailProduct: null,
     relatedListProduct: [],
-    colorsProduct: []
+    colorsProduct: [],
+    searchProduct: []
 }
 const productsReducer = (state = initState, action) => {
     switch (action.type) {
@@ -39,6 +41,11 @@ const productsReducer = (state = initState, action) => {
             return {
                 ...state,
                 colorsProduct: action.payload.list
+            }
+        case ACT_SEARCH_PRODUCT:
+            return {
+                ...state,
+                searchProduct: action.payload.list
             }
         default:
             return state

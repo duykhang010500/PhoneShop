@@ -206,7 +206,6 @@ export default function DetailProductInfo({ product }) {
                     {/* product color */}
                     <Radio.Group>
                         <Space
-                            size="large"
                             onChange={handleChangeColor}
                         >
                             {

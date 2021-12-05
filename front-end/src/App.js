@@ -29,6 +29,7 @@ import OrderSuccess from "./pages/OrderSuccess"
 import { actFetchMe, actGetAdmin } from "./store/auth/action"
 import { actGetListBrandAsync } from "./store/brands/actions"
 import { actGetColorsProductAsync } from "./store/products/actions"
+import Search from "./pages/Search"
 
 function App() {
 
@@ -59,6 +60,9 @@ function App() {
         </Route>
         <Route exact path="/register">
           <Register />
+        </Route>
+        <Route exact path="/search">
+          <Search />
         </Route>
         <Route exact path="/cart">
           <Cart />
