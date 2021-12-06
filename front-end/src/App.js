@@ -34,9 +34,11 @@ import Search from "./pages/Search"
 function App() {
 
   const dispatch = useDispatch()
+
   const isDashBoardAdmin = useRouteMatch('/admin')
 
   useEffect(() => {
+
     if (+localStorage.getItem('r') === 1) {
       dispatch(actFetchMe())
     } else {

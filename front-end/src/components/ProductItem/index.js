@@ -26,9 +26,12 @@ export default function ProductItem({ product, isShowCategory }) {
                                 formatVND(convertNewPrice(product.price, product.discount))
                             }
                         </span>
-                        <span className="product__item-discount">
-                            -{product.discount}%
-                        </span>
+
+                        {
+                            product.discount !== 0 && <span className="product__item-discount">
+                                -{product.discount}%
+                            </span>
+                        }
                         {/* <span className="product__item--price-old">
                             <del>
                                 {

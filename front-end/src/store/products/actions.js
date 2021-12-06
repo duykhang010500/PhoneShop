@@ -15,20 +15,6 @@ export const actGetListProduct = (list) => {
     }
 }
 
-export const actGetDetailProduct = (product) => {
-    return {
-        type: ACT_GET_DETAIL_PRODUCT,
-        payload: { product }
-    }
-}
-
-export const actGetBestDiscount = (list) => {
-    return {
-        type: ACT_GET_BEST_DISCOUNT,
-        payload: { list }
-    }
-}
-
 export const actGetAllProductAsync = () => async (dispatch) => {
     try {
         const res = await productsServices.getAll()
@@ -39,6 +25,34 @@ export const actGetAllProductAsync = () => async (dispatch) => {
         console.log(err)
     }
 }
+
+export const actGetDetailProduct = (product) => {
+    return {
+        type: ACT_GET_DETAIL_PRODUCT,
+        payload: { product }
+    }
+}
+
+export const actGetDetailProductAsync = (id) => async (dispatch) => {
+    try {
+        const res = await productsServices.getDetailProduct(id)
+        // console.log(res)
+        const detailProduct = res.data.data
+        // console.log(detailProduct)
+        dispatch(actGetDetailProduct(detailProduct))
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const actGetBestDiscount = (list) => {
+    return {
+        type: ACT_GET_BEST_DISCOUNT,
+        payload: { list }
+    }
+}
+
+
 
 export const actCreateProductAsync = (formData) => async (dispatch) => {
     try {
@@ -66,17 +80,7 @@ export const actDeleteProductAsync = (slug) => async (dispatch) => {
     }
 }
 
-export const actGetDetailProductAsync = (id) => async (dispatch) => {
-    try {
-        const res = await productsServices.getDetailProduct(id)
-        // console.log(res)
-        const detailProduct = res.data.data
-        // console.log(detailProduct)
-        dispatch(actGetDetailProduct(detailProduct))
-    } catch (err) {
-        console.log(err)
-    }
-}
+
 
 export const actGetBestDiscountAsync = () => async (dispatch) => {
     try {

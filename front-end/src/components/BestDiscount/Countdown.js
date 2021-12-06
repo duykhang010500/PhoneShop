@@ -7,11 +7,10 @@ const Countdown = () => {
     const [timerHours, setTimerHours] = useState(0)
     const [timerMinutes, setTimerMinutes] = useState(0)
     const [timerSeconds, setTimerSeconds] = useState(0)
-    let interval = useRef()
 
+    let interval = useRef()
     const startTimer = () => {
         const countDownDate = new Date('Dec 31, 2021 00:00:00').getTime()
-
         interval = setInterval(() => {
             const now = new Date().getTime()
             const distance = countDownDate - now;
@@ -33,7 +32,7 @@ const Countdown = () => {
     useEffect(() => {
         startTimer()
         return () => {
-            clearInterval(interval.current)
+            clearInterval(interval)
         }
     })
 

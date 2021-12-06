@@ -8,7 +8,7 @@ import DashboardAdminCustomers from './DashboardAdminCustomers'
 import DashboardHome from './DashboardAdminHome'
 import DashboardAdminOrders from './DashboardAdminOrders'
 import DashboardAminProducts from './DashboardAminProducts'
-import DashboardAdminCreateProduct from './DashboradAdminCreateProduct'
+import DashboardAdminCreateProduct from './DashboardAdminCreateProduct'
 
 const DashboardAdminRoutes = () => {
     return (

@@ -17,13 +17,18 @@ export default function HomePage() {
         dispatch(actGetBestDiscountAsync())
     }, [dispatch])
 
-    const listNew = useSelector(state => state.Products.list)
+    const selector = useSelector(state => state)
+    const listDiscount = selector.Products.listBestDiscount.data
+    const listNew = selector.Products.list
 
+    if (!listDiscount || !listNew) {
+        return null
+    }
     return (
         <div className="home-page">
             <Banner />
             <BestDiscount
-                product={listNew}
+                product={listDiscount}
             />
             <BrandFeature />
             <NewListProduct

@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
-import { Breadcrumb, Form, Input, Row, Col, Upload, Typography, InputNumber, Select, Button } from 'antd'
-import { HomeOutlined, UploadOutlined, InboxOutlined, PlusOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Breadcrumb, Form, Input, Row, Col, Upload, Typography, InputNumber, Select, Button, message, Space } from 'antd'
+import { HomeOutlined, UploadOutlined, InboxOutlined, PlusOutlined, LoadingOutlined, SaveOutlined } from '@ant-design/icons'
 
 import { useDispatch, useSelector } from 'react-redux'
 import slugify from 'slugify'
 import { useQuill } from 'react-quilljs';
-import { modules, placeholder, theme } from '../../helpers/textEditorHelper'
+// import { modules, placeholder, theme } from '../../helpers/textEditorHelper'
 import { actCreateProductAsync } from '../../store/products/actions'
+import { Link } from 'react-router-dom'
 
 const DashboardAdminCreateProduct = () => {
 
     const [form] = Form.useForm()
-    const selector = useSelector(state => state)
     const dispatch = useDispatch()
+    const selector = useSelector(state => state)
+
+    const [isLoading, setIsLoading] = useState(false)
+    const [text, setText] = useState('')
 
     // Danh sách các màu sắc
     const colorList = selector.Products.colorsProduct
@@ -37,30 +41,55 @@ const DashboardAdminCreateProduct = () => {
     // Submit form
     const onFinish = (values) => {
         // console.log(values)
+        setIsLoading(true)
+        setText(values.desc)
         const image = values.image[0].response.data.display_url
-        const images_product = values.images_product.map((item) => item.response.data.display_url)
-        const newObj = { ...values, image, images_product }
+
+        let listImage
+        if (values.images_product === undefined) {
+            listImage = []
+        } else {
+            listImage = values.images_product.map((item) => item.response.data.display_url)
+        }
+
+        const newObj = { ...values, image, images_product: listImage }
         console.log(newObj)
-        dispatch(actCreateProductAsync(newObj))
+
+        dispatch(actCreateProductAsync(newObj)).then((res) => {
+            if (res.ok) {
+                message.success(res.message)
+            } else {
+                message.error(res.message)
+            }
+        }).finally(() => {
+            setIsLoading(false)
+        })
     }
 
+    // File upload
     const normFile = (e) => {
-        console.log('Upload event:', e);
         if (Array.isArray(e)) {
             return e;
         }
         return e && e.fileList;
     };
 
-    const QuillJS = () => {
+    const TextEditor = () => {
 
-        const { quill, quillRef } = useQuill({ theme, placeholder, modules });
+
+        const { quill, quillRef } = useQuill({});
 
         useEffect(() => {
             if (quill) {
+                // quill.clipboard.dangerouslyPasteHTML(text);
+                quill.root.innerHTML = text
+                form.setFieldsValue({
+                    desc: quill.root.innerHTML
+                })
                 quill.on('text-change', () => {
                     // console.log('Text change!');
                     // console.log(quill.root.innerHTML);
+                    // setText(quill.root.innerHTML)
                     form.setFieldsValue({
                         desc: quill.root.innerHTML
                     })
@@ -91,14 +120,20 @@ const DashboardAdminCreateProduct = () => {
                 saveToServer(file);
             };
         };
+
         //End QuillJS function
         return (
-            <div ref={quillRef} style={{ width: '300', height: 500 }} />
+            <div>
+                <div style={{ width: '100%', height: 500, marginBottom: 40 }}>
+                    <div ref={quillRef} />
+                </div>
+            </div>
         )
+
     }
 
     return (
-        <div className="create-product-page">
+        <div className="create-product-page" style={{ marginBottom: 50 }}>
             <Breadcrumb style={{ marginBottom: '2rem' }}>
                 <Breadcrumb.Item href="/admin">
                     <HomeOutlined />
@@ -106,8 +141,8 @@ const DashboardAdminCreateProduct = () => {
                 <Breadcrumb.Item>
                     Sản phẩm
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/admin/products">
-                    Quản lý sản phẩm
+                <Breadcrumb.Item >
+                    <Link to='/admin/products'>Quản lý sản phẩm</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                     Tạo sản phẩm
@@ -137,6 +172,10 @@ const DashboardAdminCreateProduct = () => {
                             name="image"
                             valuePropName="fileList"
                             getValueFromEvent={normFile}
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng chọn ảnh đại diện!'
+                            }]}
                         >
                             <Upload
                                 name="image"
@@ -154,6 +193,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Tên sản phẩm"
                             name="name"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập tên sản phẩm!'
+                            }]}
                         >
                             <Input
                                 onChange={handleChangeName}
@@ -166,6 +209,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Thương hiệu"
                             name="brand_id"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng chọn thương hiệu!'
+                            }]}
                         >
                             <Select>
                                 {
@@ -187,6 +234,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Giá (VNĐ)"
                             name="price"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập giá sản phẩm!'
+                            }]}
                         >
                             <InputNumber
                                 style={{ width: '100%' }}
@@ -201,6 +252,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Tồn kho"
                             name="quantity"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập số lượng sản phẩm!'
+                            }]}
                         >
                             <InputNumber
                                 style={{ width: '100%' }}
@@ -214,6 +269,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Màu sắc"
                             name="colors"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng chọn màu sắc sản phẩm!'
+                            }]}
                         >
                             <Select mode="multiple">
                                 {
@@ -235,6 +294,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Đường dẫn"
                             name="slug"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập đường dẫn sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -245,6 +308,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Khuyến mại (%)"
                             name="discount"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng khuyến mại sản phẩm!'
+                            }]}
                         >
                             <InputNumber
                                 style={{ width: '100%' }}
@@ -263,6 +330,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Màn hình"
                             name="screen"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng màn hình sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -273,6 +344,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Camera sau"
                             name="rear_camera"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng camera sau sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -283,6 +358,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Camera trước"
                             name="selfie_camera"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng camera trước sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -293,6 +372,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Ram"
                             name="ram"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập Ram sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -303,6 +386,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Bộ nhớ trong"
                             name="internal_memory"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập bộ nhớ trong sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -313,6 +400,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="CPU"
                             name="cpu"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập CPU sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -323,6 +414,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="GPU"
                             name="gpu"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập GPU sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -333,6 +428,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Dung lượng PIN (mAh)"
                             name="battery"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập dung lượng Pin sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -343,6 +442,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Sim"
                             name="sim"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập số khe sim sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -353,6 +456,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Hệ điều hành"
                             name="os"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập hệ điều hành sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -363,6 +470,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Nơi sản xuất"
                             name="made"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập nơi sản xuất sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -373,6 +484,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Thời gian sản xuất"
                             name="time"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng thời gian sản xuất sản phẩm!'
+                            }]}
                         >
                             <Input />
                         </Form.Item>
@@ -410,22 +525,42 @@ const DashboardAdminCreateProduct = () => {
                         </Typography.Title>
                         <Form.Item
                             name="desc"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập bài viết cho sản phẩm!'
+                            }]}
                         >
-                            <QuillJS />
+                            <TextEditor />
                         </Form.Item>
                     </Col>
 
                     {/* Button tạo sản phẩm  */}
-                    <Col span={24} style={{ textAlign: 'right', marginBottom: '3rem' }}>
+                    <Col span={24} style={{ textAlign: 'right' }}>
                         <Form.Item>
-                            <Button htmlType="submit" type="primary">
-                                Tạo sản phẩm
-                            </Button>
+                            <Space>
+                                <Button
+                                    type="primary"
+                                    danger
+                                    onClick={() => {
+                                        form.resetFields()
+                                        setText('')
+                                    }}
+                                >
+                                    Reset
+                                </Button>
+                                <Button
+                                    htmlType="submit"
+                                    type="primary"
+                                    loading={isLoading}
+                                    icon={<SaveOutlined />}
+                                >
+                                    Tạo sản phẩm
+                                </Button>
+                            </Space>
                         </Form.Item>
                     </Col>
                 </Row>
             </Form>
-
         </div>
     )
 }
