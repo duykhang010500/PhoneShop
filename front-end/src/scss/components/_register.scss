@@ -1,9 +1,12 @@
 .register-page {
-  max-width: 80rem;
-  margin: 4rem auto;
-  // padding: 0 1rem;
+  max-width: 42rem;
+  margin: 13rem auto 4rem;
+  padding: 3rem;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #fff;
   .ant-form-item-label {
     text-align: left;
     font-weight: 600;
+    font-size: 2rem;
   }
 }

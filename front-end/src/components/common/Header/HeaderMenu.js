@@ -1,68 +1,29 @@
 import React from 'react'
+import { Dropdown, Menu, Button } from 'antd'
+import { Link, useHistory } from 'react-router-dom'
+import { IoNewspaper } from "react-icons/io5";
+import { useSelector, useDispatch } from 'react-redux';
+import { actSetCurrentUser, actSetToken } from '../../../store/auth/action';
 import {
-    Link,
-    useHistory
-} from 'react-router-dom'
-import {
-    useSelector
-} from 'react-redux'
-import {
+    UserOutlined,
     ShoppingCartOutlined,
-    MenuOutlined,
+    PhoneOutlined,
     LogoutOutlined,
-    IdcardOutlined,
-    FileSyncOutlined,
-    NotificationOutlined,
-    UserOutlined
+    ReconciliationOutlined
 } from '@ant-design/icons'
-import {
-    Menu,
-    Badge,
-    Dropdown,
-    Avatar,
-    Button,
-    Typography,
-    Popover,
-} from 'antd'
-import Cart from '../../Cart'
-import {
-    actSetToken,
-    actSetCurrentUser
-} from '../../../store/auth/action'
 
-import {
-    useDispatch,
-} from 'react-redux'
+import HeaderSearch from './HeaderSearch';
+import HeaderLogo from './HeaderLogo';
 
 const HeaderMenu = () => {
 
     const dispatch = useDispatch()
-    const currentUser = useSelector(state => state.Auth.currentUser)
-    const cart = useSelector(state => state.Cart.cart)
-
-    const menu = (
-        <Menu>
-            <Menu.Item icon={<IdcardOutlined />} key="1">
-                <Link to="/user">
-                    Trang cá nhân
-                </Link>
-            </Menu.Item>
-            <Menu.Item icon={<FileSyncOutlined />} key="2">
-                <Link to='/user/orders'>
-                    Đơn hàng
-                </Link>
-            </Menu.Item>
-            <Menu.Item style={{ textAlign: 'center' }} key="3">
-                <Button danger onClick={handleLogout} icon={<LogoutOutlined />}>
-                    Đăng xuất
-                </Button>
-            </Menu.Item>
-        </Menu>
-    )
-
     const history = useHistory()
 
-    function handleLogout(e) {
+    const cart = useSelector(state => state.Cart.cart)
+    const currentUser = useSelector((state) => state.Auth.currentUser)
+
+    const handleLogout = (e) => {
         e.preventDefault()
         dispatch(actSetToken(''))
         dispatch(actSetCurrentUser(null))
@@ -70,57 +31,108 @@ const HeaderMenu = () => {
         history.push('/')
     }
 
-    return (
-        <Menu mode="horizontal" overflowedIndicator={<MenuOutlined />}>
-            <Menu.Item
-                icon={<NotificationOutlined
-                    className="menu-icon" />}
-                key="4"
-            >
-                <Link to='/news'>
-                    Tin tức
-                </Link>
-            </Menu.Item>
-            {
-                !currentUser ? (
-                    <Menu.Item icon={<UserOutlined className="menu-icon" />} key="5">
-                        <Link to="/login">
-                            Đăng nhập
-                        </Link>
-                    </Menu.Item>
-                ) :
-                    (
-                        <Menu.Item key="6">
-                            <Dropdown overlay={menu} placement="bottomLeft" arrow>
-                                <Link to="/user">
-
-                                    {
-                                        currentUser.image ? <Avatar src={currentUser.image} /> : <Avatar icon={<UserOutlined />} />
-                                    }
-                                    &nbsp; <Typography.Text strong>{currentUser.name}</Typography.Text>
-                                </Link>
-
-                            </Dropdown>
-                        </Menu.Item>
-                    )
-            }
-            <Menu.Item
-                icon={<Badge count={cart.length} size="small" showZero className="cart-count">
-                    <ShoppingCartOutlined className="menu-icon" />
-                </Badge>}
-                key="7"
-            >
-                <Popover
-                    title={`${cart.length} sản phẩm`}
-                    trigger="hover"
-                    content={<Cart />}
+    const menuLogin = (
+        <Menu style={{ marginTop: 10 }}>
+            <Menu.Item>
+                <Button
+                    style={{ width: '100%' }}
+                    href='/login'
                 >
-                    <Link to="/cart">
-                        Giỏ hàng
-                    </Link>
-                </Popover>
+                    Khách hàng
+                </Button>
+            </Menu.Item>
+            <Menu.Item>
+                <Button
+                    style={{ width: '100%' }}
+                    href='/login/admin'
+                >
+                    Admin
+                </Button>
+            </Menu.Item>
+
+        </Menu>
+    )
+
+    const menu = (
+        <Menu style={{ marginTop: 10 }}>
+            <Menu.Item>
+                <Button
+                    href="/user"
+                    style={{ width: '100%' }}
+                    icon={<UserOutlined />}
+                >
+                    Tài khoản
+                </Button>
+            </Menu.Item>
+            <Menu.Item>
+                <Button
+                    href="/user/orders"
+                    style={{ width: '100%' }}
+                    icon={<ReconciliationOutlined />}
+                >
+                    Đơn hàng
+                </Button>
+            </Menu.Item>
+            <Menu.Item>
+                <Button
+                    icon={<LogoutOutlined />}
+                    type="primary"
+                    danger
+                    style={{ width: '100%' }}
+                    onClick={handleLogout}
+                >
+                    Đăng xuất
+                </Button>
             </Menu.Item>
         </Menu>
+    )
+
+
+
+    return (
+        <div className="header__menu">
+            <div className="container">
+                <div className="header__menu-wrapper">
+                    <HeaderLogo />
+                    <HeaderSearch />
+                    <div className="header__menu-actions">
+                        <div className="header__menu-actions--item">
+                            <Link to="/login">
+                                <IoNewspaper />&nbsp;Tin tức
+                            </Link>
+                        </div>
+                        <div className="header__menu-actions--item">
+                            <Link to="/login">
+                                <PhoneOutlined />&nbsp;Gọi mua hàng
+                            </Link>
+                        </div>
+                        <div className="header__menu-actions--item">
+                            {
+                                !currentUser ?
+                                    <Dropdown overlay={menuLogin} placement="bottomCenter">
+                                        <Link to="/login">
+                                            <UserOutlined />&nbsp;Đăng nhập
+                                        </Link>
+                                    </Dropdown>
+                                    :
+                                    <Dropdown overlay={menu} placement="bottomCenter">
+                                        <Link to="/login">
+                                            <UserOutlined />&nbsp;Tài khoản
+                                        </Link>
+                                    </Dropdown>
+                            }
+
+                        </div>
+                        <div className="header__menu-actions--item">
+                            <Link to="/cart">
+                                <ShoppingCartOutlined />&nbsp;Giỏ hàng
+                            </Link>
+                            <span className="num-cart">{cart.length}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 

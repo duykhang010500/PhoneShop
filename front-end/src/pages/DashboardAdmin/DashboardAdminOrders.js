@@ -111,6 +111,11 @@ const DashboardAdminOrders = () => {
             title: 'Mã đơn hàng',
             dataIndex: 'order_code',
             key: 'order_code',
+            render: (orderCode) => (
+                <Typography.Text strong>
+                    #{orderCode}
+                </Typography.Text>
+            )
         },
         {
             title: 'Ngày đặt',

@@ -12,18 +12,15 @@ import Banner from "../components/Banner";
 export default function HomePage() {
 
     const dispatch = useDispatch()
-
     useEffect(() => {
         dispatch(actGetAllProductAsync())
         dispatch(actGetBestDiscountAsync())
     }, [dispatch])
 
     const listNew = useSelector(state => state.Products.list)
-    // const listDiscount = useSelector(state => state.Products.listBestDiscount)
-    // const descListDiscount = listDiscount.slice().reverse()
-    // console.log(descListDiscount)
+
     return (
-        <section style={{ marginTop: 150 }}>
+        <div className="home-page">
             <Banner />
             <BestDiscount
                 product={listNew}
@@ -34,6 +31,6 @@ export default function HomePage() {
                 product={listNew}
             />
             <Ads />
-        </section>
+        </div>
     )
 }

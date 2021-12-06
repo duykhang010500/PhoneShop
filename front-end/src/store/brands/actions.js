@@ -23,7 +23,7 @@ export const actGetListBrandAsync = () => async (dispatch) => {
 export const actCreateBrandAsync = (formData) => async (dispatch) => {
     try {
         const res = await brandsServices.createBrand(formData)
-        console.log(res)
+        // console.log(res)
         return {
             ok: true,
             message: 'Tạo hãng mới thành công!'
@@ -40,7 +40,7 @@ export const actCreateBrandAsync = (formData) => async (dispatch) => {
 export const actDeleteBrandAsync = (id) => async (dispatch) => {
     try {
         const res = await brandsServices.deleteBrand(id)
-        console.log(res)
+        // console.log(res)
         return {
             ok: true,
             message: 'Xóa thành công!'
@@ -56,7 +56,7 @@ export const actDeleteBrandAsync = (id) => async (dispatch) => {
 export const actUpdateBrandAsync = (id, formData) => async (dispatch) => {
     try {
         const res = await brandsServices.updateBrand(id, formData)
-        console.log(res)
+        // console.log(res)
         return {
             ok: true,
             message: 'Cập nhật thành công'

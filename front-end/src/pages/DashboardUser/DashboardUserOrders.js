@@ -46,10 +46,10 @@ const DashboardUserOrder = () => {
 
 
     const handleShowDetailOrder = (orderCode) => {
-        setShowModal(true)
         setDetailId(orderCode)
         setIsLoading(true)
         dispatch(actGetDetailOrdersAsync(orderCode)).then(() => {
+            setShowModal(true)
             setIsLoading(false)
         })
     }
@@ -231,8 +231,6 @@ const DashboardUserOrder = () => {
                         </div>
                     )
                 }
-
-
             </Modal>
         </div>
     )

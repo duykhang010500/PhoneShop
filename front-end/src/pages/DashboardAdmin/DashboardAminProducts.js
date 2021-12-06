@@ -124,6 +124,9 @@ const DashboardAminProducts = () => {
             )
         },
         {
+            title: 'Thương hiệu'
+        },
+        {
             title: 'Giá',
             dataIndex: 'price',
             key: 'price',
@@ -605,8 +608,9 @@ const DashboardAminProducts = () => {
                         size="large"
                         type="primary"
                         icon={<PlusCircleOutlined />}
-                        onClick={() => setIsVisibleModal(!isVisibleModal)}
-                        className="btn-primary"
+                        href='/admin/products/create'
+                    // onClick={() => setIsVisibleModal(!isVisibleModal)}
+                    // className="btn-primary"
                     >
                         Thêm sản phẩm
                     </Button>

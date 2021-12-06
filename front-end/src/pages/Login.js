@@ -16,6 +16,7 @@ import { useNotAuthenticated } from '../hooks/useAuthenticate'
 
 export default function Login() {
 
+    useNotAuthenticated()
     const history = useHistory()
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState(false)
@@ -94,7 +95,10 @@ export default function Login() {
                     >
                         Đăng nhập
                     </Button>
-                    Hoặc <Link to='/register'>
+                    <Typography.Text>
+                        Hoặc &nbsp;
+                    </Typography.Text>
+                    <Link to='/register'>
                         <Typography.Text
                             type="danger"
                             strong

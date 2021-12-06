@@ -75,7 +75,7 @@ const DashboardAdminCategories = () => {
     //Update Brand
     const handleUpdate = (values) => {
         console.log(idSelected)
-        console.log(values)
+        // console.log(values)
         setIsLoading(true)
         dispatch(actUpdateBrandAsync(idSelected, values)).then((res) => {
             if (res.ok) {

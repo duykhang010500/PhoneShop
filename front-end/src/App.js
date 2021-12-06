@@ -104,7 +104,7 @@ function App() {
         )
       }
       <BackTop>
-        <UpCircleTwoTone style={{ fontSize: "3.5rem" }} />
+        <UpCircleTwoTone style={{ fontSize: "3.5rem", color: 'red' }} />
       </BackTop>
     </div>
   );

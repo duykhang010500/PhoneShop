@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom'
 
 const HeaderLogo = () => {
     return (
-        <Link to="/" className="logo">
-            PhoneStore
-        </Link>
+        <div className="header__menu-logo">
+            <Link to="/">
+                PhoneStore
+            </Link>
+        </div>
     )
 }
 

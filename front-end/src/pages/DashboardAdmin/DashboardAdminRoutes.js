@@ -8,6 +8,7 @@ import DashboardAdminCustomers from './DashboardAdminCustomers'
 import DashboardHome from './DashboardAdminHome'
 import DashboardAdminOrders from './DashboardAdminOrders'
 import DashboardAminProducts from './DashboardAminProducts'
+import DashboardAdminCreateProduct from './DashboradAdminCreateProduct'
 
 const DashboardAdminRoutes = () => {
     return (
@@ -17,6 +18,7 @@ const DashboardAdminRoutes = () => {
             <Route exact path='/admin/categories' component={DashboardAdminCategories} />
             <Route exact path='/admin/products' component={DashboardAminProducts} />
             <Route exact path='/admin/customer' component={DashboardAdminCustomers} />
+            <Route exact path='/admin/products/create' component={DashboardAdminCreateProduct} />
         </Switch>
     )
 }

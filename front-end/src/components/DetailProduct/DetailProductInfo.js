@@ -85,9 +85,9 @@ export default function DetailProductInfo({ product }) {
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
     // Covert Array Image
-    const formatImg = product.images_product[0].split(',')
+    const formatImg = product.images_product
     const galleryImage = [product.image, ...formatImg]
-    // console.log('ảnh đã format', galleryImage)
+    console.log('ảnh đã format', galleryImage)
 
     return (
         <Row gutter={[40, 40]}>

@@ -5,7 +5,7 @@ const productsServices = {
         return api.callWithToken().get('/products')
     },
     create(formData) {
-        return api.callWithToken().post('/product', formData)
+        return api.callWithToken().post('/products', formData)
     },
     delete(slug) {
         return api.callWithToken().delete('/product', {

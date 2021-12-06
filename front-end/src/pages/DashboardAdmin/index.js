@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation, Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useLocation, Link, useHistory } from 'react-router-dom'
 import './style.less'
 import {
     Layout,
@@ -9,7 +9,8 @@ import {
     Row,
     Space,
     Col,
-    Typography
+    Dropdown,
+    Button
 } from 'antd';
 import {
     MenuUnfoldOutlined,
@@ -19,27 +20,57 @@ import {
     ReconciliationOutlined,
     NotificationOutlined,
     UserOutlined,
+    LogoutOutlined
 } from '@ant-design/icons';
 
+
+import { useSelector, useDispatch } from 'react-redux'
 import { RiCoupon4Line } from "react-icons/ri";
 import DashboardAdminRoutes from './DashboardAdminRoutes';
-import { useSelector } from 'react-redux'
 
 import { useAdmin } from '../../hooks/useAuthenticate';
+import { actSetCurrentUser, actSetToken } from '../../store/auth/action';
 
 const { Header, Sider, Content } = Layout;
 
 const DashboardAdmin = () => {
 
     useAdmin()
+    const history = useHistory()
+    const dispatch = useDispatch()
     const location = useLocation()
-
     const [isCollapsed, setIsCollapsed] = useState(false)
     const { SubMenu } = Menu
     const currentUser = useSelector(state => state.Auth.currentUser)
     if (!currentUser) {
         return null
     }
+
+    const handleLogout = (e) => {
+        e.preventDefault()
+        dispatch(actSetToken(''))
+        dispatch(actSetCurrentUser(null))
+        localStorage.removeItem('r')
+        history.push('/')
+    }
+
+    const menu = (
+        <Menu style={{ marginTop: 20 }}>
+            <Menu.Item
+                key="1"
+            >
+                <Button
+                    type="primary"
+                    danger
+                    icon={<LogoutOutlined />}
+                    onClick={handleLogout}
+                >
+                    Đăng xuất
+                </Button>
+            </Menu.Item>
+
+        </Menu>
+    );
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -103,32 +134,26 @@ const DashboardAdmin = () => {
             </Sider>
             <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0 }}>
-                    <Row
-                        justify="space-between"
-                    >
+                    <Row justify="space-between">
                         <Col>
                             {React.createElement(isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                                 className: 'trigger',
                                 onClick: () => setIsCollapsed(!isCollapsed),
                             })}
                         </Col>
-                        <Col
-                            pull={1}
-                        >
+                        <Col pull={1}>
                             <Space size="large">
-                                <Badge
-                                // dot
-                                >
+                                <Badge>
                                     <Space>
-                                        <Avatar
-                                            shape="circle"
-                                            icon={<UserOutlined />}
-                                        />
-                                        <Typography.Text strong>
-                                            {
-                                                currentUser.name
-                                            }
-                                        </Typography.Text>
+                                        <Dropdown overlay={menu} placement="bottomCenter">
+                                            <Link to="">
+                                                <Avatar
+                                                    shape="circle"
+                                                    icon={<UserOutlined />}
+                                                />
+                                                &nbsp;{currentUser.name}
+                                            </Link>
+                                        </Dropdown>
                                     </Space>
 
                                 </Badge>
