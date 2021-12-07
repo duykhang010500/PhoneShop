@@ -38,8 +38,8 @@ const DashboardAdminCreateProduct = () => {
         })
     }
 
-    // Submit form
-    const onFinish = (values) => {
+    // Submit form create
+    const onFinishCreate = (values) => {
         // console.log(values)
         setIsLoading(true)
         setText(values.desc)
@@ -152,7 +152,7 @@ const DashboardAdminCreateProduct = () => {
             <Form
                 layout="vertical"
                 form={form}
-                onFinish={onFinish}
+                onFinish={onFinishCreate}
                 initialValues={{
                     quantity: 1,
                     discount: 0

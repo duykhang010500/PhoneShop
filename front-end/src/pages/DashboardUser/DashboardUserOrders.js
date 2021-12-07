@@ -29,7 +29,6 @@ const DashboardUserOrder = () => {
 
     useAuthenticated()
     const dispatch = useDispatch()
-
     const myOrders = useSelector(state => state.Orders.listOrders)
     const detailOrders = useSelector(state => state.Orders.detailOrder)
     useEffect(() => {
@@ -43,7 +42,6 @@ const DashboardUserOrder = () => {
     const [showModal, setShowModal] = useState(false)
     const [detailId, setDetailId] = useState(null)
     const [totalPrice, setTotalPrice] = useState(0)
-
 
     const handleShowDetailOrder = (orderCode) => {
         setDetailId(orderCode)

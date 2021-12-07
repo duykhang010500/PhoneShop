@@ -20,7 +20,7 @@ const DashboardAdminUpdateProduct = () => {
     const selector = useSelector(state => state)
 
     useEffect(() => {
-        // console.log(slug)
+        console.log(slug)
         dispatch(actGetDetailProductAsync(slug))
     }, [slug, dispatch])
 
@@ -30,7 +30,8 @@ const DashboardAdminUpdateProduct = () => {
         return null
     }
 
-    // console.log(product)
+
+    console.log(product)
 
     // Danh sách các màu sắc
     const colorList = selector.Products.colorsProduct
@@ -100,6 +101,7 @@ const DashboardAdminUpdateProduct = () => {
         return e && e.fileList;
     };
 
+    //Text editor
     const TextEditor = () => {
         const { quill, quillRef } = useQuill({});
         useEffect(() => {
@@ -154,12 +156,7 @@ const DashboardAdminUpdateProduct = () => {
         )
     }
 
-    const fileList = [
-        {
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-        }
-    ]
-
+    // Chuyển mảng hình ảnh thành fileList
     const convertArrayImageToFileList = (arr) => {
         let fileList = []
         arr.forEach((item) => {
@@ -179,8 +176,8 @@ const DashboardAdminUpdateProduct = () => {
                 <Breadcrumb.Item>
                     Sản phẩm
                 </Breadcrumb.Item>
-                <Breadcrumb.Item >
-                    <Link to='/admin/products'>Quản lý sản phẩm</Link>
+                <Breadcrumb.Item href='/admin/products'>
+                    Quản lý sản phẩm
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                     Tạo sản phẩm
@@ -618,7 +615,7 @@ const DashboardAdminUpdateProduct = () => {
                     </Col>
                 </Row>
             </Form>
-        </div >
+        </div>
     )
 }
 

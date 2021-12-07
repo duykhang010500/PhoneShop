@@ -37,7 +37,7 @@ export const actGetDetailProductAsync = (id) => async (dispatch) => {
     try {
         const res = await productsServices.getDetailProduct(id)
         console.log(res)
-        const detailProduct = res.data.data
+        const detailProduct = res.data.data[0]
         // console.log(detailProduct)
         dispatch(actGetDetailProduct(detailProduct))
     } catch (err) {

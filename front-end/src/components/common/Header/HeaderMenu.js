@@ -23,6 +23,7 @@ const HeaderMenu = () => {
     const cart = useSelector(state => state.Cart.cart)
     const currentUser = useSelector((state) => state.Auth.currentUser)
 
+
     const handleLogout = (e) => {
         e.preventDefault()
         dispatch(actSetToken(''))
@@ -33,7 +34,7 @@ const HeaderMenu = () => {
 
     const menuLogin = (
         <Menu style={{ marginTop: 10 }}>
-            <Menu.Item>
+            <Menu.Item key="1">
                 <Button
                     style={{ width: '100%' }}
                     href='/login'
@@ -41,7 +42,7 @@ const HeaderMenu = () => {
                     Khách hàng
                 </Button>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item key="2">
                 <Button
                     style={{ width: '100%' }}
                     href='/login/admin'
@@ -55,7 +56,7 @@ const HeaderMenu = () => {
 
     const menu = (
         <Menu style={{ marginTop: 10 }}>
-            <Menu.Item>
+            <Menu.Item key="1">
                 <Button
                     href="/user"
                     style={{ width: '100%' }}
@@ -64,7 +65,7 @@ const HeaderMenu = () => {
                     Tài khoản
                 </Button>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item key="2">
                 <Button
                     href="/user/orders"
                     style={{ width: '100%' }}
@@ -73,7 +74,7 @@ const HeaderMenu = () => {
                     Đơn hàng
                 </Button>
             </Menu.Item>
-            <Menu.Item>
+            <Menu.Item key="3">
                 <Button
                     icon={<LogoutOutlined />}
                     type="primary"
@@ -86,8 +87,6 @@ const HeaderMenu = () => {
             </Menu.Item>
         </Menu>
     )
-
-
 
     return (
         <div className="header__menu">

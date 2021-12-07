@@ -124,12 +124,21 @@ const DashboardAdmin = () => {
                         </Link>
                     </Menu.Item>
 
-                    <Menu.Item key="/admin/news"
+                    <SubMenu
+                        key="news"
+                        title="Tin tức"
                         icon={<NotificationOutlined
                             style={{ fontSize: "2rem" }}
-                        />}>
-                        Quản lý tin tức
-                    </Menu.Item>
+                        />}
+                    >
+                        <Menu.Item key="/admin/news/category">
+                            <Link to='/admin/news/category'>Quản lý chủ đề</Link>
+                        </Menu.Item>
+                        <Menu.Item key="/admin/news/posts" >
+                            <Link to='/admin/news/posts'>Quản lý bài viết</Link>
+                        </Menu.Item>
+                    </SubMenu>
+
                 </Menu>
             </Sider>
             <Layout className="site-layout">

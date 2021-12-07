@@ -20,7 +20,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
     HomeOutlined,
     EyeOutlined,
-    CheckOutlined,
     SyncOutlined,
     CheckCircleOutlined,
     EditOutlined,
@@ -29,7 +28,7 @@ import {
 import { FaTruck } from "react-icons/fa"
 
 import { actGetDetailOrderUserAsync, actGetListOrdersUserAsync, actUpdateStatusOrder } from '../../store/orders/action';
-import { convertNewPrice, formatVND } from '../../helpers/priceFormat'
+import { formatVND } from '../../helpers/priceFormat'
 
 const DashboardAdminOrders = () => {
 
@@ -41,8 +40,6 @@ const DashboardAdminOrders = () => {
             setIsLoading(false)
         })
     }, [dispatch])
-
-
 
     // Lấy danh sách orders
     const listOrdersUser = useSelector((state) => state.Orders.listOrdersUser)
@@ -212,7 +209,6 @@ const DashboardAdminOrders = () => {
             </Col>
 
             {/* Modal cập nhật trạng thái */}
-
             <Modal
                 title={`Cập nhật trạng thái đơn hàng #${ordersSelected.order_code}`}
                 okText="Cập nhật"
@@ -335,7 +331,6 @@ const DashboardAdminOrders = () => {
                     )
                 }
             </Modal>
-
 
             {/* Bảng đơn hàng */}
             <Col span={24}>

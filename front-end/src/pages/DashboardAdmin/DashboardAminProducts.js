@@ -92,6 +92,16 @@ const DashboardAminProducts = () => {
             key: 'action',
             render: (text, record) => (
                 <Space>
+                    <Tooltip title="Cập nhật">
+                        <Link to={`/admin/products/update/${record.slug}`}>
+                            <Button
+                                type="primary"
+                                icon={<FormOutlined />}
+                                className="btn-primary"
+                            >
+                            </Button>
+                        </Link>
+                    </Tooltip>
                     <Tooltip title="Xóa">
                         <Popconfirm
                             placement="topRight"
@@ -106,16 +116,7 @@ const DashboardAminProducts = () => {
                             </Button>
                         </Popconfirm>
                     </Tooltip>
-                    <Tooltip title="Cập nhật">
-                        <Button
-                            type="primary"
-                            icon={<FormOutlined />}
-                            className="btn-primary"
-                            href={`/admin/products/update/${record.slug}`}
-                        >
-                        </Button>
-                    </Tooltip>
-                </Space>
+                </Space >
             )
         }
     ]
