@@ -61,7 +61,8 @@ const DashboardAminProducts = () => {
             )
         },
         {
-            title: 'Thương hiệu'
+            title: 'Thương hiệu',
+            // dataIndex: ''
         },
         {
             title: 'Giá',
@@ -110,6 +111,7 @@ const DashboardAminProducts = () => {
                             type="primary"
                             icon={<FormOutlined />}
                             className="btn-primary"
+                            href={`/admin/products/update/${record.slug}`}
                         >
                         </Button>
                     </Tooltip>

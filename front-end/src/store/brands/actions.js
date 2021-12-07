@@ -12,7 +12,6 @@ export const actGetListBrand = (list) => {
 export const actGetListBrandAsync = () => async (dispatch) => {
     try {
         const res = await brandsServices.getList()
-        // console.log(res.data.data)
         const brands = res.data.data
         dispatch(actGetListBrand(brands))
     } catch (err) {

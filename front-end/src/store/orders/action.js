@@ -8,7 +8,7 @@ export const ACT_GET_LIST_ORDERS_USER = 'ACT_GET_LIST_ORDERS_USER'
 export const actMakeNewOrder = (formData) => async (dispatch) => {
     try {
         const res = await orderServices.makeNewOrder(formData)
-        // console.log(res)
+        console.log(res)
     } catch (err) {
         throw err
     }
@@ -39,7 +39,7 @@ export const actGetDetailOrders = (orders) => {
 export const actGetDetailOrdersAsync = (orderCode) => async (dispatch) => {
     try {
         const res = await orderServices.getDetailOrder(orderCode)
-        // console.log(res)
+        console.log(res)
         const orders = res.data.data
         dispatch(actGetDetailOrders(orders))
     } catch (err) {
@@ -82,7 +82,7 @@ export const actGetDetailOrderUserAsync = (order_code) => async (dispatch) => {
 export const actUpdateStatusOrder = (order_code, status) => async (dispatch) => {
     try {
         const res = await orderServices.updateStatusOrders(order_code, status)
-
+        console.log(res)
     } catch (err) {
         throw err
     }

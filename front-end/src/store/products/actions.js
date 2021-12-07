@@ -36,7 +36,7 @@ export const actGetDetailProduct = (product) => {
 export const actGetDetailProductAsync = (id) => async (dispatch) => {
     try {
         const res = await productsServices.getDetailProduct(id)
-        // console.log(res)
+        console.log(res)
         const detailProduct = res.data.data
         // console.log(detailProduct)
         dispatch(actGetDetailProduct(detailProduct))

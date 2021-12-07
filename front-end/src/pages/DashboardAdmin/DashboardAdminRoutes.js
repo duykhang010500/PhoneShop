@@ -9,6 +9,7 @@ import DashboardHome from './DashboardAdminHome'
 import DashboardAdminOrders from './DashboardAdminOrders'
 import DashboardAminProducts from './DashboardAminProducts'
 import DashboardAdminCreateProduct from './DashboardAdminCreateProduct'
+import DashboardAdminUpdateProduct from './DashboardAdminUpdateProduct'
 
 const DashboardAdminRoutes = () => {
     return (
@@ -19,6 +20,7 @@ const DashboardAdminRoutes = () => {
             <Route exact path='/admin/products' component={DashboardAminProducts} />
             <Route exact path='/admin/customer' component={DashboardAdminCustomers} />
             <Route exact path='/admin/products/create' component={DashboardAdminCreateProduct} />
+            <Route exact path='/admin/products/update/:slug' component={DashboardAdminUpdateProduct} />
         </Switch>
     )
 }

@@ -39,6 +39,11 @@ export default function DetailProduct() {
     const product = useSelector(state => state.Products.detailProduct)
     const myWishList = useSelector(state => state.WishList)
 
+    if (!product) {
+        return null
+    }
+
+
     if (isFetching) {
         return (
             <div className="container" style={{ marginTop: 140, marginBottom: 200 }}>
@@ -88,9 +93,7 @@ export default function DetailProduct() {
         )
     }
 
-    if (!product) {
-        return null
-    }
+
 
     return (
         <div className="container">
