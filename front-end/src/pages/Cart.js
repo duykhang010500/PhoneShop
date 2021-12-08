@@ -11,6 +11,8 @@ import {
     Tooltip
 } from 'antd'
 
+import { Link } from 'react-router-dom'
+
 import {
     HomeOutlined,
     DeleteOutlined,
@@ -203,9 +205,10 @@ const Cart = () => {
                         danger
                         type="primary"
                         icon={<CreditCardOutlined />}
-                        href="/checkout"
                     >
-                        Thực hiện thanh toán
+                        <Link to='/checkout'>
+                            Thực hiện thanh toán
+                        </Link>
                     </Button>
                 </Space>
             </Row>

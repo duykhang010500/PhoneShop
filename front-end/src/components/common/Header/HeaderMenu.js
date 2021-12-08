@@ -37,17 +37,19 @@ const HeaderMenu = () => {
             <Menu.Item key="1">
                 <Button
                     style={{ width: '100%' }}
-                    href='/login'
                 >
-                    Khách hàng
+                    <Link to='/login'>
+                        Khách hàng
+                    </Link>
                 </Button>
             </Menu.Item>
             <Menu.Item key="2">
                 <Button
                     style={{ width: '100%' }}
-                    href='/login/admin'
                 >
-                    Admin
+                    <Link to="/login/admin">
+                        Admin
+                    </Link>
                 </Button>
             </Menu.Item>
 

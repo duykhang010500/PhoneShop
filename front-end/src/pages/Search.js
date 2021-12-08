@@ -22,6 +22,10 @@ const Search = () => {
 
     const resultsSearch = useSelector((state) => state.Products.searchProduct)
 
+    if (!resultsSearch) {
+        return null
+    }
+
     if (isSearch) {
         return <div className="search-page">
             <div className="container">

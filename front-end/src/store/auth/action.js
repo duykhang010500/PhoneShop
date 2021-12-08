@@ -21,7 +21,7 @@ export const actSetCurrentUser = (user) => {
 export const actRegister = (formData) => async (dispatch) => {
     try {
         const res = await authServices.register(formData)
-        console.log(res)
+        // console.log(res)
         return {
             ok: true,
             message: 'Tạo tài khoản thành công!'
@@ -76,8 +76,8 @@ export const actFetchMe = () => async (dispatch) => {
         dispatch(actSetCurrentUser(currentUser))
 
     } catch (err) {
+        // console.log(err)
         localStorage.removeItem('r')
-        console.log(err)
         dispatch(actSetToken(''))
         dispatch(actSetCurrentUser(null))
     }
@@ -122,7 +122,7 @@ export const actUpdateProfile = (formData) => async (dispatch) => {
 export const actAdminLogin = (formData) => async (dispatch) => {
     try {
         const res = await authServices.adminLogin(formData)
-        console.log(res)
+        // console.log(res)
         const token = res.data.access_token
         if (token) {
             dispatch(actSetToken(token))

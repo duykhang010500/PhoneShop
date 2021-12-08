@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import slugify from 'slugify'
 import { useQuill } from 'react-quilljs';
 // import { modules, placeholder, theme } from '../../helpers/textEditorHelper'
-import { actCreateProductAsync, actGetDetailProductAsync } from '../../store/products/actions'
+import { actCreateProductAsync, actGetDetailProductAsync, actUpdateProductAsync } from '../../store/products/actions'
 import { Link, useParams } from 'react-router-dom'
 
 const DashboardAdminUpdateProduct = () => {
@@ -30,9 +30,6 @@ const DashboardAdminUpdateProduct = () => {
         return null
     }
 
-
-    console.log(product)
-
     // Danh sách các màu sắc
     const colorList = selector.Products.colorsProduct
     if (!colorList) {
@@ -54,9 +51,8 @@ const DashboardAdminUpdateProduct = () => {
 
     // Submit form
     const onFinish = (values) => {
-
+        setIsLoading(true)
         setText(values.desc)
-
         // convert string
         let image
         if (values.image[0].response) {
@@ -64,7 +60,6 @@ const DashboardAdminUpdateProduct = () => {
         } else {
             image = values.image[0].url
         }
-
         // convert array
         let listImage
         if (values.images_product === undefined) {
@@ -80,17 +75,17 @@ const DashboardAdminUpdateProduct = () => {
         }
 
         const newObj = { ...values, image, images_product: listImage }
-        console.log(newObj)
-
-        // dispatch(actCreateProductAsync(newObj)).then((res) => {
-        //     if (res.ok) {
-        //         message.success(res.message)
-        //     } else {
-        //         message.error(res.message)
-        //     }
-        // }).finally(() => {
-        //     setIsLoading(false)
-        // })
+        // console.log(newObj)
+        dispatch(actUpdateProductAsync(slug, newObj))
+            .then((res) => {
+                if (res.ok) {
+                    message.success(res.message)
+                } else {
+                    message.error(res.message)
+                }
+            }).finally(() => {
+                setIsLoading(false)
+            })
     }
 
     // File upload
@@ -607,6 +602,7 @@ const DashboardAdminUpdateProduct = () => {
                                 htmlType="submit"
                                 type="primary"
                                 loading={isLoading}
+                                // loading
                                 icon={<SaveOutlined />}
                             >
                                 Cập nhật sản phẩm

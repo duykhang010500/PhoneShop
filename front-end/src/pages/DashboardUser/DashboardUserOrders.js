@@ -28,9 +28,16 @@ import { formatVND } from '../../helpers/priceFormat'
 const DashboardUserOrder = () => {
 
     useAuthenticated()
+    const selector = useSelector((state) => state)
     const dispatch = useDispatch()
-    const myOrders = useSelector(state => state.Orders.listOrders)
-    const detailOrders = useSelector(state => state.Orders.detailOrder)
+    const [isLoading, setIsLoading] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [detailId, setDetailId] = useState(null)
+    const [totalPrice, setTotalPrice] = useState(0)
+
+    const myOrders = selector.Orders.listOrders
+    const detailOrders = selector.Orders.detailOrder
+
     useEffect(() => {
         setIsLoading(true)
         dispatch(actGetMyOrdersAsync()).finally(() => {
@@ -38,10 +45,6 @@ const DashboardUserOrder = () => {
         })
     }, [dispatch])
 
-    const [isLoading, setIsLoading] = useState(false)
-    const [showModal, setShowModal] = useState(false)
-    const [detailId, setDetailId] = useState(null)
-    const [totalPrice, setTotalPrice] = useState(0)
 
     const handleShowDetailOrder = (orderCode) => {
         setDetailId(orderCode)
@@ -210,7 +213,9 @@ const DashboardUserOrder = () => {
                                                     <div className="order__detail-product--name">
                                                         {item.product_name} ({item.product_color})
                                                     </div>
-                                                    <span className="order__detail-product--quantity">X {item.product_quantity}</span>
+                                                    <span className="order__detail-product--quantity">
+                                                        X {item.product_quantity}
+                                                    </span>
                                                     <div className="order__detail-product--price">
                                                         {formatVND(+item.product_price)}
                                                     </div>

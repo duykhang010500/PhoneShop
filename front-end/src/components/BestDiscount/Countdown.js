@@ -34,7 +34,7 @@ const Countdown = () => {
         return () => {
             clearInterval(interval)
         }
-    })
+    }, [])
 
     const formatValue = (value) => {
         if (value < 10)

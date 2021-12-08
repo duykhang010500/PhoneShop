@@ -36,8 +36,8 @@ export const actGetDetailProduct = (product) => {
 export const actGetDetailProductAsync = (id) => async (dispatch) => {
     try {
         const res = await productsServices.getDetailProduct(id)
-        console.log(res)
-        const detailProduct = res.data.data[0]
+        // console.log(res.data)
+        const detailProduct = res.data.data
         // console.log(detailProduct)
         dispatch(actGetDetailProduct(detailProduct))
     } catch (err) {
@@ -53,7 +53,7 @@ export const actGetBestDiscount = (list) => {
 }
 
 
-
+// Tạo sản phẩm
 export const actCreateProductAsync = (formData) => async (dispatch) => {
     try {
         const res = await productsServices.create(formData)
@@ -71,6 +71,7 @@ export const actCreateProductAsync = (formData) => async (dispatch) => {
     }
 }
 
+// Xoá sản phẩm
 export const actDeleteProductAsync = (slug) => async (dispatch) => {
     try {
         const res = await productsServices.delete(slug)
@@ -80,8 +81,24 @@ export const actDeleteProductAsync = (slug) => async (dispatch) => {
     }
 }
 
+//Cập nhật sản phẩm
+export const actUpdateProductAsync = (slug, formData) => async (dispatch) => {
+    try {
+        await productsServices.updateProduct(slug, formData)
+        return {
+            ok: true,
+            message: 'Cập nhật thành công!'
+        }
+    } catch (err) {
+        return {
+            ok: false,
+            message: 'Có lỗi xảy ra!'
+        }
+    }
+}
 
 
+// Lấy sản phẩm giảm giá tốt nhất
 export const actGetBestDiscountAsync = () => async (dispatch) => {
     try {
         const res = await productsServices.getBestDiscount()
@@ -153,8 +170,8 @@ const actSearchProduct = (list) => {
 export const actSearchProductAsync = (keyWord) => async (dispatch) => {
     try {
         const res = await productsServices.searchProduct(keyWord)
-        console.log('Search result: ', res.data.data)
-        const resultSearch = res.data.data
+        // console.log('Search result: ', res)
+        const resultSearch = res.data.data.data
         dispatch(actSearchProduct(resultSearch))
     } catch (err) {
         throw err
