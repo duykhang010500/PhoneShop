@@ -1,4 +1,5 @@
 import {
+    ACT_FILTER_PRODUCT,
     ACT_GET_ALL_PRODUCT,
     ACT_GET_BEST_DISCOUNT,
     ACT_GET_COLORS_PRODUCT,
@@ -13,7 +14,13 @@ const initState = {
     detailProduct: null,
     relatedListProduct: [],
     colorsProduct: [],
-    searchProduct: []
+    searchProduct: [],
+    filterListProduct: {
+        list: [],
+        totalItem: 0,
+        currentPage: 0,
+        totalPage: 0
+    }
 }
 const productsReducer = (state = initState, action) => {
     switch (action.type) {
@@ -46,6 +53,22 @@ const productsReducer = (state = initState, action) => {
             return {
                 ...state,
                 searchProduct: action.payload.list
+            }
+        case ACT_FILTER_PRODUCT:
+            return {
+                ...state,
+                filterListProduct: {
+                    ...state.filterListProduct,
+                    list: action.payload.currentPage === 1
+                        ? action.payload.products
+                        : [
+                            ...state.filterListProduct.list,
+                            ...action.payload.products
+                        ],
+                    currentPage: action.payload.currentPage,
+                    totalItem: action.payload.totalItem,
+                    totalPage: action.payload.totalPage
+                }
             }
         default:
             return state

@@ -1,3 +1,4 @@
+import { openNotificationWithIcon } from "../../helpers/notification"
 import { ACT_ADD_TO_CART, ACT_DELETE_CART, ACT_DELETE_ITEM, ACT_UPDATE_ITEM } from "./action"
 
 const getCart = () => {
@@ -24,12 +25,14 @@ const cartReducer = (state = initState, action) => {
             if (check) {
                 let newCart = [...state.cart, { ...action.payload.product, quantity: 1 }]
                 localStorage.setItem('cart', JSON.stringify(newCart))
+                openNotificationWithIcon('success', 'Đã thêm vào giỏ hàng!')
+
                 return {
                     ...state,
                     cart: [...state.cart, { ...action.payload.product, quantity: 1 }]
                 }
             } else {
-                alert('Sản phẩm này đã có trong giỏ hàng!')
+                openNotificationWithIcon('error', 'Sản phẩm này đã có trong giỏ hàng!')
             }
         }
         case ACT_DELETE_ITEM: {

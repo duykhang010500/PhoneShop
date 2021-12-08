@@ -116,7 +116,7 @@ const DashboardAminProducts = () => {
                             </Button>
                         </Popconfirm>
                     </Tooltip>
-                </Space >
+                </Space>
             )
         }
     ]

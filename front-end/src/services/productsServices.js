@@ -38,6 +38,17 @@ const productsServices = {
     },
     searchProduct(keyWord) {
         return api.call().get(`/search?data=${keyWord}`)
+    },
+    filterProduct({
+        page = 1,
+        restParams
+    } = {}) {
+        return api.call().get('/products/filter', {
+            params: {
+                page,
+                ...restParams
+            }
+        })
     }
 }
 

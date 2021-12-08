@@ -1,0 +1,17 @@
+.suggestion-wrapper {
+}
+
+.suggestion-brands {
+  position: sticky;
+  top: 100px;
+  z-index: 2;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  color: black;
+}
+
+.suggestion-title {
+  font-weight: 500;
+  background-color: #fff;
+  font-size: 2rem;
+  padding: 1rem 2rem;
+}

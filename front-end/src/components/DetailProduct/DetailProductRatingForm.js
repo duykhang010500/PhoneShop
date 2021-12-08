@@ -20,6 +20,7 @@ export default function DetailProductRatingForm({ product, showFormRating }) {
     const dispatch = useDispatch()
     const [str, setStr] = useState('')
     const [star, setStar] = useState(0)
+    const [isLoading, setIsLoading] = useState(false)
 
     console.log('product in rating', product)
     function handleChangeStar(e) {
@@ -32,30 +33,30 @@ export default function DetailProductRatingForm({ product, showFormRating }) {
     }
 
     function handleSubmit() {
-        console.log('đánh giá product có id là: ', product.id)
-        // console.log(star)
-        // console.log(str)
-        const form = {}
-        const formData = { ...form, star, content: str }
+        const formData = { star, content: str }
         console.log(formData)
-
+        setIsLoading(true)
 
         dispatch(actRatingProductAsync(product.id, formData))
-        // setStar(0)
-        // setStr('')
+            .finally(() => {
+                setIsLoading(false)
+                setStar(0)
+                setStr('')
+            })
     }
 
     return (
         <>
             {
                 showFormRating &&
-                <Row align="middle" gutter={[10, 10]}>
-                    <Col xs={24} md={8}>
+                <Row align="top" gutter={[10, 10]}>
+                    <Col xs={24} md={8} push={1}>
                         <Space
                             direction="vertical"
                             size="small"
-                            align="center">
-                            <Typography.Title level={4}>
+                            align="center"
+                        >
+                            <Typography.Title level={5}>
                                 Bạn đánh giá như thế nào?
                             </Typography.Title>
                             <Rate
@@ -80,7 +81,7 @@ export default function DetailProductRatingForm({ product, showFormRating }) {
                             style={{ marginTop: 10 }}
                             icon={<IoMdPaperPlane />}
                             onClick={handleSubmit}
-
+                            loading={isLoading}
                         >
                             &nbsp;
                             Gửi ngay

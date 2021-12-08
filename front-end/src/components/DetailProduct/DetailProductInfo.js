@@ -6,6 +6,7 @@ import {
     Radio,
     Button,
     Tooltip,
+
 } from 'antd'
 
 import {
@@ -30,7 +31,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, Controller, Thumbs } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import './styles.css';
+import { openNotificationWithIcon } from '../../helpers/notification'
 SwiperCore.use([Navigation, Pagination, Controller, Thumbs]);
+
 
 export default function DetailProductInfo({ product }) {
 
@@ -56,29 +59,34 @@ export default function DetailProductInfo({ product }) {
 
     const handleAddToCart = (product, color) => {
         if (!productColor) {
-            alert('Vui lòng chọn màu sắc sản phẩm')
+            openNotificationWithIcon('error', 'Hãy chọn màu của sản phẩm!')
             return
         }
         const productWithColor = { ...product, color }
-        // console.log(productWithColor)
+
         dispatch(actAddToCart(productWithColor))
+
+
     }
 
     const handleLikeProduct = (id) => {
         if (!localStorage.getItem('access_token')) {
-            alert('Vui lòng đăng nhập để sử dụng tính năng này')
+            openNotificationWithIcon('error', 'Vui lòng đăng nhập để sử dụng tính năng này!')
             return
         }
-        console.log(id)
         setIsLiked(true)
         setIsLoading(true)
         dispatch(actAddToWishList(id))
+        openNotificationWithIcon('success', 'Đã thích!')
+
     }
 
     const handleUnLikeProduct = (id) => {
         setIsLiked(false)
         setIsLoading(true)
         dispatch(actDeleteItemInWishListAsync(id))
+        openNotificationWithIcon('error', 'Đã bỏ thích!')
+
 
     }
 
@@ -154,7 +162,7 @@ export default function DetailProductInfo({ product }) {
                                 <Space>
                                     <Tooltip title="Bỏ thích">
                                         <HeartFilled
-                                            style={{ cursor: 'pointer', color: 'rgb(255, 66, 78)', fontSize: '1.8rem' }}
+                                            style={{ cursor: 'pointer', color: 'rgb(255, 66, 78)', fontSize: '2rem' }}
                                             onClick={() => handleUnLikeProduct(product.id)}
 
                                         />
@@ -167,7 +175,7 @@ export default function DetailProductInfo({ product }) {
                                 <Space>
                                     <Tooltip title="Yêu thích">
                                         <HeartOutlined
-                                            style={{ cursor: 'pointer', fontSize: '1.8rem' }}
+                                            style={{ cursor: 'pointer', fontSize: '2rem' }}
                                             onClick={() => handleLikeProduct(product.id)}
                                         />
                                     </Tooltip>

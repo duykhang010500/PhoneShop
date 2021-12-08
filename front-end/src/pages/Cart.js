@@ -205,10 +205,10 @@ const Cart = () => {
                         danger
                         type="primary"
                         icon={<CreditCardOutlined />}
+                        href="/checkout"
                     >
-                        <Link to='/checkout'>
-                            Thực hiện thanh toán
-                        </Link>
+                        Thực hiện thanh toán
+
                     </Button>
                 </Space>
             </Row>

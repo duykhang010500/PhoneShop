@@ -54,29 +54,16 @@ const DashboardAdmin = () => {
         history.push('/')
     }
 
-    const menu = (
-        <Menu style={{ marginTop: 20 }}>
-            <Menu.Item
-                key="1"
-            >
-                <Button
-                    type="primary"
-                    danger
-                    icon={<LogoutOutlined />}
-                    onClick={handleLogout}
-                >
-                    Đăng xuất
-                </Button>
-            </Menu.Item>
-
-        </Menu>
-    );
-
     return (
         <Layout style={{ minHeight: '100vh' }}>
-            <Sider trigger={null} collapsible collapsed={isCollapsed}>
+            <Sider
+                trigger={null}
+                collapsible
+                collapsed={isCollapsed}
+                width={240}
+            >
                 <div className="logo" />
-                <Menu theme="dark" mode="inline" selectedKeys={[location.pathname]}>
+                <Menu theme="light" mode="inline" selectedKeys={[location.pathname]}>
                     <Menu.Item
                         key="/admin"
                         icon={<DashboardOutlined
@@ -151,31 +138,22 @@ const DashboardAdmin = () => {
                             })}
                         </Col>
                         <Col pull={1}>
-                            <Space size="large">
-                                <Badge>
-                                    <Space>
-                                        <Dropdown overlay={menu} placement="bottomCenter">
-                                            <Link to="">
-                                                <Avatar
-                                                    shape="circle"
-                                                    icon={<UserOutlined />}
-                                                />
-                                                &nbsp;{currentUser.name}
-                                            </Link>
-                                        </Dropdown>
-                                    </Space>
-
-                                </Badge>
-                            </Space>
+                            <Button
+                                danger
+                                icon={<LogoutOutlined />}
+                                onClick={handleLogout}
+                            >
+                                Đăng xuất
+                            </Button>
                         </Col>
                     </Row>
                 </Header>
                 <Content
-                    className="site-layout-background"
+                    className="site-layout-background box-sd1"
                     style={{
-                        margin: '24px 16px',
+                        // margin: '16px 16px',
                         padding: 24,
-                        minHeight: 280,
+                        // minHeight: 320,
                     }}
                 >
                     <DashboardAdminRoutes />

@@ -9,9 +9,12 @@ import { actGetAllProductAsync, actGetBestDiscountAsync } from "../store/product
 import Banner from "../components/Banner";
 
 
+
+
 export default function HomePage() {
 
     const dispatch = useDispatch()
+
     useEffect(() => {
         dispatch(actGetAllProductAsync())
         dispatch(actGetBestDiscountAsync())
@@ -20,10 +23,10 @@ export default function HomePage() {
     const selector = useSelector(state => state)
     const listDiscount = selector.Products.listBestDiscount.data
     const listNew = selector.Products.list
-
     if (!listDiscount || !listNew) {
         return null
     }
+
     return (
         <div className="home-page">
             <Banner />

@@ -41,9 +41,7 @@ const CategoryFilter = () => {
             defaultChecked: false
         }
     ]
-    const Price = ['Dưới 2 triệu', 'Từ 2 - 4 triệu', 'Từ 4 - 10 triệu', 'Trên 10 triệu']
 
-    const Feature = ['Chống nước', 'Bảo mật vân tay', 'Nhận diện khuôn mặt', 'Sạc nhanh']
 
     return (
         <Row
@@ -77,44 +75,6 @@ const CategoryFilter = () => {
                     }
                 </Row>
             </Checkbox.Group>
-            <Row>
-                <Typography.Title level={5}>
-                    Mức giá
-                </Typography.Title>
-                <Checkbox.Group style={{ width: '100%', }}>
-                    <Row>
-                        {
-                            Price.map((item, index) => {
-                                return (
-                                    <Col span={24}>
-                                        <Checkbox value={item}>{item}</Checkbox>
-                                    </Col>
-
-                                )
-                            })
-                        }
-                    </Row>
-                </Checkbox.Group>
-            </Row>
-            <Row>
-                <Typography.Title level={5}>
-                    Tính năng đặc biệt
-                </Typography.Title>
-                <Checkbox.Group style={{ width: '100%', }}>
-                    <Row>
-                        {
-                            Feature.map((item, index) => {
-                                return (
-                                    <Col span={24}>
-                                        <Checkbox value={item}>{item}</Checkbox>
-                                    </Col>
-
-                                )
-                            })
-                        }
-                    </Row>
-                </Checkbox.Group>
-            </Row>
         </Row>
     )
 }

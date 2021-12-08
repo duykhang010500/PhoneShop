@@ -7,6 +7,7 @@ export const ACT_GET_BEST_DISCOUNT = 'ACT_GET_BEST_DISCOUNT'
 export const ACT_GET_RELATED_LIST_PRODUCT = 'ACT_GET_RELATED_LIST_PRODUCT'
 export const ACT_GET_COLORS_PRODUCT = 'ACT_GET_COLORS_PRODUCT'
 export const ACT_SEARCH_PRODUCT = 'ACT_GET_SEARCH_PRODUCT'
+export const ACT_FILTER_PRODUCT = 'ACT_FILTER_PRODUCT'
 
 export const actGetListProduct = (list) => {
     return {
@@ -111,10 +112,17 @@ export const actGetBestDiscountAsync = () => async (dispatch) => {
 
 export const actRatingProductAsync = (id, formData) => async (dispatch) => {
     try {
-        const res = await productsServices.ratingProduct(id, formData)
-        console.log(res)
+        await productsServices.ratingProduct(id, formData)
+        return {
+            ok: true,
+            message: 'Đánh giá thành công!'
+        }
+
     } catch (err) {
-        console.log(err)
+        return {
+            ok: false,
+            message: 'Bạn đã đánh giá sản phẩm này rồi!'
+        }
     }
 }
 
@@ -173,6 +181,49 @@ export const actSearchProductAsync = (keyWord) => async (dispatch) => {
         // console.log('Search result: ', res)
         const resultSearch = res.data.data.data
         dispatch(actSearchProduct(resultSearch))
+    } catch (err) {
+        throw err
+    }
+}
+
+//Filter Product
+export const actFilterProduct = ({
+    products,
+    totalItem,
+    currentPage,
+    totalPage
+}) => {
+    return {
+        type: ACT_FILTER_PRODUCT,
+        payload: {
+            products,
+            totalItem,
+            totalPage,
+            currentPage
+        }
+    }
+}
+
+export const actFilterProductAsync = ({
+    page,
+    ...restParams
+} = {}) => async (dispatch) => {
+    try {
+        const res = await productsServices.filterProduct({
+            page,
+            ...restParams
+        })
+        console.log(res)
+        const products = res.data.data.data
+        const totalItem = res.data.data.total
+        const currentPage = res.data.data.current_page
+        const totalPage = res.data.data.last_page
+        dispatch(actFilterProduct({
+            products,
+            totalItem,
+            totalPage,
+            currentPage
+        }))
     } catch (err) {
         throw err
     }

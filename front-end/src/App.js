@@ -18,7 +18,7 @@ import Login from "./pages/Login"
 import DetailProduct from "./pages/DetailProduct"
 import PageNotFound from "./pages/PageNotFound"
 import Register from "./pages/Register"
-import ProductByCategory from "./pages/ProductByCategory"
+
 import Cart from './pages/Cart'
 import Checkout from "./pages/Checkout"
 import AdminLogin from './pages/AdminLogin'
@@ -30,6 +30,7 @@ import { actFetchMe, actGetAdmin } from "./store/auth/action"
 import { actGetListBrandAsync } from "./store/brands/actions"
 import { actGetColorsProductAsync } from "./store/products/actions"
 import Search from "./pages/Search"
+import FilterProducts from "./pages/FilterProducts"
 
 function App() {
 
@@ -72,20 +73,17 @@ function App() {
         <Route exact path="/orderSuccess">
           <OrderSuccess />
         </Route>
-        <Route exact path="/brand/:id">
-          <ProductByCategory />
-        </Route>
         <Route exact path="/product/:id">
           <DetailProduct />
         </Route>
         <Route exact path="/checkout">
           <Checkout />
         </Route>
+        <Route exact path='/products'>
+          <FilterProducts />
+        </Route>
         <Route path="/user">
           <DashboardUser />
-        </Route>
-        <Route path="/cc">
-          <ProductByCategory />
         </Route>
         <Route path="/admin">
           <DashboardAdmin />

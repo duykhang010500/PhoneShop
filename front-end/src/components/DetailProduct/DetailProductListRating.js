@@ -6,11 +6,12 @@ import {
     Rate,
     Avatar,
     Col,
-    Row
+    Row,
+    Divider
 } from 'antd'
 export default function DetailProductListRating({ product }) {
     return (
-        <Row>
+        <div className="box-sd1 p-2">
             {
                 product.ratings.length != 0 ?
                     product.ratings.map((item, idx) => {
@@ -20,6 +21,7 @@ export default function DetailProductListRating({ product }) {
                                 key={idx}
                             >
                                 <Comment
+                                    datetime={item.created_at}
                                     author={
                                         <Typography.Text strong>
                                             {item.user_name}
@@ -39,12 +41,13 @@ export default function DetailProductListRating({ product }) {
                                         </>
                                     }
                                 />
+                                {/* <Divider /> */}
                             </Col>
                         )
                     }) :
-                    <span>Chưa có ai đánh giá, hãy là người đầu tiên</span>
+                    <span className="fs-16">Chưa có ai đánh giá, hãy là người đầu tiên cảm nhận 😊</span>
             }
-        </Row>
+        </div>
 
     )
 }

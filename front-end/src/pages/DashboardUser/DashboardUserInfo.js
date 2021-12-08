@@ -106,7 +106,7 @@ const DashboardUserInfo = () => {
 
     //rendering
     return (
-        <div className="box-sd" style={{ backgroundColor: "#fff", padding: "3rem" }}>
+        <div className="box-sd1" style={{ backgroundColor: "#fff", padding: "3rem" }}>
             <Form
                 layout="vertical"
                 initialValues={{

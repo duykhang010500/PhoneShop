@@ -37,6 +37,7 @@ const DashboardUserChangePassword = () => {
 
     return (
         <div
+            className="box-sd1"
             style={{
                 backgroundColor: "#fff",
                 padding: "3rem"

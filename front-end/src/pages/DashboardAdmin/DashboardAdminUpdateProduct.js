@@ -205,7 +205,8 @@ const DashboardAdminUpdateProduct = () => {
                     os: product.product_info.os,
                     made: product.product_info.made,
                     time: product.product_info.time,
-                    desc: product.desc
+                    desc: product.desc,
+                    type: product.type
 
                 }}
             >
@@ -313,6 +314,20 @@ const DashboardAdminUpdateProduct = () => {
                                 style={{ width: '100%' }}
                                 min={1}
                             />
+                        </Form.Item>
+                    </Col>
+
+                    {/* Dòng sản phẩm */}
+                    <Col span={6}>
+                        <Form.Item
+                            label="Dòng sản phẩm"
+                            name="type"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập dòng sản phẩm!'
+                            }]}
+                        >
+                            <Input />
                         </Form.Item>
                     </Col>
 

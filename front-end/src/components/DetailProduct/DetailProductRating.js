@@ -110,9 +110,8 @@ export default function DetailProductRating({ product }) {
                     </Row>
                 </Col>
             </Row>
-            <Divider style={{ border: "none" }} />
-            <DetailProductRatingForm product={product} showFormRating={showFormRating} />
             <Divider />
+            <DetailProductRatingForm product={product} showFormRating={showFormRating} />
         </>
     )
 }

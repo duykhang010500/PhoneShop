@@ -34,9 +34,9 @@ export default function DetailProductPost({ product }) {
             </Typography.Paragraph>
             <Row justify="center">
                 {
-                    isShowMore ? <p className="show-more" onClick={() => setIsShowMore(false)}>Xem thêm</p>
+                    isShowMore ? <p className="show-more box-sd1" onClick={() => setIsShowMore(false)}>Xem thêm</p>
                         :
-                        <p className="show-more" onClick={() => {
+                        <p className="show-more box-sd1" onClick={() => {
                             setIsShowMore(true)
                             window.scrollTo(200, 500)
                         }}>Thu Gọn</p>

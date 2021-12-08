@@ -98,36 +98,46 @@ export default function DetailProduct() {
     return (
         <div className="container">
             <section className="detail__product">
-                <DetailProductTitle product={product} />
-                <Divider />
-                <Row>
-                    <Col xs={24} md={18}>
-                        <DetailProductInfo product={product} />
-                    </Col>
-                    <Col xs={24} md={6}>
-                        <DetailProductWarranty />
-                    </Col>
-                </Row>
-                <Divider />
+                <div className="detail-info">
+                    <DetailProductTitle product={product} />
+                    <Divider />
+                    <Row>
+                        <Col xs={24} md={18}>
+                            <DetailProductInfo product={product} />
+                        </Col>
+                        <Col xs={24} md={6}>
+                            <DetailProductWarranty />
+                        </Col>
+                    </Row>
+                </div>
                 <RelatedProductList productSlug={product.slug} />
-                <Divider />
-                <Row gutter={[40, 40]}>
+                <Row gutter={[15, 15]}>
                     <Col xs={24} md={14}>
-                        <DetailProductPost product={product} />
+                        <div className="detail-post">
+                            <DetailProductPost product={product} />
+                        </div>
                     </Col>
                     <Col xs={24} md={10}>
-                        <DetailProductTechnical product={product} />
+                        <div className="detail-technical">
+                            <DetailProductTechnical product={product} />
+                        </div>
                     </Col>
                 </Row>
                 <Divider />
-                <Typography.Title level={4}>
-                    Đánh giá và nhận xét {product.name}
-                </Typography.Title>
-                <Divider style={{ border: "none" }} />
-                <DetailProductRating product={product} />
-                <Row>
+                <div className="box-sd1 p-2 bg-white">
+                    <Typography.Title level={4}>
+                        Đánh giá và nhận xét {product.name}
+                    </Typography.Title>
+
+                    <DetailProductRating product={product} />
+                </div>
+
+                <div className="bg-white mt-2">
                     <DetailProductListRating product={product} />
-                </Row>
+                    {/* <DetailProductListRating product={product} /> */}
+
+                </div>
+
             </section>
         </div>
     )

@@ -42,7 +42,7 @@ const DashboardUserWishList = () => {
     }
 
     return (
-        <div className="wishlist-page">
+        <div className="wishlist-page box-sd1">
             <ul className="wishlist">
                 {
                     myWishList.map((item, index) => {

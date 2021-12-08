@@ -23,15 +23,18 @@ const RelatedProductList = ({ productSlug }) => {
     // }
 
     return (
-        <div className="related-product-list">
-            <h2>Sản phẩm tương tự</h2>
-            <Underline />
+        <div className="related-product-list box-sd1">
+            <div className="related-title">
+                Sản phẩm tương tự
+                <Underline />
+            </div>
             <ul className="product__list">
                 {
                     relatedProductList.map((item, index) => (
                         <ProductItem
                             key={index}
                             product={item}
+                            isShowCompareButton
                         />
                     ))
                 }

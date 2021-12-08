@@ -40,7 +40,6 @@ const DashboardAdminCreateProduct = () => {
 
     // Submit form create
     const onFinishCreate = (values) => {
-        // console.log(values)
         setIsLoading(true)
         setText(values.desc)
         const image = values.image[0].response.data.display_url
@@ -263,6 +262,21 @@ const DashboardAdminCreateProduct = () => {
                             />
                         </Form.Item>
                     </Col>
+
+                    {/* Dòng sản phẩm  */}
+                    <Col span={6}>
+                        <Form.Item
+                            label="Dòng sản phẩm"
+                            name="type"
+                            rules={[{
+                                required: true,
+                                message: 'Vui lòng nhập dòng sản phẩm!'
+                            }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </Col>
+
 
                     {/* Màu sắc */}
                     <Col span={6}>

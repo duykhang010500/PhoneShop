@@ -1,11 +1,7 @@
 .detail__product {
-  margin-top: 12rem;
-  background-color: #fff;
+  margin-top: 11rem;
   padding: 2rem;
 
-  h4 {
-    margin: 0;
-  }
   &--name {
     margin-top: 1rem;
     border-bottom: 1px solid #e0e0e0;
@@ -64,7 +60,6 @@
   }
   &-sub {
     display: flex;
-    // max-width: 500px;
     overflow-x: auto;
     &::-webkit-scrollbar {
       width: 0;
@@ -76,8 +71,14 @@
   }
 }
 
+.related-title {
+  padding: 1rem 2rem;
+  background-color: #fff;
+  font-size: 1.8rem;
+}
+
 .hide-desc {
-  max-height: 650px;
+  max-height: 740px;
   overflow: hidden;
 }
 
@@ -87,11 +88,37 @@
   text-align: center;
   font-size: 1.5rem;
   font-weight: 500;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   cursor: pointer;
 }
 
 .show-more:hover {
-  color: blue;
+  color: red;
   transform: scale(1.1);
+}
+
+.detail-info {
+  background-color: #fff;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.detail-post {
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.detail-technical {
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.detail__product-name {
+  font-size: 2rem;
+  font-weight: 500;
 }

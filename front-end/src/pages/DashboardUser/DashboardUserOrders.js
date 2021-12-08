@@ -132,7 +132,7 @@ const DashboardUserOrder = () => {
 
 
     return (
-        <div>
+        <div className="box-sd1 p-1">
             <Table
                 columns={columns}
                 dataSource={myOrders}

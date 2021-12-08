@@ -39,9 +39,9 @@ const Search = () => {
     return (
         <div className="search-page">
             <div className="container">
-                <h2>
+                <div className="fs-16 mb-2">
                     Tìm thấy {resultsSearch.length} kết quả cho từ khoá "{q}"
-                </h2>
+                </div>
                 <ul className="product__list">
                     {
                         resultsSearch.map((item, index) => (

@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 html {
   font-size: 62.5%;
 }
 body {
+  font-family: 'Poppins', sans-serif;
   background-color: #f5f5fa;
   overflow-x: hidden;
 }
@@ -54,19 +56,10 @@ a:hover {
   color: black;
 }
 
-.ant-checkbox-wrapper {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-}
-
 .underline {
   width: 8rem;
   border-top: 3px solid black;
-  margin-bottom: 2rem;
-}
-
-.icon {
-  font-size: 3rem;
+  // margin-bottom: 2rem;
 }
 
 .banner-item {
@@ -92,29 +85,73 @@ a:hover {
   transition: all 0.5s ease-in-out;
 }
 
-.box-sd {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px !important;
-}
-
 .text-center {
   text-align: center;
 }
 
 .ant-form-item-label {
-  font-weight: 500 !important;
+  font-weight: 400 !important;
 }
 
-// .ant-avatar > img {
-//   display: block;
-//   width: 100%;
-//   height: 100%;
-//   object-fit: contain;
-// }
+.color-white {
+  color: white;
+}
 
-// .ant-menu-title-content {
-//   font-weight: 500;
-// }
-// .ant-form-item-label {
-//   font-weight: 500;
-// }
+.ant-breadcrumb {
+  background-color: #fff;
+  padding: 1rem 0;
+  border-radius: 4rem;
+  font-weight: 500;
+}
+
+.box-sd1 {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.p-2 {
+  padding: 2rem;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+.mt-1 {
+  margin-top: 1rem;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fs-16 {
+  font-size: 1.6rem;
+}
+
+.d-flex-center {
+  display: flex;
+  align-items: center;
+}
+
+.ant-comment-inner {
+  border-bottom: 1px solid #f2f4f5;
+}
+
+.ant-descriptions-title {
+  font-size: 1.8rem !important;
+}
