@@ -20,7 +20,9 @@ const DashboardUserWishList = () => {
 
     const myWishList = useSelector(state => state.WishList)
 
-
+    if (!myWishList) {
+        return
+    }
 
     if (isLoading) {
         return <>
@@ -30,9 +32,6 @@ const DashboardUserWishList = () => {
         </>
     }
 
-    if (!myWishList) {
-        return
-    }
 
     const handleRemoveProduct = (productId) => {
         console.log(productId)

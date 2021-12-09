@@ -31,6 +31,8 @@ import { actGetListBrandAsync } from "./store/brands/actions"
 import { actGetColorsProductAsync } from "./store/products/actions"
 import Search from "./pages/Search"
 import FilterProducts from "./pages/FilterProducts"
+import News from "./pages/News"
+import DetailPostNews from "./pages/DetailPostNews"
 
 function App() {
 
@@ -58,14 +60,23 @@ function App() {
         <Route exact path="/">
           <HomePage />
         </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
         <Route exact path="/register">
           <Register />
         </Route>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route path='/login/admin' exact>
+          <AdminLogin />
+        </Route>
         <Route exact path="/search">
           <Search />
+        </Route>
+        <Route exact path="/news">
+          <News />
+        </Route>
+        <Route exact path="/news/post/:slug">
+          <DetailPostNews />
         </Route>
         <Route exact path="/cart">
           <Cart />
@@ -88,9 +99,7 @@ function App() {
         <Route path="/admin">
           <DashboardAdmin />
         </Route>
-        <Route path='/login/admin' exact>
-          <AdminLogin />
-        </Route>
+
         <Route path="/*">
           <PageNotFound />
         </Route>

@@ -1,4 +1,5 @@
 import newsServices from "../../services/newsServices"
+import { actGetDetailProduct } from "../products/actions"
 
 // Action types 
 export const ACT_GET_CATEGORY_LIST = 'ACT_GET_CATEGORY_LIST'
@@ -82,7 +83,6 @@ const actGetArticleList = (list) => {
 export const actGetArticleListAsync = (page) => async (dispatch) => {
     try {
         const res = await newsServices.getArticleList(page)
-        // console.log(res)
         dispatch(actGetArticleList(res.data.data))
     } catch (err) {
         throw err
@@ -129,7 +129,7 @@ export const actGetDetailArticle = (article) => {
 export const actGetDetailArticleAsync = (slug) => async (dispatch) => {
     try {
         const res = await newsServices.getDetailArticle(slug)
-        console.log(res)
+        dispatch(actGetDetailArticle(res.data.data[0]))
     } catch (err) {
         throw err
     }

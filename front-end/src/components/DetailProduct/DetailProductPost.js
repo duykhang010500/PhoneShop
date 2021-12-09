@@ -5,15 +5,19 @@ import {
 } from 'antd'
 
 export default function DetailProductPost({ product }) {
-    useEffect(() => {
-        window.scrollTo(0, 0)
-        const height = document.getElementById('desc').clientHeight;
-        if (height >= 200) {
-            setIsShowMore(true)
-        }
-    }, [])
 
     const [isShowMore, setIsShowMore] = useState(false)
+    const [isShowButton, setIsShowButton] = useState(true)
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+        const height = document.getElementById('desc').offsetHeight;
+        if (height >= 500) {
+            setIsShowMore(true)
+        } else {
+            setIsShowButton(false)
+        }
+    }, [])
 
     return (
         <div >
@@ -34,12 +38,20 @@ export default function DetailProductPost({ product }) {
             </Typography.Paragraph>
             <Row justify="center">
                 {
-                    isShowMore ? <p className="show-more box-sd1" onClick={() => setIsShowMore(false)}>Xem thêm</p>
+                    isShowMore ?
+                        (
+                            isShowButton && <p className="show-more box-sd1"
+                                onClick={() => setIsShowMore(false)}>
+                                Xem thêm
+                            </p>
+                        )
                         :
-                        <p className="show-more box-sd1" onClick={() => {
-                            setIsShowMore(true)
-                            window.scrollTo(200, 500)
-                        }}>Thu Gọn</p>
+                        (
+                            isShowButton && <p className="show-more box-sd1" onClick={() => {
+                                setIsShowMore(true)
+                                window.scrollTo(200, 500)
+                            }}>Thu Gọn</p>
+                        )
                 }
             </Row>
         </div>

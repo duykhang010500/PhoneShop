@@ -21,8 +21,6 @@ const FilterProducts = () => {
     const totalItem = productPaging.totalItem
     const currentPage = productPaging.currentPage
     const totalPage = productPaging.totalPage
-
-
     const hasMorePost = currentPage < totalPage
     const handleLoadingMore = () => {
         setIsLoading(true)
@@ -42,6 +40,7 @@ const FilterProducts = () => {
                 </div>
                 <div className="filter-option mb-2">
                     Bộ lọc
+
                 </div>
                 <ul className="product__list">
                     {

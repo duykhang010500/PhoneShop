@@ -217,9 +217,11 @@ const DashboardAdminArticlesPost = () => {
     const handleCreateArticle = () => {
         formAdd.validateFields()
             .then((values) => {
+                // console.log(values)
                 setIsConfirmLoading(true)
-                const image = values.image[0].response.data.display_url
+                const image = values.image[0].response.data.url
                 const newObj = { ...values, image }
+                console.log(newObj)
                 dispatch(actCreateArticleAsync(newObj))
                     .then((res) => {
                         if (res.ok) {

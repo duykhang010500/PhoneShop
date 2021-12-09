@@ -27,6 +27,7 @@ import {
     actGetListBrandAsync,
     actUpdateBrandAsync
 } from '../../store/brands/actions'
+import slugify from 'slugify'
 import { useAdmin } from '../../hooks/useAuthenticate'
 const DashboardAdminCategories = () => {
     useAdmin()

@@ -102,14 +102,18 @@ const DashboardAdminUpdateProduct = () => {
         useEffect(() => {
             if (quill) {
                 // quill.clipboard.dangerouslyPasteHTML(text);
-                quill.root.innerHTML = product.desc
+                if (!text) {
+                    quill.root.innerHTML = product.desc
+                } else {
+                    quill.root.innerHTML = text
+                }
                 form.setFieldsValue({
                     desc: quill.root.innerHTML
                 })
                 quill.on('text-change', () => {
                     // console.log('Text change!');
                     // console.log(quill.root.innerHTML);
-                    // setText(quill.root.innerHTML)
+                    setText(quill.root.innerHTML)
                     form.setFieldsValue({
                         desc: quill.root.innerHTML
                     })
@@ -175,7 +179,7 @@ const DashboardAdminUpdateProduct = () => {
                     Quản lý sản phẩm
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
-                    Tạo sản phẩm
+                    Cập nhật sản phẩm
                 </Breadcrumb.Item>
             </Breadcrumb>
 
@@ -234,9 +238,8 @@ const DashboardAdminUpdateProduct = () => {
                                 action="https://api.imgbb.com/1/upload?key=8c37ca908e1a1a4f5db86e4555a008c2"
                                 listType="picture"
                                 maxCount={1}
-                            // defaultFileList={fileList}
                             >
-                                <Button >Click to upload</Button>
+                                <Button icon={<UploadOutlined />}>Click to upload</Button>
                             </Upload>
                         </Form.Item>
                     </Col>
