@@ -14,11 +14,13 @@ const HeaderSearch = () => {
             return
         }
         history.push('/search?q=' + value)
+
     }
 
     return (
         <div className="header__menu-search">
-            <Search placeholder="Bạn cần tìm gì?"
+            <Search
+                placeholder="Bạn cần tìm gì?"
                 allowClear
                 enterButton
                 onSearch={handleSearch}

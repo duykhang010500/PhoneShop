@@ -64,8 +64,16 @@ const DashboardUserWishList = () => {
                                         {formatVND(convertNewPrice(item.product.price, item.product.discount))}
                                     </div>
                                     <div className="wishlist__item-price--old">
-                                        {formatVND(item.product.price)}
-                                        <span>-{item.product.discount}%</span>
+                                        {
+                                            item.product.discount != 0 ?
+                                                (
+                                                    <>
+                                                        {formatVND(item.product.price)}
+                                                        <span>-{item.product.discount}%</span>
+                                                    </>
+                                                ) :
+                                                null
+                                        }
                                     </div>
                                 </div>
                                 <Tooltip title="Xóa">
@@ -78,7 +86,7 @@ const DashboardUserWishList = () => {
                     })
                 }
             </ul>
-        </div>
+        </div >
     )
 
 

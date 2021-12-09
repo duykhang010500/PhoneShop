@@ -14,8 +14,8 @@ export default function NewListProduct({ title, product }) {
                     className="title"
                 >
                     {title}
+                    <Underline />
                 </Typography.Title>
-                <Underline />
                 <ul className="product__list">
                     {
                         product.map((product, index) => <ProductItem key={index} product={product} />)

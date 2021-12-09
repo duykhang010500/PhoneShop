@@ -59,8 +59,11 @@ const DashboardAdminOrders = () => {
     // Lấy chi tiết đơn hàng của customer
     const handleGetDetailOrdersUser = (id) => {
         console.log(id)
+        setIsLoading(true)
         dispatch(actGetDetailOrderUserAsync(id)).then(() => {
             setShowModalDetailOrders(true)
+        }).then(() => {
+            setIsLoading(false)
         })
     }
 

@@ -18,9 +18,9 @@ export const actGetListProduct = (list) => {
 
 export const actGetAllProductAsync = () => async (dispatch) => {
     try {
-        const res = await productsServices.getAll()
-        // console.log(res.data.data)
-        const list = res.data.data
+        const res = await productsServices.filterProduct()
+        console.log(res.data.data)
+        const list = res.data.data.data
         dispatch(actGetListProduct(list))
     } catch (err) {
         console.log(err)

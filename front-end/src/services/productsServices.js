@@ -41,7 +41,7 @@ const productsServices = {
     },
     filterProduct({
         page = 1,
-        restParams
+        ...restParams
     } = {}) {
         return api.call().get('/products/filter', {
             params: {

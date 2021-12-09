@@ -1,8 +1,16 @@
 .filter-product-page {
-  margin-top: 11rem;
+  margin-top: 13rem;
   //   background-color: #fff;
   //   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-
-.filter-option {
+.filter {
+  margin-bottom: 2rem;
+}
+.sort-product {
+  margin-bottom: 1rem;
+  padding: 1.3rem 1rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

@@ -98,6 +98,11 @@ const HeaderMenu = () => {
                     <HeaderSearch />
                     <div className="header__menu-actions">
                         <div className="header__menu-actions--item">
+                            <Link to="/products">
+                                <IoNewspaper />&nbsp;Sản phẩm
+                            </Link>
+                        </div>
+                        <div className="header__menu-actions--item">
                             <Link to="/news">
                                 <IoNewspaper />&nbsp;Tin công nghệ
                             </Link>
