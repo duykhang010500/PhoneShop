@@ -1,3 +1,4 @@
+import api from "../../services/api"
 import orderServices from "../../services/orderServices"
 
 export const ACT_GET_MY_ORDERS = 'ACT_GET_MY_ORDERS'
@@ -88,3 +89,17 @@ export const actUpdateStatusOrder = (order_code, status) => async (dispatch) => 
     }
 }
 
+export const actDeleteOrder = (order_code) => async (dispatch) => {
+    try {
+        await orderServices.deleteOrder(order_code)
+        return {
+            ok: true,
+            message: 'Xoá thành công!'
+        }
+    } catch (err) {
+        return {
+            ok: false,
+            message: 'Có lỗi xảy ra!'
+        }
+    }
+}

@@ -1,3 +1,6 @@
+import React from 'react'
+import { useSelector } from 'react-redux'
+
 import {
     Space,
     Breadcrumb,
@@ -6,20 +9,29 @@ import {
 } from 'antd'
 
 import { HomeOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
-export default function DetailProductTitle({ product }) {
+
+export default function DetailProductTitle() {
+
+    const selector = useSelector((state) => state)
+    const product = selector.Products.detailProduct
+    if (!product) {
+        return null
+    }
+
     return (
         <Space direction="vertical">
             <Breadcrumb>
                 <Breadcrumb.Item href="/">
                     <HomeOutlined /> Trang chủ
                 </Breadcrumb.Item>
-                <Breadcrumb.Item href="/dien-thoai-di-dong">
-                    Điện thoại di động
+                <Breadcrumb.Item >
+                    <Link to="/products">Điện thoại di động</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>
                     <Typography.Text strong>
-                        {product.brand.name}
+                        {product.data.brand.name}
                     </Typography.Text>
                 </Breadcrumb.Item>
             </Breadcrumb>
@@ -27,16 +39,16 @@ export default function DetailProductTitle({ product }) {
             <Space size="large">
                 <Space size="middle" wrap>
                     <div className="detail__product-name">
-                        {product.name}
+                        {product.data.name}
                     </div>
                     <Space>
                         {
-                            product.ratings != 0 ?
-                                <Rate disabled value={0} style={{ fontSize: "1.4rem" }} /> :
+                            product.data.ratings.length != 0 ?
+                                <Rate disabled value={product.star_avg || 0} style={{ fontSize: "1.4rem" }} /> :
                                 <Rate disabled value={0} style={{ fontSize: "1.4rem" }} />
                         }
                         <Typography.Text strong>
-                            {product.ratings.length} đánh giá
+                            {product.data.ratings.length} đánh giá
                         </Typography.Text>
                     </Space>
                 </Space>

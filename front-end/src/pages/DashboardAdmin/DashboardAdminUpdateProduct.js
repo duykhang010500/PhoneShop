@@ -103,7 +103,7 @@ const DashboardAdminUpdateProduct = () => {
             if (quill) {
                 // quill.clipboard.dangerouslyPasteHTML(text);
                 if (!text) {
-                    quill.root.innerHTML = product.desc
+                    quill.root.innerHTML = product.data.desc
                 } else {
                     quill.root.innerHTML = text
                 }
@@ -165,6 +165,14 @@ const DashboardAdminUpdateProduct = () => {
         return fileList
     }
 
+    const convertColorProduct = (arr) => {
+        let color = []
+        arr.forEach((item) => {
+            color.push(item.id)
+        })
+        return color
+    }
+
 
     return (
         <div className="create-product-page" style={{ marginBottom: 50 }}>
@@ -188,29 +196,29 @@ const DashboardAdminUpdateProduct = () => {
                 form={form}
                 onFinish={onFinish}
                 initialValues={{
-                    name: product.name,
-                    image: [{ url: product.image }],
-                    images_product: convertArrayImageToFileList(product.images_product),
-                    brand_id: product.brand_id,
-                    price: product.price,
-                    quantity: product.quantity,
-                    colors: [1, 2],
-                    slug: product.slug,
-                    discount: product.discount,
-                    screen: product.product_info.screen,
-                    rear_camera: product.product_info.rear_camera,
-                    selfie_camera: product.product_info.selfie_camera,
-                    ram: product.product_info.ram,
-                    internal_memory: product.product_info.internal_memory,
-                    cpu: product.product_info.cpu,
-                    gpu: product.product_info.gpu,
-                    battery: product.product_info.battery,
-                    sim: product.product_info.sim,
-                    os: product.product_info.os,
-                    made: product.product_info.made,
-                    time: product.product_info.time,
-                    desc: product.desc,
-                    type: product.type
+                    name: product.data.name,
+                    image: [{ url: product.data.image }],
+                    images_product: convertArrayImageToFileList(product.data.images_product),
+                    brand_id: product.data.brand_id,
+                    price: product.data.price,
+                    quantity: product.data.quantity,
+                    colors: convertColorProduct(product.data.attributes),
+                    slug: product.data.slug,
+                    discount: product.data.discount,
+                    screen: product.data.product_info.screen,
+                    rear_camera: product.data.product_info.rear_camera,
+                    selfie_camera: product.data.product_info.selfie_camera,
+                    ram: product.data.product_info.ram,
+                    internal_memory: product.data.product_info.internal_memory,
+                    cpu: product.data.product_info.cpu,
+                    gpu: product.data.product_info.gpu,
+                    battery: product.data.product_info.battery,
+                    sim: product.data.product_info.sim,
+                    os: product.data.product_info.os,
+                    made: product.data.product_info.made,
+                    time: product.data.product_info.time,
+                    desc: product.data.desc,
+                    type: product.data.type
 
                 }}
             >

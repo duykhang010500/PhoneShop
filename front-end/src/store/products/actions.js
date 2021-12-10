@@ -9,6 +9,7 @@ export const ACT_GET_COLORS_PRODUCT = 'ACT_GET_COLORS_PRODUCT'
 export const ACT_SEARCH_PRODUCT = 'ACT_GET_SEARCH_PRODUCT'
 export const ACT_FILTER_PRODUCT = 'ACT_FILTER_PRODUCT'
 
+// Lấy danh sách sản phẩm
 export const actGetListProduct = (list) => {
     return {
         type: ACT_GET_ALL_PRODUCT,
@@ -27,6 +28,7 @@ export const actGetAllProductAsync = () => async (dispatch) => {
     }
 }
 
+// Lấy chi tiết sản phẩm
 export const actGetDetailProduct = (product) => {
     return {
         type: ACT_GET_DETAIL_PRODUCT,
@@ -37,22 +39,20 @@ export const actGetDetailProduct = (product) => {
 export const actGetDetailProductAsync = (id) => async (dispatch) => {
     try {
         const res = await productsServices.getDetailProduct(id)
-        // console.log(res.data)
-        const detailProduct = res.data.data
-        // console.log(detailProduct)
+        const detailProduct = res.data
         dispatch(actGetDetailProduct(detailProduct))
     } catch (err) {
         console.log(err)
     }
 }
 
+// Lấy danh sách sản phẩm giảm giá tốt
 export const actGetBestDiscount = (list) => {
     return {
         type: ACT_GET_BEST_DISCOUNT,
         payload: { list }
     }
 }
-
 
 // Tạo sản phẩm
 export const actCreateProductAsync = (formData) => async (dispatch) => {
@@ -110,6 +110,7 @@ export const actGetBestDiscountAsync = () => async (dispatch) => {
     }
 }
 
+// Đánh giá sp
 export const actRatingProductAsync = (id, formData) => async (dispatch) => {
     try {
         await productsServices.ratingProduct(id, formData)

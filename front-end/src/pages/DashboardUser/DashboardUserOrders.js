@@ -14,7 +14,8 @@ import {
 import {
     SyncOutlined,
     CheckCircleOutlined,
-    EyeOutlined
+    EyeOutlined,
+    CloseCircleOutlined
 } from '@ant-design/icons'
 import { FaTruck } from "react-icons/fa"
 
@@ -93,6 +94,11 @@ const DashboardUserOrder = () => {
             key: 'status',
             dataIndex: 'status',
             render: tag => {
+                if (tag === 0) {
+                    return <Tag icon={<CloseCircleOutlined />} color="error">
+                        Đã huỷ
+                    </Tag>
+                }
                 if (tag === 1) {
                     return <Tag icon={<SyncOutlined spin />} color="processing">
                         Đang chờ xử lý

@@ -80,11 +80,11 @@ const FilterProducts = () => {
     // check all brand
     const handleCheckedAllBrand = () => {
         setIsCheckAllBrand(true)
+        setMinPrice(null)
+        setMaxPrice(null)
+        setSortFilter(null)
         setBrandFilter([])
         setCheckedListBrand([])
-        setSortFilter(null)
-        // setMinPrice(null)
-        // setMaxPrice(null)
     }
 
     // sort
@@ -106,6 +106,7 @@ const FilterProducts = () => {
 
     const handleFilterPrice = () => {
         setIsLoadingPrice(true)
+        setIsFetching(true)
         dispatch(actFilterProductAsync({
             page: 1,
             brand_id: brandFilter,
@@ -114,6 +115,7 @@ const FilterProducts = () => {
             max_price: maxPrice
         })).finally(() => {
             setIsLoadingPrice(false)
+            setIsFetching(false)
             // setMinPrice(null)
             // setMaxPrice(null)
         })

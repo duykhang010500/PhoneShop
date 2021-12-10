@@ -17,7 +17,8 @@ import {
     HomeOutlined,
     PlusCircleOutlined,
     DeleteOutlined,
-    FormOutlined
+    FormOutlined,
+    SearchOutlined
 } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { actDeleteProductAsync, actGetAllProductAsync } from '../../store/products/actions';
@@ -62,11 +63,20 @@ const DashboardAminProducts = () => {
         },
         {
             title: 'Thương hiệu',
-            // dataIndex: ''
+            dataIndex: 'brand',
+            key: 'brand',
+            render: (text, record) => (
+                <Typography.Text strong>
+                    {record.brand.name}
+                </Typography.Text>
+            )
         },
+
         {
             title: 'Giá',
             dataIndex: 'price',
+            defaultSortOrder: 'desc',
+            sorter: (a, b) => a.price - b.price,
             key: 'price',
             render: (text, record) => (
                 <Typography.Text
@@ -81,6 +91,8 @@ const DashboardAminProducts = () => {
             title: 'Khuyến mại (%)',
             dataIndex: 'discount',
             key: 'discount',
+            defaultSortOrder: 'desc',
+            sorter: (a, b) => a.discount - b.discount,
             render: (text, record) => (
                 <Typography.Text strong>
                     {record.discount}%

@@ -35,15 +35,17 @@ import { openNotificationWithIcon } from '../../helpers/notification'
 SwiperCore.use([Navigation, Pagination, Controller, Thumbs]);
 
 
-export default function DetailProductInfo({ product }) {
+export default function DetailProductInfo() {
 
     const dispatch = useDispatch()
-
-    const myWishList = useSelector(state => state.WishList)
-
+    const selector = useSelector(state => state)
     const [productColor, setProductColor] = useState('')
     const [isLiked, setIsLiked] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [thumbsSwiper, setThumbsSwiper] = useState(null);
+
+    const myWishList = selector.WishList
+    const product = selector.Products.detailProduct.data
 
     useEffect(() => {
         if (myWishList.find(item => item.product_id === product.id)) {
@@ -52,6 +54,14 @@ export default function DetailProductInfo({ product }) {
             setIsLiked(false)
         }
     }, [myWishList])
+
+    if (!product) {
+        return null
+    }
+    if (!myWishList) {
+        return null
+    }
+
 
     const handleChangeColor = (e) => {
         setProductColor(e.target.value)
@@ -63,10 +73,7 @@ export default function DetailProductInfo({ product }) {
             return
         }
         const productWithColor = { ...product, color }
-
         dispatch(actAddToCart(productWithColor))
-
-
     }
 
     const handleLikeProduct = (id) => {
@@ -90,7 +97,6 @@ export default function DetailProductInfo({ product }) {
 
     }
 
-    const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
     // Covert Array Image
     const formatImg = product.images_product

@@ -12,7 +12,9 @@ import {
     Form,
     Radio,
     Typography,
-    Avatar
+    Avatar,
+    Popconfirm,
+    message
 } from 'antd';
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -23,11 +25,13 @@ import {
     SyncOutlined,
     CheckCircleOutlined,
     EditOutlined,
+    DeleteOutlined,
+    CloseCircleOutlined
 } from '@ant-design/icons';
 
 import { FaTruck } from "react-icons/fa"
 
-import { actGetDetailOrderUserAsync, actGetListOrdersUserAsync, actUpdateStatusOrder } from '../../store/orders/action';
+import { actDeleteOrder, actGetDetailOrderUserAsync, actGetListOrdersUserAsync, actUpdateStatusOrder } from '../../store/orders/action';
 import { formatVND } from '../../helpers/priceFormat'
 
 const DashboardAdminOrders = () => {
@@ -99,7 +103,21 @@ const DashboardAdminOrders = () => {
                 setShowModalUpdate(false)
             })
     }
-
+    //Xoá đơn hàng
+    const handleDeleteOrder = (order_code) => {
+        console.log(order_code)
+        setIsLoading(true)
+        dispatch(actDeleteOrder(order_code))
+            .then((res) => {
+                if (res.ok) {
+                    message.success(res.message)
+                } else {
+                    message.error(res.message)
+                }
+                dispatch(actGetListOrdersUserAsync())
+            })
+            .finally(() => setIsLoading(false))
+    }
     // Đóng modal
     const handleCloseModal = () => {
         setShowModalUpdate(false)
@@ -141,6 +159,11 @@ const DashboardAdminOrders = () => {
             dataIndex: 'status',
             key: 'status',
             render: tag => {
+                if (tag == '0') {
+                    return <Tag icon={<CloseCircleOutlined />} color="error">
+                        Đã huỷ
+                    </Tag>
+                }
                 if (tag == '1') {
                     return <Tag icon={<SyncOutlined spin />} color="processing">
                         Đang chờ xử lý
@@ -192,6 +215,20 @@ const DashboardAdminOrders = () => {
                         >
                         </Button>
                     </Tooltip>
+                    <Tooltip title="Xoá đơn hàng">
+                        <Popconfirm
+                            placement="topRight"
+                            title={`Xóa hãng ${record.order_code}`}
+                            onConfirm={() => handleDeleteOrder(record.order_code)}
+                        >
+                            <Button
+                                type="primary"
+                                danger
+                                icon={<DeleteOutlined />}
+                            >
+                            </Button>
+                        </Popconfirm>
+                    </Tooltip>
                 </Space>
             )
         }
@@ -220,6 +257,7 @@ const DashboardAdminOrders = () => {
                 onOk={handleChangeStatusOrder}
                 confirmLoading={confirmLoading}
                 destroyOnClose={true}
+                width={650}
             >
                 <Form
                     form={form}
@@ -233,6 +271,7 @@ const DashboardAdminOrders = () => {
                             <Radio value={1}>Đang chờ xử lý</Radio>
                             <Radio value={2}>Đang giao hàng</Radio>
                             <Radio value={3}>Đã hoàn thành</Radio>
+                            <Radio value={0}>Huỷ đơn</Radio>
                         </Radio.Group>
                     </Form.Item>
                 </Form>

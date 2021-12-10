@@ -101,7 +101,7 @@ const DashboardAdmin = () => {
                             Quản lý khách hàng
                         </Link>
                     </Menu.Item>
-                    <Menu.Item
+                    {/* <Menu.Item
                         key="/admin/coupon"
                         icon={<RiCoupon4Line
                             style={{ fontSize: "2rem" }}
@@ -109,8 +109,7 @@ const DashboardAdmin = () => {
                         <Link to='/admin/coupon'>
                             Quản lý khuyến mại
                         </Link>
-                    </Menu.Item>
-
+                    </Menu.Item> */}
                     <SubMenu
                         key="news"
                         title="Tin tức"
@@ -151,9 +150,7 @@ const DashboardAdmin = () => {
                 <Content
                     className="site-layout-background box-sd1"
                     style={{
-                        // margin: '16px 16px',
                         padding: 24,
-                        // minHeight: 320,
                     }}
                 >
                     <DashboardAdminRoutes />

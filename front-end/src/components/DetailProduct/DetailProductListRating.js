@@ -6,15 +6,18 @@ import {
     Rate,
     Avatar,
     Col,
-    Row,
-    Divider
 } from 'antd'
-export default function DetailProductListRating({ product }) {
+import { useSelector } from 'react-redux'
+export default function DetailProductListRating() {
+    const product = useSelector((state) => state.Products.detailProduct)
+    if (!product) {
+        return null
+    }
     return (
         <div className="box-sd1 p-2">
             {
-                product.ratings.length != 0 ?
-                    product.ratings.map((item, idx) => {
+                product.data.ratings.length != 0 ?
+                    product.data.ratings.map((item, idx) => {
                         return (
                             <Col
                                 span={24}

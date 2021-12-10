@@ -1,24 +1,31 @@
+import React from 'react'
+import { useSelector } from 'react-redux'
 import ProductItem from '../ProductItem'
 import { Typography } from 'antd'
 
 import Underline from '../common/Underline'
 
-export default function NewListProduct({ title, product }) {
+export default function NewListProduct({ title }) {
+    const selector = useSelector(state => state)
 
-    // console.log(product)
+    const listNew = selector.Products.list
+    if (!listNew) {
+        return null
+    }
+
     return (
         <div className="container">
             <div className="product">
-                <Typography.Title
-                    level={4}
+                <div
+                    style={{ fontSize: '2rem', fontWeight: 600, padding: '2rem' }}
                     className="title"
                 >
                     {title}
                     <Underline />
-                </Typography.Title>
+                </div>
                 <ul className="product__list">
                     {
-                        product.map((product, index) => <ProductItem key={index} product={product} />)
+                        listNew.map((product, index) => <ProductItem key={index} product={product} />)
                     }
                 </ul>
             </div>

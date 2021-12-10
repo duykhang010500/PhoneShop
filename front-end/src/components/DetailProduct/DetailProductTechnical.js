@@ -1,9 +1,13 @@
 import React from 'react'
 import { Descriptions } from 'antd'
 import { convertProductInfo } from '../../helpers/convertInfo'
+import { useSelector } from 'react-redux'
 export default function DetailProductTechnical({ product }) {
 
-    const technicalProduct = product.product_info
+    const technicalProduct = useSelector((state) => state.Products.detailProduct.data.product_info)
+    if (!technicalProduct) {
+        return null
+    }
     delete technicalProduct["id"]
     delete technicalProduct["updated_at"]
     delete technicalProduct["created_at"]

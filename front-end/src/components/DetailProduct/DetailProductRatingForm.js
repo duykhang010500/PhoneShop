@@ -10,19 +10,21 @@ import {
     message,
     Button
 } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { IoMdPaperPlane } from "react-icons/io";
 import { actRatingProductAsync } from '../../store/products/actions';
+import { openNotificationWithIcon } from '../../helpers/notification'
 
-
-export default function DetailProductRatingForm({ product, showFormRating }) {
+export default function DetailProductRatingForm({ showFormRating }) {
 
     const dispatch = useDispatch()
+    const selector = useSelector((state) => state)
     const [str, setStr] = useState('')
     const [star, setStar] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
-    console.log('product in rating', product)
+    const id = selector.Products.detailProduct.data.id
+    console.log('product in rating', id)
     function handleChangeStar(e) {
         setStar(e)
     }
@@ -33,11 +35,23 @@ export default function DetailProductRatingForm({ product, showFormRating }) {
     }
 
     function handleSubmit() {
+        if (star == 0) {
+            message.error('Sao đánh giá phải lớn hơn 0!')
+            return
+        }
         const formData = { star, content: str }
-        console.log(formData)
+
         setIsLoading(true)
 
-        dispatch(actRatingProductAsync(product.id, formData))
+        dispatch(actRatingProductAsync(id, formData))
+            .then((res) => {
+                if (res.ok) {
+                    openNotificationWithIcon('success', res.message)
+                } else {
+                    openNotificationWithIcon('error', res.message)
+
+                }
+            })
             .finally(() => {
                 setIsLoading(false)
                 setStar(0)

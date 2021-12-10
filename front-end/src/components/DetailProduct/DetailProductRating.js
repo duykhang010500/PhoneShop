@@ -8,29 +8,44 @@ import {
     Rate,
     Button,
     Typography,
-    Divider
+    Divider,
+    message
 } from 'antd'
 
 import { IoMdPaperPlane } from "react-icons/io";
 import DetailProductRatingForm from './DetailProductRatingForm';
+import { useSelector } from 'react-redux';
 
-export default function DetailProductRating({ product }) {
+export default function DetailProductRating() {
     const [showFormRating, setShowFormRating] = useState(false)
+
+    const product = useSelector(state => state.Products.detailProduct)
+    if (!product) {
+        return null
+    }
     return (
         <>
             <Row gutter={[10, 10]} align="middle">
                 <Col xs={24} md={8}>
                     <Row justify="space-around">
+                        <Typography.Title level={4}>
+                            Đánh giá và nhận xét {product.data.name}
+                        </Typography.Title>
                         <Space direction="vertical" align="center" size={1}>
-                            <Typography.Title level={4}>
+                            <Typography.Title level={5}>
                                 Điểm trung bình
                             </Typography.Title>
-                            <Typography.Text strong>
-                                3.7
+                            <Typography.Text strong style={{ fontSize: 30 }}>
+                                {product.star_avg || 0}
                                 <Rate disabled value={1} count={1} style={{ fontSize: 30, marginBottom: 10 }} />
                             </Typography.Text>
                             <Typography.Text strong>
-                                N lượt đánh giá
+                                {
+                                    product.data.ratings.length ?
+                                        <span>{product.data.ratings.length} lượt đánh giá</span>
+                                        :
+                                        <span>Chưa có đánh giá nào</span>
+                                }
                             </Typography.Text>
                         </Space>
                     </Row>
@@ -43,7 +58,7 @@ export default function DetailProductRating({ product }) {
                             </Typography.Text>
                             <Rate count={1} value={1} disabled style={{ fontSize: "1.4rem" }} />
                             <div style={{ width: 200 }}>
-                                <Progress percent={50} size="small" status="active" showInfo={false} />
+                                <Progress percent={(product.five_star / product.data.ratings.length) * 100} size="small" status="active" showInfo={false} />
                             </div>
                         </Space>
                         <Space>
@@ -52,7 +67,7 @@ export default function DetailProductRating({ product }) {
                             </Typography.Text>
                             <Rate count={1} value={1} disabled style={{ fontSize: "1.4rem" }} />
                             <div style={{ width: 200 }}>
-                                <Progress percent={50} size="small" status="active" showInfo={false} />
+                                <Progress percent={(product.four_star / product.data.ratings.length) * 100} size="small" status="active" showInfo={false} />
                             </div>
                         </Space>
                         <Space>
@@ -61,25 +76,25 @@ export default function DetailProductRating({ product }) {
                             </Typography.Text>
                             <Rate count={1} value={1} disabled style={{ fontSize: "1.4rem" }} />
                             <div style={{ width: 200 }}>
-                                <Progress percent={50} size="small" status="active" showInfo={false} />
+                                <Progress percent={(product.three_star / product.data.ratings.length) * 100} size="small" status="active" showInfo={false} />
                             </div>
                         </Space>
                         <Space>
                             <Typography.Text>
                                 2
                             </Typography.Text>
-                            <Rate count={1} value={1} disabled style={{ fontSize: "1.4rem" }} />
+                            <Rate count={1} value={1} disabled style={{ fontSize: "1.4rem", marginLeft: 1 }} />
                             <div style={{ width: 200 }}>
-                                <Progress percent={50} size="small" status="active" showInfo={false} />
+                                <Progress percent={(product.two_star / product.data.ratings.length) * 100} size="small" status="active" showInfo={false} />
                             </div>
                         </Space>
                         <Space>
-                            <Typography.Text>
+                            <Typography.Text style={{ marginLeft: 2 }}>
                                 1
                             </Typography.Text>
-                            <Rate count={1} value={1} disabled style={{ fontSize: "1.4rem" }} />
+                            <Rate count={1} value={1} disabled style={{ fontSize: "1.4rem", marginLeft: 3 }} />
                             <div style={{ width: 200 }}>
-                                <Progress percent={50} size="small" status="active" showInfo={false} />
+                                <Progress percent={(product.one_star / product.data.ratings.length) * 100} size="small" status="active" showInfo={false} />
                             </div>
                         </Space>
                     </Space>
@@ -102,7 +117,14 @@ export default function DetailProductRating({ product }) {
                                     size="large"
                                     icon={<IoMdPaperPlane
                                         style={{ fontSize: 18 }} />}
-                                    onClick={() => { setShowFormRating(!showFormRating) }}
+                                    onClick={() => {
+                                        if (!localStorage.getItem('access_token')) {
+                                            message.error('Vui lòng đăng nhập để sử dụng tín năng này!')
+                                            return
+                                        } else {
+                                            setShowFormRating(!showFormRating)
+                                        }
+                                    }}
                                 >
                                     &nbsp; Gửi đánh giá của bạn
                                 </Button>
@@ -111,7 +133,7 @@ export default function DetailProductRating({ product }) {
                 </Col>
             </Row>
             <Divider />
-            <DetailProductRatingForm product={product} showFormRating={showFormRating} />
+            <DetailProductRatingForm showFormRating={showFormRating} />
         </>
     )
 }

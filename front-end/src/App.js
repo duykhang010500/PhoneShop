@@ -37,11 +37,8 @@ import DetailPostNews from "./pages/DetailPostNews"
 function App() {
 
   const dispatch = useDispatch()
-
   const isDashBoardAdmin = useRouteMatch('/admin')
-
   useEffect(() => {
-
     if (+localStorage.getItem('r') === 1) {
       dispatch(actFetchMe())
     } else {
@@ -99,7 +96,6 @@ function App() {
         <Route path="/admin">
           <DashboardAdmin />
         </Route>
-
         <Route path="/*">
           <PageNotFound />
         </Route>

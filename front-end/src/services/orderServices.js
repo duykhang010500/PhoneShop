@@ -25,6 +25,9 @@ const orderServices = {
     },
     updateStatusOrders(order_code, status) {
         return api.callWithToken().post(`/admin/update-order?order_code=${order_code}`, status)
+    },
+    deleteOrder(order_code) {
+        return api.callWithToken().delete(`/admin/delete-order?order_code=${order_code}`)
     }
 
 }

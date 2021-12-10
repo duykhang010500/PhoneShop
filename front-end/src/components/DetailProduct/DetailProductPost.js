@@ -3,8 +3,9 @@ import {
     Row,
     Typography
 } from 'antd'
+import { useSelector } from 'react-redux'
 
-export default function DetailProductPost({ product }) {
+export default function DetailProductPost() {
 
     const [isShowMore, setIsShowMore] = useState(false)
     const [isShowButton, setIsShowButton] = useState(true)
@@ -18,6 +19,11 @@ export default function DetailProductPost({ product }) {
             setIsShowButton(false)
         }
     }, [])
+
+    const product = useSelector((state) => state.Products.detailProduct.data)
+    if (!product) {
+        return null
+    }
 
     return (
         <div >

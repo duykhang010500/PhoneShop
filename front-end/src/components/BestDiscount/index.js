@@ -1,8 +1,15 @@
+import React from 'react'
+import { useSelector } from 'react-redux'
 import ProductItem from '../ProductItem'
 import Countdown from './Countdown'
 
 export default function BestDiscount({ product }) {
 
+    const selector = useSelector(state => state)
+    const listDiscount = selector.Products.listBestDiscount.data
+    if (!listDiscount) {
+        return null
+    }
 
     return (
         <div className="container">
@@ -22,7 +29,7 @@ export default function BestDiscount({ product }) {
                     </div>
                     <ul className="product__list">
                         {
-                            product.slice(0, 5).map((product, index) =>
+                            listDiscount.slice(0, 5).map((product, index) =>
                                 <ProductItem
                                     key={index}
                                     product={product}

@@ -6,21 +6,15 @@ import { actGetRelatedListProductAsync } from '../../store/products/actions'
 import ProductItem from '../ProductItem'
 import Underline from '../common/Underline'
 
-const RelatedProductList = ({ productSlug }) => {
+const RelatedProductList = () => {
 
-    const dispatch = useDispatch()
-    const { slug } = useParams
-    console.log(slug)
 
-    useEffect(() => {
-        dispatch(actGetRelatedListProductAsync(productSlug))
-    }, [productSlug, dispatch])
 
     const relatedProductList = useSelector((state) => state.Products.relatedListProduct)
 
-    // if (!relatedProductList) {
-    //     return null
-    // }
+    if (!relatedProductList) {
+        return null
+    }
 
     return (
         <div className="related-product-list box-sd1">
@@ -34,7 +28,7 @@ const RelatedProductList = ({ productSlug }) => {
                         <ProductItem
                             key={index}
                             product={item}
-                            isShowCompareButton
+                        // isShowCompareButton
                         />
                     ))
                 }

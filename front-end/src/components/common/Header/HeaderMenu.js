@@ -7,9 +7,10 @@ import { actSetCurrentUser, actSetToken } from '../../../store/auth/action';
 import {
     UserOutlined,
     ShoppingCartOutlined,
-    PhoneOutlined,
+    MobileOutlined,
     LogoutOutlined,
-    ReconciliationOutlined
+    ReconciliationOutlined,
+    SettingOutlined
 } from '@ant-design/icons'
 
 import HeaderSearch from './HeaderSearch';
@@ -22,7 +23,6 @@ const HeaderMenu = () => {
 
     const cart = useSelector(state => state.Cart.cart)
     const currentUser = useSelector((state) => state.Auth.currentUser)
-
 
     const handleLogout = (e) => {
         e.preventDefault()
@@ -61,16 +61,29 @@ const HeaderMenu = () => {
             <Menu.Item key="1">
                 <Button
                     href="/user"
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     icon={<UserOutlined />}
                 >
                     Tài khoản
                 </Button>
             </Menu.Item>
+            {
+                currentUser && currentUser.role == 'admin' &&
+                <Menu.Item key="3">
+                    <Button
+                        href="/admin"
+                        style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+                        icon={<SettingOutlined />}
+
+                    >
+                        Quản lý
+                    </Button>
+                </Menu.Item>
+            }
             <Menu.Item key="2">
                 <Button
                     href="/user/orders"
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                     icon={<ReconciliationOutlined />}
                 >
                     Đơn hàng
@@ -99,7 +112,7 @@ const HeaderMenu = () => {
                     <div className="header__menu-actions">
                         <div className="header__menu-actions--item">
                             <Link to="/products">
-                                <IoNewspaper />&nbsp;Sản phẩm
+                                <MobileOutlined />&nbsp;Sản phẩm
                             </Link>
                         </div>
                         <div className="header__menu-actions--item">
@@ -107,11 +120,11 @@ const HeaderMenu = () => {
                                 <IoNewspaper />&nbsp;Tin công nghệ
                             </Link>
                         </div>
-                        <div className="header__menu-actions--item">
+                        {/* <div className="header__menu-actions--item">
                             <Link to="/login">
                                 <PhoneOutlined />&nbsp;Gọi mua hàng
                             </Link>
-                        </div>
+                        </div> */}
                         <div className="header__menu-actions--item">
                             {
                                 !currentUser ?

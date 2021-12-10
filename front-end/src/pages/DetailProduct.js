@@ -16,35 +16,29 @@ import DetailProductPost from '../components/DetailProduct/DetailProductPost';
 import DetailProductTechnical from '../components/DetailProduct/DetailProductTechnical';
 import DetailProductRating from '../components/DetailProduct/DetailProductRating';
 import DetailProductListRating from '../components/DetailProduct/DetailProductListRating';
-import { actGetDetailProductAsync } from '../store/products/actions';
+import { actGetDetailProductAsync, actGetRelatedListProductAsync } from '../store/products/actions';
 import { actGetMyWishListAsync } from '../store/wishList/action';
 import RelatedProductList from '../components/RelatedProductList';
 
 export default function DetailProduct() {
 
     const { id } = useParams()
+    const [firstLoading, setFirstLoading] = useState(true)
     const dispatch = useDispatch()
-    const [isFetching, setIsFetching] = useState(false)
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        setIsFetching(true)
-        dispatch(actGetDetailProductAsync(id)).then(() => {
-            setIsFetching(false)
-        })
         dispatch(actGetMyWishListAsync())
+        dispatch(actGetRelatedListProductAsync(id))
+        dispatch(actGetRelatedListProductAsync(id))
+        dispatch(actGetDetailProductAsync(id))
+            .then(() => {
+                setFirstLoading(false)
+            })
     }, [dispatch, id])
 
 
-    const product = useSelector(state => state.Products.detailProduct)
-    const myWishList = useSelector(state => state.WishList)
-
-    if (!product) {
-        return null
-    }
-
-
-    if (isFetching) {
+    if (firstLoading) {
         return (
             <div className="container" style={{ marginTop: 140, marginBottom: 200 }}>
                 <Row gutter={[20, 20]}>
@@ -93,49 +87,41 @@ export default function DetailProduct() {
         )
     }
 
-
-
     return (
         <div className="container">
             <section className="detail__product">
                 <div className="detail-info">
-                    <DetailProductTitle product={product} />
+                    <DetailProductTitle />
                     <Divider />
                     <Row>
                         <Col xs={24} md={18}>
-                            <DetailProductInfo product={product} />
+                            <DetailProductInfo />
                         </Col>
                         <Col xs={24} md={6}>
                             <DetailProductWarranty />
                         </Col>
                     </Row>
                 </div>
-                <RelatedProductList productSlug={product.slug} />
+                <RelatedProductList />
                 <Row gutter={[15, 15]}>
                     <Col xs={24} md={14}>
                         <div className="detail-post">
-                            <DetailProductPost product={product} />
+                            <DetailProductPost />
                         </div>
                     </Col>
                     <Col xs={24} md={10}>
                         <div className="detail-technical">
-                            <DetailProductTechnical product={product} />
+                            <DetailProductTechnical />
                         </div>
                     </Col>
                 </Row>
                 <Divider />
                 <div className="box-sd1 p-2 bg-white">
-                    <Typography.Title level={4}>
-                        Đánh giá và nhận xét {product.name}
-                    </Typography.Title>
-
-                    <DetailProductRating product={product} />
+                    <DetailProductRating />
                 </div>
 
                 <div className="bg-white mt-2">
-                    <DetailProductListRating product={product} />
-                    {/* <DetailProductListRating product={product} /> */}
-
+                    <DetailProductListRating />
                 </div>
 
             </section>

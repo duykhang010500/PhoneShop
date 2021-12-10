@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import dateFormat from 'dateformat'
 import querystring from 'qs'
 import crypto from 'crypto'
-import { } from '@ant-design/icons'
+
 
 import {
     Breadcrumb,
@@ -48,11 +48,13 @@ const Checkout = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const [form] = Form.useForm()
+    const selector = useSelector(state => state)
 
     const [isLoading, setIsLoading] = useState(false)
 
+
     //Get Cart
-    const cart = useSelector(state => state.Cart.cart)
+    const cart = selector.Cart.cart
     const [totalPrice, setTotalPrice] = useState(0)
 
     //State province
@@ -66,16 +68,32 @@ const Checkout = () => {
     //State ward
     const [listWard, setListWard] = useState([])
 
-    //Get address
-    useEffect(() => {
-        getListProvince()
-    }, [])
-
     const getListProvince = () => {
         fetch('https://provinces.open-api.vn/api/p/')
             .then(res => res.json())
             .then(data => setListProvince(data))
     }
+    //Get address
+    useEffect(() => {
+        getListProvince()
+    }, [])
+
+    useEffect(() => {
+        const totalPrice = () => {
+            const total = cart.reduce((prev, item) => {
+                return prev + (convertNewPrice(item.price * item.quantity, item.discount))
+            }, 0)
+            setTotalPrice(total)
+        }
+        totalPrice()
+    }, [cart])
+
+    const colorList = selector.Products.colorsProduct
+    // if (!color) {
+    //     return null
+    // }
+
+
 
     const handleChangeProvince = (value, option) => {
         form.setFieldsValue({
@@ -113,15 +131,6 @@ const Checkout = () => {
             .then(data => setListWard(data.wards))
     }
 
-    useEffect(() => {
-        const totalPrice = () => {
-            const total = cart.reduce((prev, item) => {
-                return prev + (convertNewPrice(item.price * item.quantity, item.discount))
-            }, 0)
-            setTotalPrice(total)
-        }
-        totalPrice()
-    }, [cart])
 
     const handleSubmitForm = () => {
         form.validateFields().then((values) => finalSubmit(values))
@@ -210,6 +219,18 @@ const Checkout = () => {
             history.push('/orderSuccess')
         })
 
+    }
+
+    const convertColorById = (id) => {
+        let colorName
+        if (colorList.length) {
+            colorList.forEach((item) => {
+                if (item.id == id) {
+                    colorName = item.name
+                }
+            })
+            return colorName
+        }
     }
 
     return (
@@ -436,7 +457,7 @@ const Checkout = () => {
                                                     </Badge>
                                                 }
 
-                                                title={`${item.name} (${item.color})`}
+                                                title={`${item.name} (${convertColorById(item.color)})`}
                                                 description={<>
                                                     <Typography.Text
                                                         strong

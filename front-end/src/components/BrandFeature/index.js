@@ -20,6 +20,7 @@ const BrandFeature = () => {
                 </Typography.Title>
                 <Underline />
                 <Row
+                    style={{ marginTop: '2rem' }}
                     gutter={[12, 12]}
                 >
                     <Col
