@@ -132,7 +132,7 @@ const DashboardAdminCreateProduct = () => {
     }
 
     return (
-        <div className="create-product-page" style={{ marginBottom: 50 }}>
+        <div className="create-product-page" style={{ marginBottom: 100 }}>
             <Breadcrumb style={{ marginBottom: '2rem' }}>
                 <Breadcrumb.Item href="/admin">
                     <HomeOutlined />
@@ -268,10 +268,10 @@ const DashboardAdminCreateProduct = () => {
                         <Form.Item
                             label="Dòng sản phẩm"
                             name="type"
-                            rules={[{
-                                required: true,
-                                message: 'Vui lòng nhập dòng sản phẩm!'
-                            }]}
+                        // rules={[{
+                        //     required: true,
+                        //     message: 'Vui lòng nhập dòng sản phẩm!'
+                        // }]}
                         >
                             <Input />
                         </Form.Item>

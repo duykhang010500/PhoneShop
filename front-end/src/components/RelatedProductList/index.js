@@ -8,8 +8,9 @@ import Underline from '../common/Underline'
 
 const RelatedProductList = () => {
 
-
-
+    // const 
+    const { id } = useParams()
+    console.log(id)
     const relatedProductList = useSelector((state) => state.Products.relatedListProduct)
 
     if (!relatedProductList) {

@@ -157,7 +157,7 @@ const Checkout = () => {
         var tmnCode = 'V1LO03SA'
         var secretKey = 'ABNXIREWAUKEJSCQYFIUSCERNPQAEDRC'
         var vnpUrl = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-        var returnUrl = 'https://google.com';
+        var returnUrl = 'http://localhost:3000/checkoutSuccess';
 
         var date = new Date();
         var createDate = dateFormat(date, 'yyyymmddHHmmss');

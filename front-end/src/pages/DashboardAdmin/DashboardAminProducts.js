@@ -21,7 +21,7 @@ import {
     SearchOutlined
 } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { actDeleteProductAsync, actGetAllProductAsync } from '../../store/products/actions';
+import { actDeleteProductAsync, actGetAllProductAsync, actGetAllProductNotPaging } from '../../store/products/actions';
 import { formatVND } from '../../helpers/priceFormat'
 
 
@@ -31,7 +31,7 @@ const DashboardAminProducts = () => {
     const [isFetchingProduct, setIsFetchingProduct] = useState(false)
 
     useEffect(() => {
-        dispatch(actGetAllProductAsync())
+        dispatch(actGetAllProductNotPaging())
     }, [dispatch])
 
     const listProduct = useSelector((state) => state.Products.list)
@@ -147,7 +147,7 @@ const DashboardAminProducts = () => {
 
     //Render
     return (
-        <Row gutter={[20, 10]}>
+        <Row gutter={[20, 10]} style={{ marginBottom: 200 }}>
             <Col span={24}>
                 <Breadcrumb style={{ marginBottom: '2rem' }}>
                     <Breadcrumb.Item href="/admin">

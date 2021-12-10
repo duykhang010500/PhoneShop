@@ -33,6 +33,7 @@ import Search from "./pages/Search"
 import FilterProducts from "./pages/FilterProducts"
 import News from "./pages/News"
 import DetailPostNews from "./pages/DetailPostNews"
+import CheckoutSuccess from "./pages/CheckoutSuccess"
 
 function App() {
 
@@ -89,6 +90,9 @@ function App() {
         </Route>
         <Route exact path='/products'>
           <FilterProducts />
+        </Route>
+        <Route exact path='/checkoutSuccess'>
+          <CheckoutSuccess />
         </Route>
         <Route path="/user">
           <DashboardUser />

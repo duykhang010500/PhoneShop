@@ -15,7 +15,6 @@ export default function ProductItem({ product, isShowCategory, isShowCompareButt
 
     return (
         <li className={finalClass}>
-
             <Link to={`/product/${product.slug}`}>
                 <img src={product.image} alt="" className="product__item--thumb" />
             </Link>
@@ -50,7 +49,7 @@ export default function ProductItem({ product, isShowCategory, isShowCompareButt
                         className="mt-1 mt-auo d-flex-center"
                         icon={<IoIosGitCompare />}
                         danger
-                        onClick={() => alert('cc')}
+                        onClick={() => alert('Click compare')}
                     >
                         &nbsp; So sánh ngay
                     </Button>

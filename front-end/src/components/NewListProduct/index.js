@@ -25,7 +25,7 @@ export default function NewListProduct({ title }) {
                 </div>
                 <ul className="product__list">
                     {
-                        listNew.map((product, index) => <ProductItem key={index} product={product} />)
+                        listNew.slice(0, 10).map((product, index) => <ProductItem key={index} product={product} />)
                     }
                 </ul>
             </div>

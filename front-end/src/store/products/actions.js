@@ -28,6 +28,18 @@ export const actGetAllProductAsync = () => async (dispatch) => {
     }
 }
 
+export const actGetAllProductNotPaging = () => async (dispatch) => {
+    try {
+        const res = await productsServices.getAll()
+        // console.log(res.data.data)
+        // console.log(res)
+        const list = res.data.data
+        dispatch(actGetListProduct(list))
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 // Lấy chi tiết sản phẩm
 export const actGetDetailProduct = (product) => {
     return {

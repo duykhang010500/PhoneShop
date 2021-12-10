@@ -4,12 +4,8 @@ import './style.less'
 import {
     Layout,
     Menu,
-    Avatar,
-    Badge,
     Row,
-    Space,
     Col,
-    Dropdown,
     Button
 } from 'antd';
 import {
@@ -23,19 +19,14 @@ import {
     LogoutOutlined
 } from '@ant-design/icons';
 
-
 import { useSelector, useDispatch } from 'react-redux'
-import { RiCoupon4Line } from "react-icons/ri";
 import DashboardAdminRoutes from './DashboardAdminRoutes';
-
-import { useAdmin } from '../../hooks/useAuthenticate';
 import { actSetCurrentUser, actSetToken } from '../../store/auth/action';
-
 const { Header, Sider, Content } = Layout;
 
 const DashboardAdmin = () => {
 
-    useAdmin()
+
     const history = useHistory()
     const dispatch = useDispatch()
     const location = useLocation()

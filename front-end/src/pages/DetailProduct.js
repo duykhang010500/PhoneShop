@@ -28,16 +28,14 @@ export default function DetailProduct() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        setFirstLoading(true)
         dispatch(actGetMyWishListAsync())
-        dispatch(actGetRelatedListProductAsync(id))
         dispatch(actGetRelatedListProductAsync(id))
         dispatch(actGetDetailProductAsync(id))
             .then(() => {
                 setFirstLoading(false)
             })
     }, [dispatch, id])
-
-
     if (firstLoading) {
         return (
             <div className="container" style={{ marginTop: 140, marginBottom: 200 }}>
@@ -86,6 +84,8 @@ export default function DetailProduct() {
             </div>
         )
     }
+
+
 
     return (
         <div className="container">

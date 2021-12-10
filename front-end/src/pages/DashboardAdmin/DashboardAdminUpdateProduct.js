@@ -333,10 +333,10 @@ const DashboardAdminUpdateProduct = () => {
                         <Form.Item
                             label="Dòng sản phẩm"
                             name="type"
-                            rules={[{
-                                required: true,
-                                message: 'Vui lòng nhập dòng sản phẩm!'
-                            }]}
+                        // rules={[{
+                        //     required: true,
+                        //     message: 'Vui lòng nhập dòng sản phẩm!'
+                        // }]}
                         >
                             <Input />
                         </Form.Item>

@@ -4,13 +4,13 @@ import Ads from "../components/Ads";
 import NewListProduct from "../components/NewListProduct";
 import BrandFeature from "../components/BrandFeature";
 import BestDiscount from '../components/BestDiscount'
-import { actGetAllProductAsync, actGetBestDiscountAsync } from "../store/products/actions";
+import { actGetAllProductNotPaging, actGetBestDiscountAsync } from "../store/products/actions";
 import Banner from "../components/Banner";
 
 export default function HomePage() {
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(actGetAllProductAsync())
+        dispatch(actGetAllProductNotPaging())
         dispatch(actGetBestDiscountAsync())
     }, [dispatch])
 

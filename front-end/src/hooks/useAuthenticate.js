@@ -31,15 +31,3 @@ export const useNotAuthenticated = () => {
     }, [token])
 }
 
-export const useAdmin = () => {
-    // const history = useHistory()
-    // const isAdmin = useSelector(state => state.Auth.currentUser.role)
-    // if (!isAdmin) {
-    //     return null
-    // }
-    // useEffect(() => {
-    //     if (isAdmin != 'admin') {
-    //         history.push('/')
-    //     }
-    // }, [isAdmin])
-}
