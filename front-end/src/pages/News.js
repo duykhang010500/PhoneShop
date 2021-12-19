@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Skeleton } from 'antd'
 
 
-const shortDesc = (text, num = 40) => {
+const shortDesc = (text, num = 20) => {
     if (text.length > num) {
         return text.split(' ').splice(0, num).join(' ') + '...'
     } else {
@@ -32,7 +32,15 @@ const News = () => {
 
     if (isFetching) {
         return (
-            <div className="container mt-12">
+            <div className="container news-wrapper mt-12">
+                <Skeleton
+                    paragraph={{ rows: 4 }}
+                    active
+                />
+                <Skeleton
+                    paragraph={{ rows: 4 }}
+                    active
+                />
                 <Skeleton
                     paragraph={{ rows: 4 }}
                     active

@@ -28,10 +28,10 @@ const DashboardAdminCustomers = () => {
             dataIndex: 'image',
             key: 'image',
             render: image => (
-                <Avatar
+                <img
                     src={image}
-                    shape="square"
                     alt={image}
+                    style={{ width: 50, height: 50 }}
                 />
             )
         },
@@ -48,7 +48,15 @@ const DashboardAdminCustomers = () => {
         {
             title: 'Giới tính',
             dataIndex: 'sex',
-            key: 'sex'
+            key: 'sex',
+            render: (gender) => {
+                if (gender === 'male') {
+                    return <span>Nam</span>
+                } else {
+                    return <span>Nữ</span>
+
+                }
+            }
         },
         {
             title: 'Ngày sinh',

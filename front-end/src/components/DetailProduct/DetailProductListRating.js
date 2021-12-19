@@ -31,8 +31,10 @@ export default function DetailProductListRating() {
                                         </Typography.Text>
                                     }
                                     avatar={
-                                        <Avatar
+                                        <img
                                             src={item.user_image}
+                                            alt={item.user_image}
+                                            style={{ width: 40, height: 40 }}
                                         />
                                     }
                                     content={

@@ -258,7 +258,7 @@ const Checkout = () => {
                     <Typography.Title level={3}>
                         Thông tin nhận hàng
                     </Typography.Title>
-                    <Underline />
+                    {/* <Underline /> */}
                     <Form
                         layout="vertical"
                         className="checkout-form"
@@ -306,11 +306,11 @@ const Checkout = () => {
                                 >
                                     <Radio.Group size="large">
                                         <Space>
-                                            <Radio.Button value='Tiền mặt'>
+                                            <Radio.Button value={1}>
                                                 Tiền mặt
                                             </Radio.Button>
                                             <Radio.Button
-                                                value='Online - VNPAY'
+                                                value={2}
                                                 onClick={handlePaymentOnline}
                                             >
                                                 VNPAY
@@ -434,7 +434,7 @@ const Checkout = () => {
                             Chỉnh sửa
                         </Button>
                     </Row>
-                    <Underline />
+                    {/* <Underline /> */}
                     <Row>
                         {
                             cart.map((item, index) => {
@@ -488,7 +488,7 @@ const Checkout = () => {
                             >
                                 Đặt hàng
                             </Typography.Title>
-                            <Underline />
+                            {/* <Underline /> */}
                             <Space
                                 size="middle"
                                 direction="vertical"

@@ -69,7 +69,10 @@ const DashboardAdminArticlesPost = () => {
         {
             title: 'Đường dẫn',
             dataIndex: 'slug',
-            key: 'slug'
+            key: 'slug',
+            render: (slug) => (
+                <span>/{slug}</span>
+            )
         },
         {
             title: 'Hành động',
@@ -258,6 +261,7 @@ const DashboardAdminArticlesPost = () => {
                         dispatch(actGetArticleListAsync())
                         setIsConfirmLoading(false)
                         setIsShowModalUpdate(false)
+                        setArticleSelected(null)
                     })
             })
     }

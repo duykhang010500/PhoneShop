@@ -6,7 +6,7 @@ const CheckoutSuccess = () => {
         <div style={{ marginTop: '13rem' }}>
             <Result
                 status="success"
-                title="Thanh toán VNPAY thành công!"
+                title="Thanh toán VNPAY thành công, hãy tiến hành đặt hàng!"
             />
         </div>
     )

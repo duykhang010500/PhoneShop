@@ -56,10 +56,10 @@ export default function Login() {
                             required: true,
                             message: 'Vui lòng nhập email!'
                         },
-                        {
-                            type: "email",
-                            message: 'Email không hợp lệ'
-                        }
+                        // {
+                        //     type: "email",
+                        //     message: 'Email không hợp lệ'
+                        // }
                     ]}
                 >
                     <Input
@@ -71,13 +71,16 @@ export default function Login() {
                 </Form.Item>
                 <Form.Item
                     name="password"
-                    rules={[{
-                        required: true,
-                        message: 'Vui lòng nhập mật khẩu!',
-                    }, {
-                        min: 6,
-                        message: 'Mật khẩu phải ít nhất 6 ký tự'
-                    }]}
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Vui lòng nhập mật khẩu!',
+                        },
+                        // {
+                        //     min: 6,
+                        //     message: 'Mật khẩu phải ít nhất 6 ký tự'
+                        // }
+                    ]}
                 >
                     <Input
                         placeholder="Mật khẩu"

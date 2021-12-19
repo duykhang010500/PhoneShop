@@ -521,6 +521,8 @@ const DashboardAdminCreateProduct = () => {
                                     name="image"
                                     action="https://api.imgbb.com/1/upload?key=8c37ca908e1a1a4f5db86e4555a008c2"
                                     maxCount={10}
+                                    listType='picture-card'
+                                    style={{ marginBottom: 20 }}
                                 >
                                     <p className="ant-upload-drag-icon">
                                         <InboxOutlined />

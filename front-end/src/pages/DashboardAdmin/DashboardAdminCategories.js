@@ -94,6 +94,11 @@ const DashboardAdminCategories = () => {
     //Columns in table
     const columnsBrandTable = [
         {
+            title: '#ID',
+            dataIndex: 'id',
+            key: 'id'
+        },
+        {
             title: 'Tên hãng',
             dataIndex: 'name',
             key: 'name',
@@ -101,7 +106,10 @@ const DashboardAdminCategories = () => {
         {
             title: 'Đường dẫn',
             dataIndex: 'slug',
-            key: 'slug'
+            key: 'slug',
+            render: (slug) => (
+                <span>/{slug}</span>
+            )
         },
         {
             title: 'Mô tả',

@@ -198,7 +198,11 @@ const DashboardUserOrder = () => {
                                         <span>
                                             Thanh toán: &nbsp;
                                         </span>
-                                        {detailOrders[0].ship.method}
+                                        {
+
+                                            detailOrders[0].ship.method === 1 ? <>Tiền mặt</> : <>Online VNPAY</>
+
+                                        }
                                     </div>
                                 </div>
                             </div>

@@ -12,6 +12,7 @@ import DashboardAdminCreateProduct from './DashboardAdminCreateProduct'
 import DashboardAdminUpdateProduct from './DashboardAdminUpdateProduct'
 import DashboardAdminArticleCategory from './DashboardAdminArticleCategory'
 import DashboardAdminArticlesPost from './DashboardAdminArticlesPost'
+import DashboardAdminCoupon from './DashboardAdminCoupon'
 
 const DashboardAdminRoutes = () => {
     return (
@@ -25,6 +26,7 @@ const DashboardAdminRoutes = () => {
             <Route exact path='/admin/products/update/:slug' component={DashboardAdminUpdateProduct} />
             <Route exact path='/admin/news/category' component={DashboardAdminArticleCategory} />
             <Route exact path='/admin/news/posts' component={DashboardAdminArticlesPost} />
+            <Route exact path='/admin/coupons' component={DashboardAdminCoupon} />
         </Switch>
     )
 }

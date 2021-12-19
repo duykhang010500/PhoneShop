@@ -106,7 +106,8 @@ const DashboardHome = () => {
                 </Breadcrumb>
             </Col>
             <Col
-                sx={24}
+                xs={24}
+                sm={12}
                 md={6}
             >
                 <Card hoverable className='box-sd1'>
@@ -119,7 +120,9 @@ const DashboardHome = () => {
                 </Card>
             </Col>
             <Col
-                sx={24}
+                xs={24}
+                sm={12}
+
                 md={6}
             >
                 <Card hoverable className='box-sd1'>
@@ -132,7 +135,8 @@ const DashboardHome = () => {
                 </Card>
             </Col>
             <Col
-                sx={24}
+                xs={24}
+                sm={12}
                 md={6}
             >
                 <Card hoverable className='box-sd1'>
@@ -146,7 +150,8 @@ const DashboardHome = () => {
                 </Card>
             </Col>
             <Col
-                sx={24}
+                xs={24}
+                sm={12}
                 md={6}
             >
                 <Card hoverable className='box-sd1'>
@@ -167,10 +172,9 @@ const DashboardHome = () => {
                 <Table
                     columns={columns}
                     dataSource={statistics.orders}
+                    rowKey={(record) => record.order_code}
                 />
             </Col>
-
-
         </Row>
     )
 }

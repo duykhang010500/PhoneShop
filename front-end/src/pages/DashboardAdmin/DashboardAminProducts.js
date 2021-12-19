@@ -55,7 +55,7 @@ const DashboardAminProducts = () => {
             key: 'name',
             render: (text, record) => (
                 <Typography.Text
-                    strong
+                // strong
                 >
                     {record.name}
                 </Typography.Text>
@@ -66,7 +66,7 @@ const DashboardAminProducts = () => {
             dataIndex: 'brand',
             key: 'brand',
             render: (text, record) => (
-                <Typography.Text strong>
+                <Typography.Text >
                     {record.brand.name}
                 </Typography.Text>
             )
@@ -94,10 +94,16 @@ const DashboardAminProducts = () => {
             defaultSortOrder: 'desc',
             sorter: (a, b) => a.discount - b.discount,
             render: (text, record) => (
-                <Typography.Text strong>
+                <Typography.Text>
                     {record.discount}%
                 </Typography.Text>
             )
+        },
+        {
+            title: 'Đã bán',
+            dataIndex: 'sold',
+            key: 'sold',
+            sorter: (a, b) => a.sold - b.sold
         },
         {
             title: 'Hành động',
@@ -117,7 +123,7 @@ const DashboardAminProducts = () => {
                     <Tooltip title="Xóa">
                         <Popconfirm
                             placement="topRight"
-                            title={`Xóa điện thoai ${record.name}`}
+                            title={`Xóa điện thoại ${record.name}`}
                             onConfirm={() => handleDeleteProduct(record.slug)}
                         >
                             <Button

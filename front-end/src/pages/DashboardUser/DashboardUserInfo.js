@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Form,
     Input,
@@ -9,7 +9,8 @@ import {
     Upload,
     Select,
     Avatar,
-    message
+    message,
+    Spin
 } from 'antd'
 
 import {
@@ -30,7 +31,10 @@ const DashboardUserInfo = () => {
     useAuthenticated()
     const [form] = Form.useForm()
     const [isLoading, setIsLoading] = useState(false)
+
     const [isImageChange, setIsImageChange] = useState(false)
+
+
 
     // const [fileList, setFileList] = useState([])
     //Set preview avatar on change
@@ -102,15 +106,14 @@ const DashboardUserInfo = () => {
         }).finally(() => setIsLoading(false))
     }
 
-
-
     //rendering
     return (
+
         <div className="box-sd1" style={{ backgroundColor: "#fff", padding: "3rem" }}>
             <Form
                 layout="vertical"
                 initialValues={{
-                    // image: currentUser.image,
+                    image: currentUser.image,
                     email: currentUser.email,
                     name: currentUser.name,
                     sex: currentUser.sex,
@@ -122,13 +125,12 @@ const DashboardUserInfo = () => {
                     <Col span={24}>
                         <Form.Item
                             label="Ảnh đại diện"
-                            // valuePropName="fileList"
                             name="avt"
-                            rules={[
-                                {
-                                    required: true
-                                }
-                            ]}
+                        // rules={[
+                        //     {
+                        //         required: true
+                        //     }
+                        // ]}
                         >
                             <Upload
                                 name="image"
@@ -256,6 +258,7 @@ const DashboardUserInfo = () => {
                 </Row>
             </Form>
         </div>
+
     )
 }
 

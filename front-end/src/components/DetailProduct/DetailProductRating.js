@@ -25,13 +25,15 @@ export default function DetailProductRating() {
     }
     return (
         <>
-            <Row gutter={[10, 10]} align="middle">
+            <Row gutter={[20, 20]} align="middle" justify='space-between'>
+                <Col span={24}>
+                    <Typography.Title level={5}>
+                        Đánh giá và nhận xét {product.data.name}
+                    </Typography.Title>
+                </Col>
                 <Col xs={24} md={8}>
-                    <Row justify="space-around">
-                        <Typography.Title level={4}>
-                            Đánh giá và nhận xét {product.data.name}
-                        </Typography.Title>
-                        <Space direction="vertical" align="center" size={1}>
+                    <Row justify="space-around" gutter={[20, 20]}>
+                        <Space direction="vertical" align="center" size="small">
                             <Typography.Title level={5}>
                                 Điểm trung bình
                             </Typography.Title>

@@ -34,10 +34,12 @@
     }
     &-thumb {
       margin-right: 1rem;
+      width: 40%;
     }
     &-desc {
       display: flex;
       flex-direction: column;
+      width: 70%;
       &--title {
         font-size: 2.2rem;
         font-weight: 400;

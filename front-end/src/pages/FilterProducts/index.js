@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Row, Checkbox, Col, Select, Input, InputNumber, Spin } from 'antd'
+import { Button, Row, Checkbox, Col, Select, Input, InputNumber, Spin, message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { actFilterProductAsync } from '../../store/products/actions'
 import ProductItem from '../../components/ProductItem'
@@ -105,6 +105,10 @@ const FilterProducts = () => {
     }
 
     const handleFilterPrice = () => {
+        if (maxPrice < minPrice) {
+            message.error('Giá tối đa phải lớn hơn giá nhỏ nhất!')
+            return
+        }
         setIsLoadingPrice(true)
         setIsFetching(true)
         dispatch(actFilterProductAsync({
@@ -170,6 +174,7 @@ const FilterProducts = () => {
                                 <InputNumber
                                     className="mb-1 w-100"
                                     step={500000}
+                                    min={0}
                                     onChange={handleChangeMinimumPrice}
                                     value={minPrice}
                                 />
@@ -179,6 +184,7 @@ const FilterProducts = () => {
                                 <InputNumber className="mb-2 w-100"
                                     step={500000}
                                     value={maxPrice}
+                                    min={0}
                                     onChange={handleChangeMaximumPrice}
                                 />
                                 <Button style={{ width: '100%' }}

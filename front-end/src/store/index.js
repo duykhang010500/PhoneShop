@@ -15,6 +15,7 @@ import wishListReducer from './wishList/reducer'
 import customersReducer from './customers/reducer'
 import newsReducer from './news/reducer'
 import statisticsReducer from './statistics/reducer'
+import couponsReducer from './coupons/reducer'
 
 const rootReducer = combineReducers({
     Auth: authReducer,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     WishList: wishListReducer,
     Customer: customersReducer,
     News: newsReducer,
-    Statistics: statisticsReducer
+    Statistics: statisticsReducer,
+    Coupons: couponsReducer
 })
 const store = createStore(rootReducer, applyMiddleware(thunk, logger))
 

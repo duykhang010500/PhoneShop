@@ -218,7 +218,7 @@ const DashboardAdminOrders = () => {
                     <Tooltip title="Xoá đơn hàng">
                         <Popconfirm
                             placement="topRight"
-                            title={`Xóa hãng ${record.order_code}`}
+                            title={`Xóa đơn hàng #${record.order_code}`}
                             onConfirm={() => handleDeleteOrder(record.order_code)}
                         >
                             <Button
@@ -332,7 +332,10 @@ const DashboardAdminOrders = () => {
                                         <span>
                                             Thanh toán: &nbsp;
                                         </span>
-                                        {detailOrders[0].ship.method}
+                                        {
+                                            detailOrders[0].ship.method === 1 ? <>Tiền mặt</> : <>VNPAY</>
+
+                                        }
                                     </div>
                                 </div>
                             </div>

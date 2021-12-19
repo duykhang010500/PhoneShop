@@ -19,6 +19,8 @@ import {
     LogoutOutlined
 } from '@ant-design/icons';
 
+import { RiCoupon4Line } from "react-icons/ri";
+
 import { useSelector, useDispatch } from 'react-redux'
 import DashboardAdminRoutes from './DashboardAdminRoutes';
 import { actSetCurrentUser, actSetToken } from '../../store/auth/action';
@@ -84,23 +86,14 @@ const DashboardAdmin = () => {
                         <Link to='/admin/orders'>Quản lý đơn hàng</Link>
                     </Menu.Item>
                     <Menu.Item
-                        key="/admin/customer"
-                        icon={<UserOutlined
-                            style={{ fontSize: "2rem" }}
-                        />}>
-                        <Link to='/admin/customer'>
-                            Quản lý khách hàng
-                        </Link>
-                    </Menu.Item>
-                    {/* <Menu.Item
                         key="/admin/coupon"
                         icon={<RiCoupon4Line
                             style={{ fontSize: "2rem" }}
                         />}>
-                        <Link to='/admin/coupon'>
+                        <Link to='/admin/coupons'>
                             Quản lý khuyến mại
                         </Link>
-                    </Menu.Item> */}
+                    </Menu.Item>
                     <SubMenu
                         key="news"
                         title="Tin tức"
@@ -115,7 +108,15 @@ const DashboardAdmin = () => {
                             <Link to='/admin/news/posts'>Quản lý bài viết</Link>
                         </Menu.Item>
                     </SubMenu>
-
+                    <Menu.Item
+                        key="/admin/customer"
+                        icon={<UserOutlined
+                            style={{ fontSize: "2rem" }}
+                        />}>
+                        <Link to='/admin/customer'>
+                            Quản lý khách hàng
+                        </Link>
+                    </Menu.Item>
                 </Menu>
             </Sider>
             <Layout className="site-layout">

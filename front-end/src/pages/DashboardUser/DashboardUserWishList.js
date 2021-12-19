@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Skeleton, Tooltip } from 'antd'
+import { Skeleton, Spin, Tooltip } from 'antd'
 import { actDeleteItemInWishListAsync, actGetMyWishListAsync } from '../../store/wishList/action'
 import { convertNewPrice, formatVND } from '../../helpers/priceFormat'
 
@@ -35,12 +35,14 @@ const DashboardUserWishList = () => {
 
     const handleRemoveProduct = (productId) => {
         console.log(productId)
+        setIsLoading(true)
         dispatch(actDeleteItemInWishListAsync(productId)).then(() => {
             dispatch(actGetMyWishListAsync())
-        })
+        }).finally(() => setIsLoading(false))
     }
 
     return (
+
         <div className="wishlist-page box-sd1">
             <ul className="wishlist">
                 {
@@ -86,7 +88,8 @@ const DashboardUserWishList = () => {
                     })
                 }
             </ul>
-        </div >
+        </div>
+
     )
 
 

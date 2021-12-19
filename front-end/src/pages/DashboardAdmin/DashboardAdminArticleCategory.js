@@ -65,7 +65,10 @@ const DashboardAdminArticleCategory = () => {
         {
             title: 'Đường dẫn',
             dataIndex: 'slug',
-            key: 'slug'
+            key: 'slug',
+            render: (slug) => (
+                <span>/{slug}</span>
+            )
         },
         {
             title: 'Mô tả ngắn',

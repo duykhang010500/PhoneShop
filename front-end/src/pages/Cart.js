@@ -200,16 +200,18 @@ const Cart = () => {
                     >
                         Tiếp tục mua hàng
                     </Button>
-                    <Button
-                        size="large"
-                        danger
-                        type="primary"
-                        icon={<CreditCardOutlined />}
-                        href="/checkout"
-                    >
-                        Thực hiện thanh toán
+                    {
+                        cart.length !== 0 && <Button
+                            size="large"
+                            danger
+                            type="primary"
+                            icon={<CreditCardOutlined />}
+                            href="/checkout"
+                        >
+                            Thực hiện thanh toán
 
-                    </Button>
+                        </Button>
+                    }
                 </Space>
             </Row>
 

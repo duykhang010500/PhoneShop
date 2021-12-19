@@ -20,7 +20,9 @@ const DetailPostNews = () => {
         return (
             <div className="mt-12">
                 <div className="container">
-                    <Skeleton />
+                    <Skeleton
+                        paragraph={{ rows: 10 }}
+                    />
                 </div>
             </div>
         )
