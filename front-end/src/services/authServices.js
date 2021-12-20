@@ -21,6 +21,16 @@ const authServices = {
     },
     getAdmin() {
         return api.callWithToken().post('/admin/refresh')
+    },
+    sendMailResetPassword(email) {
+        return api.call().post(`/user/reset-password?email=${email}`)
+    },
+    resetPassword(token, password) {
+        return api.call().put('/user/reset-password', password, {
+            params: {
+                token: token
+            }
+        })
     }
 }
 

@@ -75,11 +75,7 @@ export default function Login() {
                         {
                             required: true,
                             message: 'Vui lòng nhập mật khẩu!',
-                        },
-                        // {
-                        //     min: 6,
-                        //     message: 'Mật khẩu phải ít nhất 6 ký tự'
-                        // }
+                        }
                     ]}
                 >
                     <Input
@@ -89,6 +85,13 @@ export default function Login() {
                         allowClear
                     />
                 </Form.Item>
+                <Link
+                    to='/forgot-password'
+                    style={{ textAlign: 'right', marginTop: 10, fontSize: 15, fontWeight: 500, color: 'rgb(241, 102, 34)', display: 'block' }}>
+                    Quên mật khẩu?
+                </Link>
+
+
                 <Form.Item>
                     <Button
                         type="primary"

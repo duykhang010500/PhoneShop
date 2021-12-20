@@ -34,6 +34,8 @@ import FilterProducts from "./pages/FilterProducts"
 import News from "./pages/News"
 import DetailPostNews from "./pages/DetailPostNews"
 import CheckoutSuccess from "./pages/CheckoutSuccess"
+import ForgotPassword from "./pages/ForgotPassword"
+import NewPassword from "./pages/NewPassword"
 
 function App() {
 
@@ -93,6 +95,12 @@ function App() {
         </Route>
         <Route exact path='/checkoutSuccess'>
           <CheckoutSuccess />
+        </Route>
+        <Route exact path='/forgot-password'>
+          <ForgotPassword />
+        </Route>
+        <Route exact path='/new-password'>
+          <NewPassword />
         </Route>
         <Route path="/user">
           <DashboardUser />

@@ -166,3 +166,21 @@ export const actGetAdmin = () => async (dispatch) => {
         dispatch(actSetCurrentUser(null))
     }
 }
+
+export const actSendMailResetPassword = (email) => async (dispatch) => {
+    try {
+        const res = await authServices.sendMailResetPassword(email)
+        console.log(res)
+    } catch (err) {
+        throw err
+    }
+}
+
+export const actResetPasswordAsync = (token, password) => async (dispatch) => {
+    try {
+        const res = await authServices.resetPassword(token, password)
+        console.log(res)
+    } catch (err) {
+        throw err
+    }
+}
