@@ -192,7 +192,13 @@ const DashboardUserOrder = () => {
                                         <span>
                                             Ghi chú: &nbsp;
                                         </span>
-                                        {detailOrders[0].ship.note}
+                                        {detailOrders[0].ship.note ? detailOrders[0].ship.note : <>Không có</>}
+                                    </div>
+                                    <div className="order__detail-customer--info">
+                                        <span>
+                                            Mã khuyến mại: &nbsp;
+                                        </span>
+                                        {detailOrders[0].order.coupon}
                                     </div>
                                     <div className="order__detail-customer--info">
                                         <span>

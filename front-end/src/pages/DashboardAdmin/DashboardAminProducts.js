@@ -109,7 +109,7 @@ const DashboardAminProducts = () => {
             title: 'Hành động',
             key: 'action',
             render: (text, record) => (
-                <Space>
+                <Space size='middle'>
                     <Tooltip title="Cập nhật">
                         <Link to={`/admin/products/update/${record.slug}`}>
                             <Button

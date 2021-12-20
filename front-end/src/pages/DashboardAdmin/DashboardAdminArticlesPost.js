@@ -78,12 +78,12 @@ const DashboardAdminArticlesPost = () => {
             title: 'Hành động',
             key: 'action',
             render: (item, record) => (
-                <Space>
+                <Space size='middle'>
                     <Tooltip title="Cập nhật">
                         <Button
                             type="primary"
                             icon={<EditOutlined />}
-                            shape="circle"
+
                             onClick={() => {
                                 setIsShowModalUpdate(true)
                                 // handleGetDetailArticle(record.slug)
@@ -109,7 +109,7 @@ const DashboardAdminArticlesPost = () => {
                                 type="primary"
                                 danger
                                 icon={<DeleteOutlined />}
-                                shape="circle"
+
                             >
                             </Button>
                         </Popconfirm>

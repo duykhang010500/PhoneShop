@@ -120,7 +120,7 @@ const DashboardAdminCategories = () => {
             title: 'Hành động',
             key: 'action',
             render: (text, record) => (
-                <Space>
+                <Space size='middle'>
                     <Tooltip title="Cập nhật">
                         <Button
                             type="primary"

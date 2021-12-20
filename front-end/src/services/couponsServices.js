@@ -16,6 +16,13 @@ const couponsServices = {
     },
     updateCoupon: (code, formData) => {
         return api.callWithToken().put(`/coupon?coupon_code=${code}`, formData)
+    },
+    checkCoupon: (code) => {
+        return api.call().get('/coupon', {
+            params: {
+                coupon_code: code
+            }
+        })
     }
 }
 

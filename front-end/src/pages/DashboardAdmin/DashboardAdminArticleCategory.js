@@ -79,12 +79,12 @@ const DashboardAdminArticleCategory = () => {
             title: 'Hành động',
             key: 'action',
             render: (item, record) => (
-                <Space>
+                <Space size='middle'>
                     <Tooltip title="Cập nhật">
                         <Button
                             type="primary"
                             icon={<EditOutlined />}
-                            shape="circle"
+
                             onClick={() => {
                                 setIsShowModalUpdate(true)
                                 setCategorySelected(record)
@@ -107,7 +107,7 @@ const DashboardAdminArticleCategory = () => {
                                 type="primary"
                                 danger
                                 icon={<DeleteOutlined />}
-                                shape="circle"
+
                             >
                             </Button>
                         </Popconfirm>

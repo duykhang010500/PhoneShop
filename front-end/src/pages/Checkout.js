@@ -19,7 +19,8 @@ import {
     Card,
     Avatar,
     Badge,
-    Divider
+    Divider,
+    message
 } from 'antd'
 
 import Underline from '../components/common/Underline'
@@ -37,7 +38,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { convertNewPrice, formatVND } from '../helpers/priceFormat'
 import { actMakeNewOrder } from '../store/orders/action'
 import { actDeleteCart } from '../store/cart/action'
+import { actCheckCoupon } from '../store/coupons/action'
 
+const convertPriceWithCoupon = (totalPrice, couponValue) => {
+    return totalPrice - (totalPrice * couponValue / 100)
+}
 
 const Checkout = () => {
 
@@ -51,6 +56,8 @@ const Checkout = () => {
     const selector = useSelector(state => state)
 
     const [isLoading, setIsLoading] = useState(false)
+    const [coupon, setCoupon] = useState(null)
+    const [couponCode, setCouponCode] = useState('')
 
 
     //Get Cart
@@ -162,7 +169,7 @@ const Checkout = () => {
         var date = new Date();
         var createDate = dateFormat(date, 'yyyymmddHHmmss');
         var orderId = dateFormat(date, 'HHmmss');
-        var amount = totalPrice;
+        var amount = convertPriceWithCoupon(totalPrice, coupon ? +coupon.number : 0);
         // var bankCode = ''
         var orderInfo = 'Thanh toán nè';
         var orderType = 'other';
@@ -193,7 +200,7 @@ const Checkout = () => {
     }
 
     const finalSubmit = (values) => {
-        console.log(values)
+        // console.log(values)
         setIsLoading(true)
         const finalCart = cart.map(item => ({
             product_id: item.id,
@@ -202,7 +209,7 @@ const Checkout = () => {
 
         }))
 
-        const formatOrder = { ...values, address: values.detailAddress + ', ' + values.ward + ', ' + values.district + ', ' + values.province, coupon_code: '' }
+        const formatOrder = { ...values, address: values.detailAddress + ', ' + values.ward + ', ' + values.district + ', ' + values.province, coupon_code: couponCode }
         delete formatOrder.ward
         delete formatOrder.district
         delete formatOrder.province
@@ -210,6 +217,7 @@ const Checkout = () => {
 
         const newOrder = { ...formatOrder, cart: finalCart }
 
+        console.log(newOrder)
         dispatch(actMakeNewOrder(newOrder)).then(() => {
             setIsLoading(false)
             dispatch(actDeleteCart())
@@ -231,6 +239,24 @@ const Checkout = () => {
             })
             return colorName
         }
+    }
+
+    const handleChangeCoupon = (e) => {
+        setCouponCode(e.target.value)
+    }
+
+    const handleCheckCoupon = () => {
+        dispatch(actCheckCoupon(couponCode))
+            .then((res) => {
+                if (!res.ok) {
+                    message.error('Mã khuyến mại không tồn tại!')
+                    setCoupon(res.coupon)
+                } else {
+                    message.success('Mã khuyến mại hợp lệ!')
+                    console.log(res)
+                    setCoupon(res.coupon)
+                }
+            })
     }
 
     return (
@@ -477,6 +503,32 @@ const Checkout = () => {
                         }
 
                         <Divider />
+
+                        <Col span={24}>
+                            <Space size='large'>
+                                <Input
+                                    size='large'
+                                    style={{ width: '35.6rem' }}
+                                    placeholder='Mã khuyến mại'
+                                    onChange={handleChangeCoupon}
+                                />
+                                <Button
+                                    size='large'
+                                    type='primary'
+                                    onClick={() => handleCheckCoupon()}
+                                    disabled={!couponCode}
+                                >
+                                    Áp dụng
+                                </Button>
+                            </Space>
+                            {
+                                coupon ?
+                                    <small>Bạn đang áp dụng mã khuyến mại "{coupon.name}"</small> :
+                                    null
+                            }
+                        </Col>
+
+                        <Divider />
                         <Col span={24}
                             style={{
                                 backgroundColor: "#fff",
@@ -522,6 +574,26 @@ const Checkout = () => {
                                     <Col>
                                         <Typography.Text
                                             strong
+
+                                        >
+                                            Khuyến mại
+                                        </Typography.Text>
+                                    </Col>
+                                    <Col>
+                                        <Typography.Text
+                                            strong
+                                        >
+                                            {coupon ? +coupon.number : 0} %
+                                        </Typography.Text>
+
+                                    </Col>
+                                </Row>
+                                <Row
+                                    justify="space-between"
+                                >
+                                    <Col>
+                                        <Typography.Text
+                                            strong
                                         >
                                             Phí vận chuyển
                                         </Typography.Text>
@@ -554,7 +626,7 @@ const Checkout = () => {
                                             style={{ fontSize: "2rem" }}
                                         >
                                             {
-                                                formatVND(totalPrice)
+                                                formatVND(convertPriceWithCoupon(totalPrice, coupon ? +coupon.number : 0))
                                             }
                                         </Typography.Text>
 

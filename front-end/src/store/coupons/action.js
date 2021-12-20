@@ -42,3 +42,22 @@ export const actUpdateCouponAsync = (code, formData) => async (dispatch) => {
         throw err
     }
 }
+
+export const actCheckCoupon = (code) => async (dispatch) => {
+    try {
+        const res = await couponsServices.checkCoupon(code)
+        console.log('Check coupon: ', res.data.data)
+        if (res.data.data.length === 0) {
+            return {
+                ok: false
+            }
+        } else {
+            return {
+                ok: true,
+                coupon: res.data.data[0]
+            }
+        }
+    } catch (err) {
+        throw err
+    }
+}

@@ -55,7 +55,6 @@ const DashboardAdminCoupon = () => {
                         <Button
                             icon={<EditOutlined />}
                             type='primary'
-                            shape='circle'
                             onClick={() => {
                                 setCouponSelected(record)
                                 setIsShowModalUpdate(true)
@@ -74,7 +73,6 @@ const DashboardAdminCoupon = () => {
                             icon={<DeleteOutlined />}
                             type='primary'
                             danger
-                            shape='circle'
                             onClick={() => handleDeleteCoupon(record.code)}
                         >
                         </Button>
