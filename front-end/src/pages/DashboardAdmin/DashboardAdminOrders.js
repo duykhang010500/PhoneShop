@@ -14,7 +14,9 @@ import {
     Typography,
     Avatar,
     Popconfirm,
-    message
+    message,
+    Input,
+    Select
 } from 'antd';
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -26,7 +28,8 @@ import {
     CheckCircleOutlined,
     EditOutlined,
     DeleteOutlined,
-    CloseCircleOutlined
+    CloseCircleOutlined,
+    SearchOutlined
 } from '@ant-design/icons';
 
 import { FaTruck } from "react-icons/fa"
@@ -37,13 +40,14 @@ import { formatVND } from '../../helpers/priceFormat'
 const DashboardAdminOrders = () => {
 
     const dispatch = useDispatch()
+    const [ordersTime, setOrdersTime] = useState('last-month')
 
     useEffect(() => {
         setIsLoading(true)
-        dispatch(actGetListOrdersUserAsync()).then(() => {
+        dispatch(actGetListOrdersUserAsync(ordersTime)).then(() => {
             setIsLoading(false)
         })
-    }, [dispatch])
+    }, [dispatch, ordersTime])
 
     // Lấy danh sách orders
     const listOrdersUser = useSelector((state) => state.Orders.listOrdersUser)
@@ -131,14 +135,72 @@ const DashboardAdminOrders = () => {
             key: 'order_code',
             render: (orderCode) => (
                 <Typography.Text strong>
-                    #{orderCode}
+                    {orderCode}
                 </Typography.Text>
-            )
+            ),
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                autoFocus
+                                placeholder='Nhập mã đơn hàng'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                                onPressEnter={() => {
+                                    confirm()
+                                }}
+                            // onBlur={() => {
+                            //     confirm()
+                            // }}
+                            >
+                            </Input>
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    danger
+                                    size='small'
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+
+                    </div>)
+            },
+            onFilter: (value, record) => {
+                return record.order_code.toLowerCase().includes(value.toLowerCase())
+            },
+            filterIcon: () => {
+                return <SearchOutlined />
+            }
+
         },
         {
-            title: 'Ngày đặt',
-            dataIndex: 'created_at',
-            key: 'created_at',
+            title: 'Thông tin cơ bản',
+            dataIndex: 'info',
+            key: 'info',
+            render: (text, record) => {
+                return (
+                    <div>
+                        <span>{record.ship.name}</span>
+                        <span>{record.ship.phone}</span>
+                    </div>
+
+
+                )
+            }
         },
         {
             title: 'Tổng tiền',
@@ -151,13 +213,23 @@ const DashboardAdminOrders = () => {
                 >
                     {formatVND(price)}
                 </Typography.Text>
-            )
+            ),
+            sorter: (a, b) => a.total - b.total
         },
         ,
         {
             title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
+            filters: [
+                { text: 'Đang chờ xử lý', value: 1 },
+                { text: 'Đang giao hàng', value: 2 },
+                { text: 'Đã hoàn thành', value: 3 },
+                { text: 'Đã huỷ', value: 0 }
+            ],
+            onFilter: (value, record) => {
+                return record.status === value
+            },
             render: tag => {
                 if (tag == '0') {
                     return <Tag icon={<CloseCircleOutlined />} color="error">
@@ -293,7 +365,7 @@ const DashboardAdminOrders = () => {
                         <span>Đang tải thông tin</span>
                     ) : (
                         <div className="order__detail">
-                            <div className="order__detail-customer">
+                            {/* <div className="order__detail-customer">
                                 <div className="order__detail-customer--title">
                                     Thông tin khách hàng
                                 </div>
@@ -330,6 +402,17 @@ const DashboardAdminOrders = () => {
                                     </div>
                                     <div className="order__detail-customer--info">
                                         <span>
+                                            Mã khuyến mại: &nbsp;
+                                        </span>
+                                        {
+                                            detailOrders[0].order.coupon ? (
+                                                <>{detailOrders[0].order.coupon} (Giảm {formatVND(detailOrders[0].order.coupon_number)})</>
+                                            ) : <>Không có</>
+                                        }
+
+                                    </div>
+                                    <div className="order__detail-customer--info">
+                                        <span>
                                             Thanh toán: &nbsp;
                                         </span>
                                         {
@@ -338,7 +421,7 @@ const DashboardAdminOrders = () => {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="order__detail-product">
                                 <div className="order__detail-product--title">
                                     Thông tin sản phẩm
@@ -367,15 +450,62 @@ const DashboardAdminOrders = () => {
                                 }
                             </div>
                             <div className="order__detail-total">
+                                {
+                                    detailOrders[0].order.coupon_number &&
+                                    <>
+                                        <span>Khuyến mại: </span>
+                                        <span className="total-price">
+                                            - {formatVND(detailOrders[0].order.coupon_number)}
+                                        </span>
+                                    </>
+                                }
+                            </div>
+                            <div className="order__detail-total">
                                 <span>Thành tiền: </span>
                                 <span className="total-price">
-                                    {formatVND(totalPrice)}
+                                    {formatVND(totalPrice - detailOrders[0].order.coupon_number)}
                                 </span>
                             </div>
                         </div>
                     )
                 }
             </Modal>
+            <Col span={24} style={{ textAlign: 'right' }}>
+                <Space>
+                    <Typography.Text>Lọc theo:</Typography.Text>
+                    <Select style={{ width: 130 }}
+                        defaultValue=''
+                        onChange={(value) => setOrdersTime(value)}
+                    >
+                        <Select.Option
+                            value=''
+                        >
+                            Tất cả
+                        </Select.Option>
+                        <Select.Option
+                            value='week'
+                        >
+                            Trong tuần
+                        </Select.Option>
+                        <Select.Option
+                            value='month'
+                        >
+                            Trong tháng
+                        </Select.Option>
+                        <Select.Option
+                            value='last-month'
+                        >
+                            Tháng trước
+                        </Select.Option>
+                        <Select.Option
+                            value='year'
+                        >
+                            Trong năm
+                        </Select.Option>
+                    </Select>
+                </Space>
+
+            </Col>
 
             {/* Bảng đơn hàng */}
             <Col span={24}>
@@ -384,6 +514,10 @@ const DashboardAdminOrders = () => {
                     columns={columns}
                     dataSource={listOrdersUser}
                     rowKey={(record) => record.order_code}
+                    pagination={{
+                        showSizeChanger: true
+                    }}
+
                 />
             </Col>
 

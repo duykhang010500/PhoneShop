@@ -44,7 +44,7 @@ const DashboardAdminArticlesPost = () => {
     // Cột
     const columns = [
         {
-            title: '#Id',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id'
         },

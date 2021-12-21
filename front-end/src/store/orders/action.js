@@ -56,9 +56,9 @@ export const actGetListOrdersUser = (listOrdersUser) => {
     }
 }
 
-export const actGetListOrdersUserAsync = () => async (dispatch) => {
+export const actGetListOrdersUserAsync = (ordersTime) => async (dispatch) => {
     try {
-        const res = await orderServices.getListOrderUser()
+        const res = await orderServices.getListOrderUser(ordersTime)
         const listOrdersUser = res.data.data
         dispatch(actGetListOrdersUser(listOrdersUser))
     } catch (err) {

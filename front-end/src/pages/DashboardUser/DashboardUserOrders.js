@@ -8,7 +8,8 @@ import {
     Row,
     Col,
     Image,
-    Avatar
+    Avatar,
+    Typography
 } from 'antd'
 
 import {
@@ -159,7 +160,7 @@ const DashboardUserOrder = () => {
                         <span>Đang tải thông tin</span>
                     ) : (
                         <div className="order__detail">
-                            <div className="order__detail-customer">
+                            {/* <div className="order__detail-customer">
                                 <div className="order__detail-customer--title">
                                     Thông tin khách hàng
                                 </div>
@@ -198,7 +199,12 @@ const DashboardUserOrder = () => {
                                         <span>
                                             Mã khuyến mại: &nbsp;
                                         </span>
-                                        {detailOrders[0].order.coupon}
+                                        {
+                                            detailOrders[0].order.coupon ? (
+                                                <>{detailOrders[0].order.coupon} (Giảm {formatVND(detailOrders[0].order.coupon_number)})</>
+                                            ) : <>Không có</>
+                                        }
+
                                     </div>
                                     <div className="order__detail-customer--info">
                                         <span>
@@ -211,7 +217,7 @@ const DashboardUserOrder = () => {
                                         }
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="order__detail-product">
                                 <div className="order__detail-product--title">
                                     Thông tin sản phẩm
@@ -242,9 +248,20 @@ const DashboardUserOrder = () => {
                                 }
                             </div>
                             <div className="order__detail-total">
+                                {
+                                    detailOrders[0].order.coupon_number &&
+                                    <>
+                                        <span>Khuyến mại: </span>
+                                        <span className="total-price">
+                                            - {formatVND(detailOrders[0].order.coupon_number)}
+                                        </span>
+                                    </>
+                                }
+                            </div>
+                            <div className="order__detail-total">
                                 <span>Thành tiền: </span>
                                 <span className="total-price">
-                                    {formatVND(totalPrice)}
+                                    {formatVND(totalPrice - detailOrders[0].order.coupon_number)}
                                 </span>
                             </div>
                         </div>

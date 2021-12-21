@@ -53,7 +53,7 @@ const DashboardAdminArticleCategory = () => {
     //Các cột trong bảng
     const columns = [
         {
-            title: '#Id',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id'
         },

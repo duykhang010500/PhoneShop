@@ -10,7 +10,8 @@ import {
     Avatar,
     Tooltip,
     Popconfirm,
-    Typography
+    Typography,
+    Input
 } from 'antd'
 import { Link } from 'react-router-dom'
 import {
@@ -55,11 +56,58 @@ const DashboardAminProducts = () => {
             key: 'name',
             render: (text, record) => (
                 <Typography.Text
-                // strong
                 >
                     {record.name}
                 </Typography.Text>
-            )
+            ),
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                autoFocus
+                                placeholder='Nhập tên sản phẩm'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                                onPressEnter={() => {
+                                    confirm()
+                                }}
+                            // onBlur={() => {
+                            //     confirm()
+                            // }}
+                            >
+                            </Input>
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    danger
+                                    size='small'
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+
+                    </div>
+                )
+            },
+            filterIcon: () => {
+                return <SearchOutlined />
+            },
+            onFilter: (value, record) => {
+                return record.name.toLowerCase().includes(value.toLowerCase())
+            }
         },
         {
             title: 'Thương hiệu',
@@ -69,7 +117,21 @@ const DashboardAminProducts = () => {
                 <Typography.Text >
                     {record.brand.name}
                 </Typography.Text>
-            )
+            ),
+            filters: [
+                { text: 'Realmi', value: 'Realmi' },
+                { text: 'Vivo', value: 'Vivo' },
+                { text: 'Asus', value: 'Asus' },
+                { text: 'Xiaomi', value: 'Xiaomi' },
+                { text: 'Apple', value: 'Apple' },
+                { text: 'Oppo', value: 'Oppo' },
+                { text: 'Nokia', value: 'Nokia' },
+                { text: 'Samsung', value: 'Samsung' }
+
+            ],
+            onFilter: (value, record) => {
+                return record.brand.name === value
+            }
         },
 
         {
@@ -186,10 +248,13 @@ const DashboardAminProducts = () => {
             </Col>
             <Col span={24}>
                 <Table
+                    loading={isFetchingProduct}
                     columns={columns}
                     dataSource={listProduct}
                     rowKey={(record) => record.id}
-                    loading={isFetchingProduct}
+                    pagination={{
+                        showSizeChanger: true
+                    }}
                 />
             </Col>
 

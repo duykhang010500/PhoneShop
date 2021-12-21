@@ -37,7 +37,7 @@ const DashboardAdminCoupon = () => {
             key: 'code'
         },
         {
-            title: 'Giá trị giảm (%)',
+            title: 'Giá trị giảm (VNĐ)',
             dataIndex: 'number',
             key: 'number'
         },
@@ -160,7 +160,7 @@ const DashboardAdminCoupon = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label='Khuyến mại (%)'
+                        label='Khuyến mại (VNĐ)'
                         name='number'
                         rules={[
                             { required: true, message: 'Vui lòng nhập giá trị khuyến mại!' }
@@ -168,7 +168,9 @@ const DashboardAdminCoupon = () => {
                     >
                         <InputNumber
                             style={{ width: '100%' }}
-                            min={1}
+                            min={50000}
+                            step={50000}
+
                         />
                     </Form.Item>
                     <Form.Item
@@ -252,7 +254,8 @@ const DashboardAdminCoupon = () => {
                     >
                         <InputNumber
                             style={{ width: '100%' }}
-                            min={1}
+                            min={50000}
+                            step={50000}
                         />
                     </Form.Item>
                     <Form.Item

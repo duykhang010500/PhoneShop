@@ -129,7 +129,11 @@ const Cart = () => {
                                         {formatVND(item.price)}
                                     </Typography.Text>
                                     <Typography.Text style={{ fontSize: '1.3rem', fontWeight: '500' }}>
-                                        Giảm {item.discount} %
+                                        {
+                                            item.discount !== 0 && <span>
+                                                Giảm {item.discount} %
+                                            </span>
+                                        }
                                     </Typography.Text>
                                 </Space>
                             </Col>

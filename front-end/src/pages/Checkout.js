@@ -41,7 +41,7 @@ import { actDeleteCart } from '../store/cart/action'
 import { actCheckCoupon } from '../store/coupons/action'
 
 const convertPriceWithCoupon = (totalPrice, couponValue) => {
-    return totalPrice - (totalPrice * couponValue / 100)
+    return totalPrice - couponValue
 }
 
 const Checkout = () => {
@@ -209,7 +209,7 @@ const Checkout = () => {
 
         }))
 
-        const formatOrder = { ...values, address: values.detailAddress + ', ' + values.ward + ', ' + values.district + ', ' + values.province, coupon_code: couponCode }
+        const formatOrder = { ...values, address: values.detailAddress + ', ' + values.ward + ', ' + values.district + ', ' + values.province, coupon_code: coupon ? coupon.code : '' }
         delete formatOrder.ward
         delete formatOrder.district
         delete formatOrder.province
@@ -583,7 +583,9 @@ const Checkout = () => {
                                         <Typography.Text
                                             strong
                                         >
-                                            {coupon ? +coupon.number : 0} %
+                                            {
+                                                formatVND(coupon ? +coupon.number : 0)
+                                            }
                                         </Typography.Text>
 
                                     </Col>

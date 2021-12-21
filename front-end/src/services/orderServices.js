@@ -13,8 +13,12 @@ const orderServices = {
             }
         })
     },
-    getListOrderUser() {
-        return api.callWithToken().get('/admin/order-user')
+    getListOrderUser(ordersTime) {
+        return api.callWithToken().get('/admin/order-user', {
+            params: {
+                filter: ordersTime
+            }
+        })
     },
     getDetailOrderUser(order_code) {
         return api.callWithToken().get('/admin/order-user-detail', {

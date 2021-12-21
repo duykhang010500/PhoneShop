@@ -94,7 +94,7 @@ const DashboardAdminCategories = () => {
     //Columns in table
     const columnsBrandTable = [
         {
-            title: '#ID',
+            title: 'ID',
             dataIndex: 'id',
             key: 'id'
         },
