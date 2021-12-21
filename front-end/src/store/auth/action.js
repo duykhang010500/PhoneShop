@@ -73,6 +73,8 @@ export const actFetchMe = () => async (dispatch) => {
         const token = res.data.access_token
         dispatch(actSetToken(token))
         const currentUser = res.data.user
+        // console.log('curentUser', currentUser)
+        localStorage.setItem('r', 1)
         dispatch(actSetCurrentUser(currentUser))
 
     } catch (err) {

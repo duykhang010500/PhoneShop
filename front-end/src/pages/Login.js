@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { actLogin } from '../store/auth/action'
+import { actFetchMe, actLogin, actSetToken } from '../store/auth/action'
 
 import {
     Form,
@@ -13,8 +13,12 @@ import {
 import { Link, useHistory } from 'react-router-dom'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNotAuthenticated } from '../hooks/useAuthenticate'
+import GoogleLogin from '../components/GoogleLoginButton'
 
 export default function Login() {
+
+    const qs = window.location.search
+
 
     useNotAuthenticated()
     const history = useHistory()
@@ -22,6 +26,24 @@ export default function Login() {
     const [isLoading, setIsLoading] = useState(false)
 
     const [form] = Form.useForm()
+
+    useEffect(() => {
+        if (qs) {
+            fetch(`http://localhost:8000/api/google/callback${qs}`)
+                .then((res) => res.json())
+                .then(data => {
+                    dispatch(actSetToken(data.token))
+                    dispatch(actFetchMe())
+                        .then(() => {
+                            message.success('Đăng nhập thành công!')
+                            history.push('/')
+                        })
+                })
+        } else {
+            console.log('huhu')
+        }
+    }, [])
+
 
     const handleSubmit = (values) => {
         setIsLoading(true)
@@ -87,8 +109,17 @@ export default function Login() {
                 </Form.Item>
                 <Link
                     to='/forgot-password'
-                    style={{ textAlign: 'right', marginTop: 10, fontSize: 15, fontWeight: 500, color: 'rgb(241, 102, 34)', display: 'block' }}>
-                    Quên mật khẩu?
+                    style={{ fontSize: 14, textAlign: 'right', display: 'block' }}
+
+                >
+                    <Typography.Text
+                        type="danger"
+                        strong
+                        style={{ fontSize: 14, textAlign: 'right' }}
+
+                    >
+                        Quên mật khẩu?
+                    </Typography.Text>
                 </Link>
 
 
@@ -97,12 +128,17 @@ export default function Login() {
                         type="primary"
                         loading={isLoading}
                         htmlType="submit"
+                        className='mt-1'
                         style={{ width: '100%', marginBottom: 10 }}
                     >
                         Đăng nhập
                     </Button>
-                    <Typography.Text>
+                    <Typography.Text style={{ textAlign: 'center', display: 'block' }}>
                         Hoặc &nbsp;
+                    </Typography.Text>
+                    <GoogleLogin />
+                    <Typography.Text>
+                        Đây là lần sử dụng đầu tiên của bạn? &nbsp;
                     </Typography.Text>
                     <Link to='/register'>
                         <Typography.Text
@@ -110,7 +146,7 @@ export default function Login() {
                             strong
                             style={{ fontSize: 16 }}
                         >
-                            Đăng ký ngay
+                            Hãy tạo tài khoản mới
                         </Typography.Text>
                     </Link>
                 </Form.Item>
