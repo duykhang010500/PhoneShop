@@ -545,7 +545,7 @@ const DashboardAdminOrders = () => {
                         Lọc theo:
                     </Typography.Text>
                     <Select
-                        style={{ width: 150 }}
+                        style={{ width: 145, textAlign: 'center' }}
                         defaultValue=''
                         onChange={(value) => setOrdersTime(value)}
                         size='large'

@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react'
-import { Table, Avatar } from 'antd'
+import { Table, Avatar, Tooltip, Switch } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { actGetListCustomerAsync } from '../../store/customers/action'
 
@@ -67,6 +67,18 @@ const DashboardAdminCustomers = () => {
             title: 'Ngày đăng ký',
             dataIndex: 'created_at',
             key: 'created_at'
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => {
+                return (
+                    <Tooltip title='Thay đổi trạng thái'>
+                        <Switch />
+                    </Tooltip>
+                )
+            }
         }
     ]
 

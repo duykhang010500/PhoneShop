@@ -1,7 +1,7 @@
 import brandsServices from "../../services/brandsServices";
 
 export const ACT_SET_LIST_BRAND = 'ACT_SET_LIST_BRAND'
-
+export const ACT_GET_LIST_BRAND_ADMIN = 'ACT_GET_LIST_BRAND_ADMIN'
 
 export const actGetListBrand = (list) => {
     return {
@@ -66,5 +66,23 @@ export const actUpdateBrandAsync = (id, formData) => async (dispatch) => {
             ok: false,
             message: 'Có lỗi xảy ra'
         }
+    }
+}
+
+const actGetListBrandAdmin = (list) => {
+    // console.log(list)
+    return {
+        type: ACT_GET_LIST_BRAND_ADMIN,
+        payload: { list }
+    }
+}
+
+export const actGetListBrandAdminAsync = () => async (dispatch) => {
+    try {
+        const res = await brandsServices.getListBrandAdmin()
+        return res.data.data
+        dispatch(actGetListBrandAdmin(res.data.data))
+    } catch (err) {
+
     }
 }

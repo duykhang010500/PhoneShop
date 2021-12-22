@@ -11,6 +11,9 @@ const brandsServices = {
     },
     updateBrand(id, formData) {
         return api.callWithToken().put(`/brand?slug=${id}`, formData)
+    },
+    getListBrandAdmin() {
+        return api.callWithToken().get('/admin/brands/all')
     }
 }
 

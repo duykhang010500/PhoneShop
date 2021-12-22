@@ -246,7 +246,7 @@ const DashboardAdminCoupon = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label='Khuyến mại (%)'
+                        label='Khuyến mại (VNĐ)'
                         name='number'
                         rules={[
                             { required: true, message: 'Vui lòng nhập giá trị khuyến mại!' }

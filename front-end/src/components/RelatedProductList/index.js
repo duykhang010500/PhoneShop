@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { actGetRelatedListProductAsync } from '../../store/products/actions'
+import { useSelector } from 'react-redux'
+
 import ProductItem from '../ProductItem'
 import Underline from '../common/Underline'
 
@@ -18,7 +18,6 @@ const RelatedProductList = () => {
     }
 
     return (
-
         <>
             {
                 relatedProductList.length !== 0 &&

@@ -11,7 +11,8 @@ import {
     Tooltip,
     Popconfirm,
     Typography,
-    Input
+    Input,
+    Switch
 } from 'antd'
 import { Link } from 'react-router-dom'
 import {
@@ -22,7 +23,7 @@ import {
     SearchOutlined
 } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { actDeleteProductAsync, actGetAllProductAsync, actGetAllProductNotPaging } from '../../store/products/actions';
+import { actDeleteProductAsync, actGetAllProductAsync, actGetAllProductNotPaging, actUpdateProductAsync } from '../../store/products/actions';
 import { formatVND } from '../../helpers/priceFormat'
 
 
@@ -32,7 +33,9 @@ const DashboardAminProducts = () => {
     const [isFetchingProduct, setIsFetchingProduct] = useState(false)
 
     useEffect(() => {
+        setIsFetchingProduct(true)
         dispatch(actGetAllProductNotPaging())
+            .finally(() => setIsFetchingProduct(false))
     }, [dispatch])
 
     const listProduct = useSelector((state) => state.Products.list)
@@ -162,6 +165,28 @@ const DashboardAminProducts = () => {
             )
         },
         {
+            title: 'Trạng thái',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status, record) => {
+                return (
+                    <Tooltip title='Thay đổi trạng thái'>
+                        <Switch
+                            defaultChecked={status}
+                            onChange={() => handleChangeStatus(status, record)}
+                        />
+                    </Tooltip>
+                )
+            },
+            filters: [
+                { text: 'Đang kích hoạt', value: 1 },
+                { text: 'Đang ẩn', value: 0 },
+            ],
+            onFilter: (value, record) => {
+                return record.status === value
+            }
+        },
+        {
             title: 'Đã bán',
             dataIndex: 'sold',
             key: 'sold',
@@ -200,6 +225,29 @@ const DashboardAminProducts = () => {
             )
         }
     ]
+
+    const handleChangeStatus = (status, record) => {
+        // console.log('Change: ', status, record)
+        setIsFetchingProduct(true)
+        if (status === 1) {
+            let newProduct = { ...record, status: 0 }
+            dispatch(actUpdateProductAsync(newProduct.slug, newProduct))
+                .then(() => {
+                    dispatch(actGetAllProductNotPaging())
+                    setIsFetchingProduct(false)
+                    message.success('Đã thay đổi trạng thái!')
+                })
+        } else {
+            let newProduct = { ...record, status: 1 }
+            dispatch(actUpdateProductAsync(newProduct.slug, newProduct))
+                .then(() => {
+                    dispatch(actGetAllProductNotPaging())
+                    setIsFetchingProduct(false)
+                    message.success('Đã thay đổi trạng thái!')
+
+                })
+        }
+    }
 
     //Delete Product
     const handleDeleteProduct = (slug) => {

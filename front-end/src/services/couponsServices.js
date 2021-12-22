@@ -2,7 +2,7 @@ import api from './api'
 
 const couponsServices = {
     getAll: () => {
-        return api.call().get('/coupons')
+        return api.callWithToken().get('/admin/coupons/all')
     },
     createCoupon: (formData) => {
         return api.callWithToken().post('/coupons', formData)

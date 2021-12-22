@@ -10,6 +10,13 @@ const Banner = () => {
         marginBottom: '2rem'
     }
 
+    const listImg = [
+        'https://i.ibb.co/p0FXd27/web-fold-filp-01.jpg',
+        'https://i.ibb.co/2cZCTN5/tua-n-le-giam-so-c-samsung-galaxy-a-1200x382.jpg',
+        'https://i.ibb.co/HYtGxB7/lenovo-m10-01.jpg',
+        'https://i.ibb.co/J3khjQL/huawei-band-6-freebuds-4i-01.jpg'
+    ]
+
     return (
         <div className="banner">
             <div className="container">
@@ -17,18 +24,17 @@ const Banner = () => {
                     dots={true}
                     autoplay
                 >
-                    <div style={contentStyle}>
-                        <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/11/26/web-fold-filp-01.jpg" alt="" />
-                    </div>
-                    <div style={contentStyle}>
-                        <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/11/15/lenovo-m10-01.jpg" alt="" />
-                    </div>
-                    <div style={contentStyle}>
-                        <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/12/03/tua-n-le-giam-so-c-samsung-galaxy-a-1200x382.jpg" alt="" />
-                    </div>
-                    <div style={contentStyle}>
-                        <img src="https://cdn.hoanghamobile.com/i/home/Uploads/2021/12/02/huawei-band-6-freebuds-4i-01.jpg" alt="" />
-                    </div>
+                    {
+                        listImg.map((item, index) => {
+                            return <div
+                                style={contentStyle}
+                                key={index}
+                            >
+                                <img src={item} alt="" />
+                            </div>
+                        })
+                    }
+
                 </Carousel>
             </div>
         </div>

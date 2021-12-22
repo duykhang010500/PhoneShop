@@ -4,6 +4,9 @@ const productsServices = {
     getAll() {
         return api.callWithToken().get('/products')
     },
+    getAllForAdmin() {
+        return api.callWithToken().get('/admin/products/all')
+    },
     create(formData) {
         return api.callWithToken().post('/products', formData)
     },

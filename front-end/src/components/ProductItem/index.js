@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import cls from 'classnames'
+
 import {
     convertNewPrice,
     formatVND
@@ -9,12 +9,10 @@ import { IoIosGitCompare } from "react-icons/io";
 
 export default function ProductItem({ product, isShowCategory, isShowCompareButton }) {
 
-    const finalClass = cls('product__item', {
-        'product__item-category': isShowCategory
-    })
+
 
     return (
-        <li className={finalClass}>
+        <li className='product__item'>
             <Link to={`/product/${product.slug}`}>
                 <img src={product.image} alt="" className="product__item--thumb" />
             </Link>
@@ -36,13 +34,6 @@ export default function ProductItem({ product, isShowCategory, isShowCompareButt
                             -{product.discount}%
                         </span>
                     }
-                    {/* <span className="product__item--price-old">
-                        <del>
-                            {
-                                formatVND(product.price)
-                            }
-                        </del>
-                    </span> */}
                 </div>
                 {
                     isShowCompareButton && <Button

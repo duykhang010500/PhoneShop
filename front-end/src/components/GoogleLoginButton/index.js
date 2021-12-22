@@ -1,9 +1,7 @@
 import React from 'react'
-import GoogleLogin from 'react-google-login';
 import GoogleButton from 'react-google-button'
 
 const GoogleLoginButton = () => {
-
     return (
         <GoogleButton
             type='light'

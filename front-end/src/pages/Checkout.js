@@ -23,14 +23,13 @@ import {
     message
 } from 'antd'
 
-import Underline from '../components/common/Underline'
+
 
 import {
     HomeOutlined,
     MailOutlined,
     UserOutlined,
     PhoneOutlined,
-    FileOutlined,
     EditOutlined
 } from '@ant-design/icons'
 
@@ -58,7 +57,7 @@ const Checkout = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [coupon, setCoupon] = useState(null)
     const [couponCode, setCouponCode] = useState('')
-
+    const [isCheckCoupon, setIsCheckCoupon] = useState(false)
 
     //Get Cart
     const cart = selector.Cart.cart
@@ -200,7 +199,7 @@ const Checkout = () => {
     }
 
     const finalSubmit = (values) => {
-        // console.log(values)
+
         setIsLoading(true)
         const finalCart = cart.map(item => ({
             product_id: item.id,
@@ -246,6 +245,7 @@ const Checkout = () => {
     }
 
     const handleCheckCoupon = () => {
+        setIsCheckCoupon(true)
         dispatch(actCheckCoupon(couponCode))
             .then((res) => {
                 if (!res.ok) {
@@ -256,6 +256,9 @@ const Checkout = () => {
                     console.log(res)
                     setCoupon(res.coupon)
                 }
+            })
+            .finally(() => {
+                setIsCheckCoupon(false)
             })
     }
 
@@ -508,10 +511,11 @@ const Checkout = () => {
                             <Space size='large'>
                                 <Input
                                     size='large'
-                                    style={{ width: '35.6rem' }}
+                                    style={{ width: '34.6rem' }}
                                     placeholder='Mã khuyến mại'
                                     onChange={handleChangeCoupon}
                                     disabled={coupon}
+                                    allowClear
                                 />
                                 {
                                     coupon ?
@@ -530,6 +534,7 @@ const Checkout = () => {
                                             type='primary'
                                             onClick={() => handleCheckCoupon()}
                                             disabled={!couponCode}
+                                            loading={isCheckCoupon}
                                         >
                                             Áp dụng
                                         </Button>
@@ -676,5 +681,6 @@ const Checkout = () => {
         </div>
     )
 }
+
 
 export default Checkout

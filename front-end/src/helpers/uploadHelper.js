@@ -18,38 +18,8 @@ function beforeUpload(file) {
     return isJpgOrPng && isLt2M;
 }
 
-const draggerProps = {
-    name: 'image',
-    multiple: false,
-    listType: 'picture',
-    action: 'https://api.imgbb.com/1/upload?expiration=600&key=8c37ca908e1a1a4f5db86e4555a008c2',
-    // onChange(info) {
-    //     const { status } = info.file;
-    //     if (status !== 'uploading') {
-    //         // console.log('file', info.file, info.fileList);
-    //         console.log('Upload xong')
-    //         console.log('list upload', info.fileList)
-
-    //         // console.log(info.fileList[0].response.data.display_url)
-    //         const urls = info.fileList.map(item => item.response.data.display_url)
-    //         console.log(urls)
-    //         form.setFieldsValue({
-    //             images_product: urls
-    //         })
-    //     }
-    //     if (status === 'done') {
-    //         message.success(`${info.file.name} tải lên thành công`);
-    //     } else if (status === 'error') {
-    //         message.error(`${info.file.name} file upload failed.`);
-    //     }
-    // },
-    // onDrop(e) {
-    //     console.log('Dropped files', e.dataTransfer.files);
-    // },
-};
 
 export {
     getBase64,
     beforeUpload,
-    draggerProps
 }

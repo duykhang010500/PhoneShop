@@ -7,7 +7,6 @@ import {
     Statistic,
     Typography,
     Breadcrumb,
-    Table
 } from 'antd'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,10 +15,10 @@ import {
     HomeOutlined,
     SyncOutlined,
     CheckCircleOutlined,
-    TabletOutlined,
     CloseOutlined,
     ReconciliationOutlined
 } from '@ant-design/icons'
+import { Line } from '@ant-design/charts';
 import { MdAttachMoney } from "react-icons/md";
 import { Tag } from 'antd'
 import { FaTruck } from "react-icons/fa"
@@ -29,67 +28,59 @@ import { formatVND } from '../../helpers/priceFormat'
 const DashboardHome = () => {
 
     const selector = useSelector(state => state)
+
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(actGetDashboardAsync())
     }, [])
+
     const statistics = selector.Statistics
     if (!statistics) {
         return null
     }
 
-    const columns = [
-        {
-            title: 'Mã đơn hàng',
-            dataIndex: 'order_code',
-            key: 'order_code'
+    const data = []
+
+    statistics.sales.forEach((item, index) => {
+        data.push({
+            month: `Tháng ${index + 1}`,
+            value: item
+        })
+        return data
+    })
+
+    const config = {
+        data,
+        xField: 'month',
+        yField: 'value',
+        label: {},
+        point: {
+            size: 5,
+            shape: 'diamond',
+            style: {
+                fill: 'white',
+                stroke: '#5B8FF9',
+                lineWidth: 2,
+            },
         },
-        {
-            title: 'Thời gian đặt',
-            dataIndex: 'created_at',
-            key: 'created_at'
+        tooltip: {
+            showMarkers: false,
         },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'status',
-            key: 'status',
-            render: tag => {
-                if (tag == '0') {
-                    return <Tag color="error" icon={<CloseOutlined />}>
-                        Đã huỷ
-                    </Tag>
-                }
-                if (tag == '1') {
-                    return <Tag icon={<SyncOutlined spin />} color="processing">
-                        Đang chờ xử lý
-                    </Tag>
-                }
-                if (tag == '2') {
-                    return <Tag icon={<FaTruck style={{ paddingTop: '4px', marginRight: '4px' }} />} color="warning">
-                        Đang giao hàng
-                    </Tag>
-                }
-                if (tag == '3') {
-                    return <Tag icon={<CheckCircleOutlined />} color="success">
-                        Đã hoàn thành
-                    </Tag>
-                }
-            }
+        state: {
+            active: {
+                style: {
+                    shadowBlur: 4,
+                    stroke: '#000',
+                    fill: 'red',
+                },
+            },
         },
-        {
-            title: 'Tổng tiền',
-            key: 'total',
-            dataIndex: 'total',
-            render: (total) => (
-                <Typography.Text
-                    type="danger"
-                    strong
-                >
-                    {formatVND(total)}
-                </Typography.Text>
-            )
-        }
-    ]
+        interactions: [
+            {
+                type: 'marker-active',
+            },
+        ],
+    };
 
     return (
         <Row gutter={[16, 16]}>
@@ -165,16 +156,9 @@ const DashboardHome = () => {
                     />
                 </Card>
             </Col>
-            {/* <Col span={24}>
-                <Typography.Title level={5}>
-                    Đơn hàng mới nhất
-                </Typography.Title>
-                <Table
-                    columns={columns}
-                    dataSource={statistics.orders}
-                    rowKey={(record) => record.order_code}
-                />
-            </Col> */}
+            <Col span={24}>
+                <Line {...config} />
+            </Col>
         </Row>
     )
 }

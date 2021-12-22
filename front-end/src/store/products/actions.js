@@ -30,9 +30,7 @@ export const actGetAllProductAsync = () => async (dispatch) => {
 
 export const actGetAllProductNotPaging = () => async (dispatch) => {
     try {
-        const res = await productsServices.getAll()
-        // console.log(res.data.data)
-        // console.log(res)
+        const res = await productsServices.getAllForAdmin()
         const list = res.data.data
         dispatch(actGetListProduct(list))
     } catch (err) {

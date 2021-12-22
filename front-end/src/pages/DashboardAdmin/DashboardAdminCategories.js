@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Row,
     Col,
@@ -11,7 +11,8 @@ import {
     Input,
     message,
     Tooltip,
-    Popconfirm
+    Popconfirm,
+    Switch
 } from 'antd'
 import {
     HomeOutlined,
@@ -24,6 +25,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import {
     actCreateBrandAsync,
     actDeleteBrandAsync,
+    actGetListBrandAdminAsync,
     actGetListBrandAsync,
     actUpdateBrandAsync
 } from '../../store/brands/actions'
@@ -37,9 +39,15 @@ const DashboardAdminCategories = () => {
     const [form] = Form.useForm()
     const [showFormAdd, setShowFormAdd] = useState(false)
     const [showFormUpdate, setShowFormUpdate] = useState(false)
-
+    const [listBrand, setListBrand] = useState([])
     //Get list brand
-    const brands = useSelector(state => state.Brands.list)
+
+    useEffect(() => {
+        setIsLoading(true)
+        dispatch(actGetListBrandAdminAsync())
+            .then((res) => setListBrand(res))
+            .finally(() => setIsLoading(false))
+    }, [dispatch])
 
     //Create Brand
     const handleSubmit = (values) => {
@@ -47,7 +55,9 @@ const DashboardAdminCategories = () => {
         dispatch(actCreateBrandAsync(values)).then((res) => {
             if (res.ok) {
                 message.success(res.message)
-                dispatch(actGetListBrandAsync())
+                dispatch(actGetListBrandAdminAsync())
+                    .then((res) => setListBrand(res))
+                    .finally(() => setIsLoading(false))
             } else {
                 message.error(res.message)
             }
@@ -68,7 +78,9 @@ const DashboardAdminCategories = () => {
                 message.error(res.message)
             }
         }).finally(() => {
-            dispatch(actGetListBrandAsync())
+            dispatch(actGetListBrandAdminAsync())
+                .then((res) => setListBrand(res))
+                .finally(() => setIsLoading(false))
             setIsLoading(false)
         })
     }
@@ -87,8 +99,20 @@ const DashboardAdminCategories = () => {
         }).finally(() => {
             setIsLoading(false)
             setShowFormUpdate(false)
-            dispatch(actGetListBrandAsync())
+            dispatch(actGetListBrandAdminAsync())
         })
+    }
+
+    const handleChangeStatus = (status, record) => {
+        console.log('status', status, record)
+        setIsLoading(true)
+        if (status === 1) {
+            dispatch(actUpdateBrandAsync(record.slug, { ...record, status: 0 }))
+                .finally(() => setIsLoading(false))
+        } else {
+            dispatch(actUpdateBrandAsync(record.slug, { ...record, status: 1 }))
+                .finally(() => setIsLoading(false))
+        }
     }
 
     //Columns in table
@@ -110,6 +134,17 @@ const DashboardAdminCategories = () => {
             render: (slug) => (
                 <span>/{slug}</span>
             )
+        },
+        {
+            title: 'Trạng thái',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status, record) => {
+                return <Switch
+                    onChange={() => handleChangeStatus(status, record)}
+                    defaultChecked={status}
+                />
+            }
         },
         {
             title: 'Mô tả',
@@ -195,7 +230,7 @@ const DashboardAdminCategories = () => {
             <Col span={24}>
                 <Table
                     columns={columnsBrandTable}
-                    dataSource={brands}
+                    dataSource={listBrand}
                     loading={isLoading}
                     rowKey={(record) => record.id}
                 />
