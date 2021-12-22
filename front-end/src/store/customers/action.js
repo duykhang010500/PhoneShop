@@ -19,3 +19,12 @@ export const actGetListCustomerAsync = () => async (dispatch) => {
         throw err
     }
 }
+
+export const actChangeStatusCustomerAsync = (email, formData) => async (dispatch) => {
+    try {
+        const res = await customerServices.updateStatus(email, formData)
+        console.log(res)
+    } catch (err) {
+        throw err
+    }
+}

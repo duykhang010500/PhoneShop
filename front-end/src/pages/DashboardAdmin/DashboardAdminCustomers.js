@@ -1,8 +1,8 @@
 
 import React, { useEffect, useState } from 'react'
-import { Table, Avatar, Tooltip, Switch } from 'antd'
+import { Table, Avatar, Tooltip, Switch, message } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import { actGetListCustomerAsync } from '../../store/customers/action'
+import { actChangeStatusCustomerAsync, actGetListCustomerAsync } from '../../store/customers/action'
 
 
 const DashboardAdminCustomers = () => {
@@ -14,9 +14,6 @@ const DashboardAdminCustomers = () => {
         dispatch(actGetListCustomerAsync()).then(() => {
             setIsLoading(false)
         })
-        return () => {
-            setIsLoading(false)
-        }
     }, [dispatch])
 
     const listCustomer = useSelector(state => state.Customer.list)
@@ -72,15 +69,33 @@ const DashboardAdminCustomers = () => {
             title: 'Trạng thái',
             dataIndex: 'status',
             key: 'status',
-            render: (status) => {
+            render: (status, record) => {
                 return (
                     <Tooltip title='Thay đổi trạng thái'>
-                        <Switch />
+                        <Switch
+                            defaultChecked={status}
+                            onChange={() => (handleChangeStatusCustomer(status, record))}
+                        />
                     </Tooltip>
                 )
             }
         }
     ]
+
+    const handleChangeStatusCustomer = (status, record) => {
+        setIsLoading(true)
+        if (status === 1) {
+            dispatch(actChangeStatusCustomerAsync(record.email, { status: 0 }))
+                .then(() => message.success('Thay đổi trạng thái thành công!'))
+            dispatch(actGetListCustomerAsync())
+                .finally(() => setIsLoading(false))
+        } else {
+            dispatch(actChangeStatusCustomerAsync(record.email, { status: 1 }))
+                .then(() => message.success('Thay đổi trạng thái thành công!'))
+            dispatch(actGetListCustomerAsync())
+                .finally(() => setIsLoading(false))
+        }
+    }
 
     return (
         <>
