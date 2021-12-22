@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react'
-import { Table, Avatar, Tooltip, Switch, message } from 'antd'
+import { Table, Input, Tooltip, Switch, message, Space, Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { actChangeStatusCustomerAsync, actGetListCustomerAsync } from '../../store/customers/action'
+import { SearchOutlined } from '@ant-design/icons'
 
 
 const DashboardAdminCustomers = () => {
@@ -35,12 +36,90 @@ const DashboardAdminCustomers = () => {
         {
             title: 'Email',
             dataIndex: 'email',
-            key: 'email'
+            key: 'email',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 4 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                placeholder='Nhập email'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                                onPressEnter={() => confirm()}
+                            />
+                            <Space>
+                                <Button
+                                    type='primary'
+                                    onClick={() => confirm()}
+                                    size='small'
+                                >
+                                    OK
+                                </Button>
+                                <Button
+                                    type='primary'
+                                    onClick={() => clearFilters()}
+                                    danger
+                                    size='small'
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                )
+            },
+            filterIcon() {
+                return <SearchOutlined />
+            },
+            onFilter(value, record) {
+                return record.email.toLowerCase().includes(value.toLowerCase())
+            }
         },
         {
             title: 'Tên',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 4 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                placeholder='Nhập tên khách hàng'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                                onPressEnter={() => confirm()}
+                            />
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    danger
+                                    size='small'
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                )
+            },
+            filterIcon: () => <SearchOutlined />,
+            onFilter: (value, record) => {
+                return record.name.toLowerCase().includes(value.toLowerCase())
+            }
         },
         {
             title: 'Giới tính',
@@ -49,21 +128,27 @@ const DashboardAdminCustomers = () => {
             render: (gender) => {
                 if (gender === 'male') {
                     return <span>Nam</span>
-                } else {
+                } else if (gender === 'female') {
                     return <span>Nữ</span>
-
                 }
-            }
+            },
+            filters: [
+                { text: 'Nam', value: 'male' },
+                { text: 'Nữ', value: 'female' },
+            ],
+            onFilter: (value, record) => record.sex === value
         },
         {
             title: 'Ngày sinh',
             dataIndex: 'dob',
-            key: 'dob'
+            key: 'dob',
+            sorter: (a, b) => new Date(a.dob) - new Date(b.dob)
         },
         {
             title: 'Ngày đăng ký',
             dataIndex: 'created_at',
-            key: 'created_at'
+            key: 'created_at',
+            sorter: (a, b) => new Date(a.created_at) - new Date(b.created_at)
         },
         {
             title: 'Trạng thái',
@@ -78,7 +163,13 @@ const DashboardAdminCustomers = () => {
                         />
                     </Tooltip>
                 )
-            }
+            },
+            filters: [
+                { text: 'Đang kích hoạt', value: 1 },
+                { text: 'Đang Ẩn', value: 0 },
+
+            ],
+            onFilter: (value, record) => record.status === value
         }
     ]
 
