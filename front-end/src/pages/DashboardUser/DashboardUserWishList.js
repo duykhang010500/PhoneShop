@@ -34,7 +34,6 @@ const DashboardUserWishList = () => {
 
 
     const handleRemoveProduct = (productId) => {
-        console.log(productId)
         setIsLoading(true)
         dispatch(actDeleteItemInWishListAsync(productId)).then(() => {
             dispatch(actGetMyWishListAsync())
@@ -43,7 +42,7 @@ const DashboardUserWishList = () => {
 
     return (
 
-        <div className="wishlist-page box-sd1">
+        <div className="wishlist-page">
             <ul className="wishlist">
                 {
                     myWishList.map((item, index) => {

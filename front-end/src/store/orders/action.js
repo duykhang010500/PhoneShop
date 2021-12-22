@@ -103,3 +103,18 @@ export const actDeleteOrder = (order_code) => async (dispatch) => {
         }
     }
 }
+
+export const actDeleteOrderInProgressAsync = (order_code) => async (dispatch) => {
+    try {
+        await orderServices.deleteOrderInProgress(order_code)
+        return {
+            ok: true,
+            message: 'Xoá thành công!'
+        }
+    } catch (err) {
+        return {
+            ok: false,
+            message: 'Có lỗi xảy ra'
+        }
+    }
+}

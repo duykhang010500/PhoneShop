@@ -32,6 +32,13 @@ const orderServices = {
     },
     deleteOrder(order_code) {
         return api.callWithToken().delete(`/admin/delete-order?order_code=${order_code}`)
+    },
+    deleteOrderInProgress(order_code) {
+        return api.callWithToken().delete('/user/delete-order', {
+            params: {
+                order_code
+            }
+        })
     }
 
 }

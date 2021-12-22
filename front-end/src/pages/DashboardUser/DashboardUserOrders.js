@@ -9,14 +9,18 @@ import {
     Col,
     Image,
     Avatar,
-    Typography
+    Typography,
+    Space,
+    message,
+    Popconfirm
 } from 'antd'
 
 import {
     SyncOutlined,
     CheckCircleOutlined,
     EyeOutlined,
-    CloseCircleOutlined
+    CloseCircleOutlined,
+    DeleteOutlined
 } from '@ant-design/icons'
 import { FaTruck } from "react-icons/fa"
 
@@ -24,7 +28,7 @@ import moment from 'moment'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { useAuthenticated } from '../../hooks/useAuthenticate'
-import { actGetDetailOrdersAsync, actGetMyOrdersAsync } from '../../store/orders/action'
+import { actDeleteOrderInProgressAsync, actGetDetailOrdersAsync, actGetMyOrdersAsync } from '../../store/orders/action'
 import { formatVND } from '../../helpers/priceFormat'
 
 const DashboardUserOrder = () => {
@@ -122,20 +126,51 @@ const DashboardUserOrder = () => {
             key: 'action',
             render: (order) => {
                 return (
-                    <Tooltip
-                        title="Xem chi tiết"
-                    >
-                        <Button
-                            icon={<EyeOutlined />}
-                            type="primary"
-                            onClick={() => handleShowDetailOrder(order.order_code)}
+                    <Space>
+                        <Tooltip
+                            title="Xem chi tiết"
                         >
-                        </Button>
-                    </Tooltip>
+                            <Button
+                                icon={<EyeOutlined />}
+                                type="primary"
+                                onClick={() => handleShowDetailOrder(order.order_code)}
+                            >
+                            </Button>
+                        </Tooltip>
+                        {
+                            order.status === 1 && <Tooltip
+                                title="Huỷ đơn hàng"
+                            >
+                                <Popconfirm
+                                    title={`Huỷ đơn hàng ${order.order_code} ?`}
+                                    onConfirm={() => handleDeleteOrder(order.order_code)}
+                                >
+                                    <Button
+                                        icon={<DeleteOutlined />}
+                                        type="primary"
+                                        danger
+                                    >
+                                    </Button>
+                                </Popconfirm>
+                            </Tooltip>
+                        }
+                    </Space>
                 )
             }
         }
     ]
+
+    const handleDeleteOrder = async (order_code) => {
+        setIsLoading(true)
+        const res = await dispatch(actDeleteOrderInProgressAsync(order_code))
+        if (res.ok) {
+            message.success(res.message)
+        } else {
+            message.error(res.message)
+        }
+        dispatch(actGetMyOrdersAsync())
+            .finally(() => setIsLoading(false))
+    }
 
 
     return (

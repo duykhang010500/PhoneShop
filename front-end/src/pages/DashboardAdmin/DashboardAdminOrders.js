@@ -29,7 +29,8 @@ import {
     EditOutlined,
     DeleteOutlined,
     CloseCircleOutlined,
-    SearchOutlined
+    SearchOutlined,
+    ClockCircleOutlined
 } from '@ant-design/icons';
 
 import { FaTruck } from "react-icons/fa"
@@ -40,7 +41,7 @@ import { formatVND } from '../../helpers/priceFormat'
 const DashboardAdminOrders = () => {
 
     const dispatch = useDispatch()
-    const [ordersTime, setOrdersTime] = useState('last-month')
+    const [ordersTime, setOrdersTime] = useState('')
 
     useEffect(() => {
         setIsLoading(true)
@@ -101,7 +102,7 @@ const DashboardAdminOrders = () => {
         dispatch(actUpdateStatusOrder(ordersSelected.order_code, status))
             .then(() => {
                 setConfirmLoading(false)
-                dispatch(actGetListOrdersUserAsync())
+                dispatch(actGetListOrdersUserAsync(ordersTime))
             })
             .finally(() => {
                 setShowModalUpdate(false)
@@ -130,6 +131,7 @@ const DashboardAdminOrders = () => {
 
     const columns = [
         {
+            width: '12%',
             title: 'Mã đơn hàng',
             dataIndex: 'order_code',
             key: 'order_code',
@@ -143,6 +145,7 @@ const DashboardAdminOrders = () => {
                     <div style={{ padding: 8 }}>
                         <Space direction='vertical'>
                             <Input
+                                style={{ width: 120 }}
                                 autoFocus
                                 placeholder='Nhập mã đơn hàng'
                                 value={selectedKeys}
@@ -188,19 +191,81 @@ const DashboardAdminOrders = () => {
 
         },
         {
-            title: 'Thông tin cơ bản',
+            title: 'Thông tin khách hàng',
             dataIndex: 'info',
             key: 'info',
             render: (text, record) => {
                 return (
-                    <div>
-                        <span>{record.ship.name}</span>
-                        <span>{record.ship.phone}</span>
+                    <div style={{ fontSize: 13 }}>
+                        <p><span className='fw-500'>Tên khách hàng:</span> {record.ship.name}</p>
+                        <p><span className='fw-500'>Số điện thoại:</span> {record.ship.phone}</p>
+                        <p><span className='fw-500'>Email:</span> {record.ship.email}</p>
+
+                        <p><span className='fw-500'>Địa chỉ:</span> {record.ship.address}</p>
+                        <p><span className='fw-500'>Thanh toán:</span> {record.ship.method === 1 ? <>Tiền mặt</> : <>VNPAY</>}</p>
+                        <p><span className='fw-500'>Ghi chú:</span> {record.ship.note}</p>
                     </div>
 
 
                 )
-            }
+            },
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                style={{ width: 380 }}
+                                autoFocus
+                                placeholder='Nhập tên khách hàng, email hoặc số điện thoại'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                                onPressEnter={() => {
+                                    confirm()
+                                }}
+                            // onBlur={() => {
+                            //     confirm()
+                            // }}
+                            >
+                            </Input>
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    danger
+                                    size='small'
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+
+                    </div>)
+            },
+            onFilter: (value, record) => {
+                return record.ship.phone.toLowerCase().includes(value.toLowerCase()) ||
+                    record.ship.name.toLowerCase().includes(value.toLowerCase()) ||
+                    record.ship.email.toLowerCase().includes(value.toLowerCase())
+            },
+            filterIcon: () => <SearchOutlined />
+        },
+        {
+            title: 'Ngày đặt',
+            dataIndex: 'created_at',
+            key: 'ordersDate',
+            render: (text, record) => {
+                return <span><ClockCircleOutlined /> {record.created_at}</span>
+            },
+            sorter: (a, b) => new Date(a.created_at) - new Date(b.created_at)
         },
         {
             title: 'Tổng tiền',
@@ -254,10 +319,11 @@ const DashboardAdminOrders = () => {
             }
         },
         {
+            width: '10%',
             title: 'Hành động',
             key: 'action',
             render: (text, record) => (
-                <Space size="middle">
+                <Space size="small">
                     <Tooltip title="Cập nhật">
                         <Button
                             type="primary"
@@ -470,12 +536,19 @@ const DashboardAdminOrders = () => {
                     )
                 }
             </Modal>
-            <Col span={24} style={{ textAlign: 'right' }}>
+            <Col
+                span={24}
+                style={{ textAlign: 'right' }}
+            >
                 <Space>
-                    <Typography.Text>Lọc theo:</Typography.Text>
-                    <Select style={{ width: 130 }}
+                    <Typography.Text strong>
+                        Lọc theo:
+                    </Typography.Text>
+                    <Select
+                        style={{ width: 150 }}
                         defaultValue=''
                         onChange={(value) => setOrdersTime(value)}
+                        size='large'
                     >
                         <Select.Option
                             value=''
@@ -515,12 +588,11 @@ const DashboardAdminOrders = () => {
                     dataSource={listOrdersUser}
                     rowKey={(record) => record.order_code}
                     pagination={{
-                        showSizeChanger: true
+                        showSizeChanger: true,
+                        size: 'default'
                     }}
-
                 />
             </Col>
-
         </Row>
     )
 }

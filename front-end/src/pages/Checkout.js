@@ -511,19 +511,33 @@ const Checkout = () => {
                                     style={{ width: '35.6rem' }}
                                     placeholder='Mã khuyến mại'
                                     onChange={handleChangeCoupon}
+                                    disabled={coupon}
                                 />
-                                <Button
-                                    size='large'
-                                    type='primary'
-                                    onClick={() => handleCheckCoupon()}
-                                    disabled={!couponCode}
-                                >
-                                    Áp dụng
-                                </Button>
+                                {
+                                    coupon ?
+                                        <Button
+                                            size='large'
+                                            type='primary'
+                                            danger
+                                            onClick={() => setCoupon(null)}
+
+                                        >
+                                            Huỷ
+                                        </Button>
+                                        :
+                                        <Button
+                                            size='large'
+                                            type='primary'
+                                            onClick={() => handleCheckCoupon()}
+                                            disabled={!couponCode}
+                                        >
+                                            Áp dụng
+                                        </Button>
+                                }
                             </Space>
                             {
                                 coupon ?
-                                    <small>Bạn đang áp dụng mã khuyến mại "{coupon.name}"</small> :
+                                    <small style={{ display: 'block' }}>Bạn đang áp dụng mã khuyến mại "{coupon.name}"</small> :
                                     null
                             }
                         </Col>

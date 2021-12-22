@@ -165,7 +165,7 @@ const DashboardHome = () => {
                     />
                 </Card>
             </Col>
-            <Col span={24}>
+            {/* <Col span={24}>
                 <Typography.Title level={5}>
                     Đơn hàng mới nhất
                 </Typography.Title>
@@ -174,7 +174,7 @@ const DashboardHome = () => {
                     dataSource={statistics.orders}
                     rowKey={(record) => record.order_code}
                 />
-            </Col>
+            </Col> */}
         </Row>
     )
 }
