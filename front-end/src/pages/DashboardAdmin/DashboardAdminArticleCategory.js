@@ -17,7 +17,8 @@ import {
     HomeOutlined,
     EditOutlined,
     DeleteOutlined,
-    PlusCircleOutlined
+    PlusCircleOutlined,
+    SearchOutlined
 } from '@ant-design/icons'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -55,12 +56,49 @@ const DashboardAdminArticleCategory = () => {
         {
             title: 'ID',
             dataIndex: 'id',
-            key: 'id'
+            key: 'id',
+            sorter: (a, b) => a.id - b.id
         },
         {
             title: 'Tên chủ đề',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                placeholder='Nhập tên chủ đề'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                                onPressEnter={() => confirm()}
+                            />
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    size='small'
+                                    danger
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                )
+            },
+            filterIcon: () => <SearchOutlined />,
+            onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase())
         },
         {
             title: 'Đường dẫn',

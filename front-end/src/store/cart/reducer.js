@@ -20,7 +20,16 @@ const cartReducer = (state = initState, action) => {
     switch (action.type) {
         case ACT_ADD_TO_CART: {
             const check = state.cart.every(item => {
-                return item.id !== action.payload.product.id
+                if (item.id !== action.payload.product.id) {
+                    return true
+                } else {
+                    if (item.color != action.payload.product.color) {
+                        return true
+                    }
+                    else {
+                        return false
+                    }
+                }
             })
             if (check) {
                 let newCart = [...state.cart, { ...action.payload.product, quantity: 1 }]

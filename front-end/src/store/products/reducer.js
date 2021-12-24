@@ -4,6 +4,7 @@ import {
     ACT_GET_BEST_DISCOUNT,
     ACT_GET_COLORS_PRODUCT,
     ACT_GET_DETAIL_PRODUCT,
+    ACT_GET_LIST_NEW_PRODUCT,
     ACT_GET_RELATED_LIST_PRODUCT,
     ACT_SEARCH_PRODUCT
 } from "./actions"
@@ -16,6 +17,12 @@ const initState = {
     colorsProduct: [],
     searchProduct: [],
     filterListProduct: {
+        list: [],
+        totalItem: 0,
+        currentPage: 0,
+        totalPage: 0
+    },
+    listNewProduct: {
         list: [],
         totalItem: 0,
         currentPage: 0,
@@ -70,6 +77,17 @@ const productsReducer = (state = initState, action) => {
                     totalPage: action.payload.totalPage
                 }
             }
+        case ACT_GET_LIST_NEW_PRODUCT: {
+            return {
+                ...state,
+                listNewProduct: {
+                    list: action.payload.products,
+                    currentPage: action.payload.currentPage,
+                    totalItem: action.payload.totalItem,
+                    totalPage: action.payload.totalPage
+                }
+            }
+        }
         default:
             return state
     }

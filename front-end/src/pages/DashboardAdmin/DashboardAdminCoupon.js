@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Breadcrumb, Row, Col, Table, Button, Modal, Form, Input, InputNumber, Space, Tooltip, Popconfirm, message } from 'antd'
-import { HomeOutlined, PlusCircleOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { HomeOutlined, PlusCircleOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { actCreateCouponAsync, actDeleteCouponAsync, actGetListCouponAsync, actUpdateCoupon, actUpdateCouponAsync } from '../../store/coupons/action'
+import { formatVND } from '../../helpers/priceFormat'
 
 const DashboardAdminCoupon = () => {
 
@@ -29,22 +30,99 @@ const DashboardAdminCoupon = () => {
         {
             title: 'Tên khuyến mại',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            filterDropdown: ({ setSelectedKeys, SelectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                placeholder='Nhập tên khuyến mại'
+                                value={SelectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                            />
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    size='small'
+                                    danger
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                )
+            },
+            filterIcon: () => <SearchOutlined />,
+            onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase())
         },
         {
             title: 'Code',
             dataIndex: 'code',
-            key: 'code'
+            key: 'code',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                placeholder='Nhập code'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                            />
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    size='small'
+                                    danger
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                )
+            },
+            filterIcon: () => <SearchOutlined />,
+            onFilter: (value, record) => record.code.toLowerCase().includes(value.toLowerCase())
         },
         {
             title: 'Giá trị giảm (VNĐ)',
             dataIndex: 'number',
-            key: 'number'
+            key: 'number',
+            render: (number) => {
+                return <span>
+                    {formatVND(+number)}
+                </span>
+            },
+            sorter: (a, b) => +a.number - +b.number
         },
         {
             title: 'Số lượng',
             dataIndex: 'quantity',
-            key: 'quantity'
+            key: 'quantity',
+            sorter: (a, b) => a.quantity - b.quantity
         },
         {
             title: 'Hành động',

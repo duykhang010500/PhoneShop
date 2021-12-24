@@ -4,6 +4,7 @@ export const ACT_UPDATE_ITEM = 'ACT_UPDATE_ITEM'
 export const ACT_DELETE_CART = 'ACT_DELETE_CART'
 
 export const actAddToCart = (product) => {
+    console.log(product)
     return {
         type: ACT_ADD_TO_CART,
         payload: { product }

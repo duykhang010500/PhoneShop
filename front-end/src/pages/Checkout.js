@@ -4,7 +4,6 @@ import dateFormat from 'dateformat'
 import querystring from 'qs'
 import crypto from 'crypto'
 
-
 import {
     Breadcrumb,
     Typography,
@@ -22,8 +21,6 @@ import {
     Divider,
     message
 } from 'antd'
-
-
 
 import {
     HomeOutlined,
@@ -51,6 +48,7 @@ const Checkout = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
+    const [payment, setPayment] = useState('Tiền mặt')
     const [form] = Form.useForm()
     const selector = useSelector(state => state)
 
@@ -170,7 +168,7 @@ const Checkout = () => {
         var orderId = dateFormat(date, 'HHmmss');
         var amount = convertPriceWithCoupon(totalPrice, coupon ? +coupon.number : 0);
         // var bankCode = ''
-        var orderInfo = 'Thanh toán nè';
+        var orderInfo = 'Thanh toán sản phẩm!';
         var orderType = 'other';
         var locale = 'vn';
         var currCode = 'VND';
@@ -195,11 +193,11 @@ const Checkout = () => {
         vnp_Params['vnp_SecureHash'] = signed;
         vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
 
-        window.open(vnpUrl, '_blank');
+        // window.open(vnpUrl, '_blank');
+        window.location.href = vnpUrl
     }
 
     const finalSubmit = (values) => {
-
         setIsLoading(true)
         const finalCart = cart.map(item => ({
             product_id: item.id,
@@ -215,14 +213,20 @@ const Checkout = () => {
         delete formatOrder.detailAddress
 
         const newOrder = { ...formatOrder, cart: finalCart }
+        localStorage.setItem('newOrders', JSON.stringify(newOrder))
 
         console.log(newOrder)
+        if (payment === 2) {
+            handlePaymentOnline()
+            return
+        }
         dispatch(actMakeNewOrder(newOrder)).then(() => {
             setIsLoading(false)
             dispatch(actDeleteCart())
 
         }).finally(() => {
             setIsLoading(false)
+            localStorage.removeItem('newOrders')
             history.push('/orderSuccess')
         })
 
@@ -335,12 +339,13 @@ const Checkout = () => {
                                 >
                                     <Radio.Group size="large">
                                         <Space>
-                                            <Radio.Button value={1}>
+                                            <Radio.Button value={`Tiền mặt`}>
                                                 Tiền mặt
                                             </Radio.Button>
                                             <Radio.Button
                                                 value={2}
-                                                onClick={handlePaymentOnline}
+                                                // onClick={handlePaymentOnline}
+                                                onClick={() => setPayment(2)}
                                             >
                                                 VNPAY
                                             </Radio.Button>
@@ -504,9 +509,7 @@ const Checkout = () => {
                                 )
                             })
                         }
-
                         <Divider />
-
                         <Col span={24}>
                             <Space size='large'>
                                 <Input
@@ -546,7 +549,6 @@ const Checkout = () => {
                                     null
                             }
                         </Col>
-
                         <Divider />
                         <Col span={24}
                             style={{

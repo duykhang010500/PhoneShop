@@ -8,6 +8,7 @@ export const ACT_GET_RELATED_LIST_PRODUCT = 'ACT_GET_RELATED_LIST_PRODUCT'
 export const ACT_GET_COLORS_PRODUCT = 'ACT_GET_COLORS_PRODUCT'
 export const ACT_SEARCH_PRODUCT = 'ACT_GET_SEARCH_PRODUCT'
 export const ACT_FILTER_PRODUCT = 'ACT_FILTER_PRODUCT'
+export const ACT_GET_LIST_NEW_PRODUCT = 'ACT_GET_LIST_NEW_PRODUCT'
 
 // Lấy danh sách sản phẩm
 export const actGetListProduct = (list) => {
@@ -224,12 +225,50 @@ export const actFilterProductAsync = ({
             page,
             ...restParams
         })
-        console.log(res)
         const products = res.data.data.data
         const totalItem = res.data.data.total
         const currentPage = res.data.data.current_page
         const totalPage = res.data.data.last_page
         dispatch(actFilterProduct({
+            products,
+            totalItem,
+            totalPage,
+            currentPage
+        }))
+    } catch (err) {
+        throw err
+    }
+}
+
+const actGetListNewProductPaging = ({
+    products,
+    totalItem,
+    totalPage,
+    currentPage
+}) => {
+    return {
+        type: ACT_GET_LIST_NEW_PRODUCT,
+        payload: {
+            products,
+            totalItem,
+            totalPage,
+            currentPage
+        }
+    }
+}
+
+export const actGetListNewProductPagingAsync = ({
+    page,
+    ...restParams
+} = {}) => async (dispatch) => {
+    try {
+        const res = await productsServices.filterProduct({ page, ...restParams })
+        console.log('Filter', res)
+        const products = res.data.data.data
+        const totalItem = res.data.data.total
+        const currentPage = res.data.data.current_page
+        const totalPage = res.data.data.last_page
+        dispatch(actGetListNewProductPaging({
             products,
             totalItem,
             totalPage,

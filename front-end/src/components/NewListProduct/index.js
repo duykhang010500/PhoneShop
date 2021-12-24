@@ -1,17 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import ProductItem from '../ProductItem'
-import { Typography } from 'antd'
-
+import { Pagination, Spin } from 'antd'
+import { useDispatch } from 'react-redux'
 import Underline from '../common/Underline'
+import { actFilterProductAsync, actGetListNewProductPagingAsync } from '../../store/products/actions'
 
 export default function NewListProduct({ title }) {
     const selector = useSelector(state => state)
+    const dispatch = useDispatch()
+    const [isLoading, setIsLoading] = useState(false)
+    const [page, setPage] = useState(1)
+    const listProduct = selector.Products.listNewProduct
 
-    const listNew = selector.Products.list
-    if (!listNew) {
+    useEffect(() => {
+        setIsLoading(true)
+        dispatch(actGetListNewProductPagingAsync({ page }))
+            .finally(() => setIsLoading(false))
+    }, [dispatch, page])
+
+    if (!listProduct) {
         return null
     }
+    const list = listProduct.list
+    const currPage = listProduct.currentPage
+    const totalItem = listProduct.totalItem
+
 
     return (
         <div className="container">
@@ -23,11 +37,20 @@ export default function NewListProduct({ title }) {
                     {title}
                     <Underline />
                 </div>
-                <ul className="product__list">
-                    {
-                        listNew.slice(0, 10).map((product, index) => <ProductItem key={index} product={product} />)
-                    }
-                </ul>
+                <Spin spinning={isLoading}>
+                    <ul className="product__list">
+                        {
+                            list.map((product, index) => <ProductItem key={index} product={product} />)
+                        }
+                    </ul>
+                </Spin>
+                <Pagination
+                    style={{ textAlign: 'center', paddingBottom: 10 }}
+                    current={page}
+                    total={totalItem}
+                    onChange={(page) => setPage(page)}
+
+                />
             </div>
         </div>
 

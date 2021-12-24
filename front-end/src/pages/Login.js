@@ -129,11 +129,14 @@ export default function Login() {
                         loading={isLoading}
                         htmlType="submit"
                         className='mt-1'
-                        style={{ width: '100%', marginBottom: 10 }}
+                        style={{ width: '100%', marginBottom: 5 }}
+                        size='large'
                     >
                         Đăng nhập
                     </Button>
-                    <Typography.Text style={{ textAlign: 'center', display: 'block' }}>
+                    <Typography.Text
+                        style={{ textAlign: 'center', display: 'block', fontWeight: 500 }}
+                    >
                         Hoặc &nbsp;
                     </Typography.Text>
                     <GoogleLogin />

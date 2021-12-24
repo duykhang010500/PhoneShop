@@ -10,7 +10,8 @@ import {
     MobileOutlined,
     LogoutOutlined,
     ReconciliationOutlined,
-    SettingOutlined
+    SettingOutlined,
+    SearchOutlined
 } from '@ant-design/icons'
 
 import HeaderSearch from './HeaderSearch';
@@ -117,20 +118,20 @@ const HeaderMenu = () => {
                         </div>
                         <div className="header__menu-actions--item">
                             <Link to="/news">
-                                <IoNewspaper />&nbsp;Tin công nghệ
+                                <IoNewspaper />&nbsp;Tin tức
                             </Link>
                         </div>
-                        {/* <div className="header__menu-actions--item">
-                            <Link to="/login">
-                                <PhoneOutlined />&nbsp;Gọi mua hàng
+                        <div className="header__menu-actions--item">
+                            <Link to="/order-tracking">
+                                <SearchOutlined />&nbsp;Tra cứu đơn hàng
                             </Link>
-                        </div> */}
+                        </div>
                         <div className="header__menu-actions--item">
                             {
                                 !currentUser ?
                                     <Dropdown overlay={menuLogin} placement="bottomCenter">
                                         <Link to="/login">
-                                            <UserOutlined />&nbsp;Đăng nhập
+                                            <UserOutlined />&nbsp;
                                         </Link>
                                     </Dropdown>
                                     :
@@ -144,7 +145,7 @@ const HeaderMenu = () => {
                         </div>
                         <div className="header__menu-actions--item">
                             <Link to="/cart">
-                                <ShoppingCartOutlined />&nbsp;Giỏ hàng
+                                <ShoppingCartOutlined />&nbsp;
                             </Link>
                             <span className="num-cart">{cart.length}</span>
                         </div>

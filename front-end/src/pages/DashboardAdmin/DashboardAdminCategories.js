@@ -19,9 +19,10 @@ import {
     PlusCircleOutlined,
     DeleteOutlined,
     FormOutlined,
-    SaveOutlined
+    SaveOutlined,
+    SearchOutlined
 } from '@ant-design/icons'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {
     actCreateBrandAsync,
     actDeleteBrandAsync,
@@ -120,12 +121,48 @@ const DashboardAdminCategories = () => {
         {
             title: 'ID',
             dataIndex: 'id',
-            key: 'id'
+            key: 'id',
+            sorter: (a, b) => a.id - b.id
         },
         {
             title: 'Tên hãng',
             dataIndex: 'name',
             key: 'name',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space>
+                            <Input
+                                placeholder='Nhập tên hãng'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                            />
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    danger
+                                    size='small'
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                )
+            },
+            filterIcon: () => <SearchOutlined />,
+            onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase())
         },
         {
             title: 'Đường dẫn',
@@ -144,7 +181,12 @@ const DashboardAdminCategories = () => {
                     onChange={() => handleChangeStatus(status, record)}
                     defaultChecked={status}
                 />
-            }
+            },
+            filters: [
+                { text: 'Đang kích hoạt', value: 1 },
+                { text: 'Đang ẩn', value: 0 },
+            ],
+            onFilter: (value, record) => record.status === value
         },
         {
             title: 'Mô tả',

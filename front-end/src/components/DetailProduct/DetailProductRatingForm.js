@@ -12,7 +12,7 @@ import {
 } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { IoMdPaperPlane } from "react-icons/io";
-import { actRatingProductAsync } from '../../store/products/actions';
+import { actGetDetailProductAsync, actRatingProductAsync } from '../../store/products/actions';
 import { openNotificationWithIcon } from '../../helpers/notification'
 
 export default function DetailProductRatingForm({ showFormRating }) {
@@ -24,6 +24,7 @@ export default function DetailProductRatingForm({ showFormRating }) {
     const [isLoading, setIsLoading] = useState(false)
 
     const id = selector.Products.detailProduct.data.id
+    const slug = selector.Products.detailProduct.data.slug
     console.log('product in rating', id)
     function handleChangeStar(e) {
         setStar(e)
@@ -47,9 +48,9 @@ export default function DetailProductRatingForm({ showFormRating }) {
             .then((res) => {
                 if (res.ok) {
                     openNotificationWithIcon('success', res.message)
+                    dispatch(actGetDetailProductAsync(slug))
                 } else {
                     openNotificationWithIcon('error', res.message)
-
                 }
             })
             .finally(() => {

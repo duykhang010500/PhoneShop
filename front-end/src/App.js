@@ -36,6 +36,7 @@ import DetailPostNews from "./pages/DetailPostNews"
 import CheckoutSuccess from "./pages/CheckoutSuccess"
 import ForgotPassword from "./pages/ForgotPassword"
 import NewPassword from "./pages/NewPassword"
+import OrderTracking from "./pages/OrderTracking"
 
 function App() {
 
@@ -102,6 +103,9 @@ function App() {
         <Route exact path='/new-password'>
           <NewPassword />
         </Route>
+        <Route exact path='/order-tracking'>
+          <OrderTracking />
+        </Route>
         <Route path="/user">
           <DashboardUser />
         </Route>
@@ -117,12 +121,12 @@ function App() {
           <>
             <CoreValue />
             <Footer />
+            <BackTop>
+              <UpCircleTwoTone style={{ fontSize: "3.5rem", color: 'red' }} />
+            </BackTop>
           </>
         )
       }
-      <BackTop>
-        <UpCircleTwoTone style={{ fontSize: "3.5rem", color: 'red' }} />
-      </BackTop>
     </div>
   );
 }

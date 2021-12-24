@@ -4,6 +4,7 @@ import orderServices from "../../services/orderServices"
 export const ACT_GET_MY_ORDERS = 'ACT_GET_MY_ORDERS'
 export const ACT_GET_DETAIL_ORDERS = ' ACT_GET_DETAIL_ORDERS'
 export const ACT_GET_LIST_ORDERS_USER = 'ACT_GET_LIST_ORDERS_USER'
+export const ACT_TRACKING_ORDER = 'ACT_TRACKING_ORDER'
 
 // create new order
 export const actMakeNewOrder = (formData) => async (dispatch) => {
@@ -116,5 +117,33 @@ export const actDeleteOrderInProgressAsync = (order_code) => async (dispatch) =>
             ok: false,
             message: 'Có lỗi xảy ra'
         }
+    }
+}
+
+export const actTrackingOrder = (order) => {
+    return {
+        type: ACT_TRACKING_ORDER,
+        payload: { order }
+    }
+}
+
+export const actTrackingOrderAsync = (formValues) => async (dispatch) => {
+    try {
+        const res = await orderServices.trackingOrder(formValues)
+        console.log('Tracking - Order: ', res)
+        if (res.data.data.length === 0) {
+            return {
+                ok: false,
+                message: 'Thông tin cung cấp không chính xác, vui lòng kiểm tra lại!'
+            }
+        } else {
+            dispatch(actTrackingOrder(res.data.data[0]))
+            return {
+                ok: true,
+                message: 'Tra cứu đơn hàng thành công!'
+            }
+        }
+    } catch (err) {
+        throw err
     }
 }

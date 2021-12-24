@@ -55,12 +55,14 @@ const DashboardAdmin = () => {
                 collapsed={isCollapsed}
                 width={240}
             >
-                <div className="logo" />
-                <Menu theme="light" mode="inline" selectedKeys={[location.pathname]}>
+                <div className="logo">
+                    {/* Phone Shop */}
+                </div>
+                <Menu theme="dark" mode="inline" selectedKeys={[location.pathname]}>
                     <Menu.Item
                         key="/admin"
                         icon={<DashboardOutlined
-                            style={{ fontSize: "2rem" }}
+                        // style={{ fontSize: "2rem" }}
                         />}>
                         <Link to='/admin'>Tổng quan</Link>
                     </Menu.Item>

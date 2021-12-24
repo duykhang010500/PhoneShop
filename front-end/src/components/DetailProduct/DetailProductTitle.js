@@ -44,8 +44,17 @@ export default function DetailProductTitle() {
                     <Space>
                         {
                             product.data.ratings.length != 0 ?
-                                <Rate disabled value={product.star_avg || 0} style={{ fontSize: "1.4rem" }} /> :
-                                <Rate disabled value={0} style={{ fontSize: "1.4rem" }} />
+                                <Rate
+                                    allowHalf
+                                    disabled
+                                    value={product.star_avg || 0}
+                                    style={{ fontSize: "1.4rem" }} /> :
+                                <Rate
+                                    disabled
+                                    value={0}
+                                    style={{ fontSize: "1.4rem" }}
+
+                                />
                         }
                         <Typography.Text strong>
                             {product.data.ratings.length} đánh giá

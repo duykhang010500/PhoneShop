@@ -1,8 +1,9 @@
-import { ACT_GET_DETAIL_ORDERS, ACT_GET_LIST_ORDERS_USER, ACT_GET_MY_ORDERS } from './action'
+import { ACT_GET_DETAIL_ORDERS, ACT_GET_LIST_ORDERS_USER, ACT_GET_MY_ORDERS, ACT_TRACKING_ORDER } from './action'
 const initialState = {
     listOrders: [],
     detailOrder: null,
     listOrdersUser: [],
+    trackingOrder: null
 }
 
 const ordersReducer = (state = initialState, action) => {
@@ -21,6 +22,11 @@ const ordersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 listOrdersUser: action.payload.listOrdersUser
+            }
+        case ACT_TRACKING_ORDER:
+            return {
+                ...state,
+                trackingOrder: action.payload.order
             }
         default:
             return state

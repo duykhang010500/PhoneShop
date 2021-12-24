@@ -53,6 +53,7 @@ const DashboardAdminOrders = () => {
     // Lấy danh sách orders
     const listOrdersUser = useSelector((state) => state.Orders.listOrdersUser)
 
+
     // Lấy chi tiết orders
     const detailOrders = useSelector(state => state.Orders.detailOrder)
 
@@ -129,6 +130,7 @@ const DashboardAdminOrders = () => {
         Modal.destroyAll()
     }
 
+
     const columns = [
         {
             width: '12%',
@@ -194,16 +196,16 @@ const DashboardAdminOrders = () => {
             title: 'Thông tin khách hàng',
             dataIndex: 'info',
             key: 'info',
+            width: '35%',
             render: (text, record) => {
                 return (
                     <div style={{ fontSize: 13 }}>
                         <p><span className='fw-500'>Tên khách hàng:</span> {record.ship.name}</p>
                         <p><span className='fw-500'>Số điện thoại:</span> {record.ship.phone}</p>
                         <p><span className='fw-500'>Email:</span> {record.ship.email}</p>
-
                         <p><span className='fw-500'>Địa chỉ:</span> {record.ship.address}</p>
-                        <p><span className='fw-500'>Thanh toán:</span> {record.ship.method === 1 ? <>Tiền mặt</> : <>VNPAY</>}</p>
-                        <p><span className='fw-500'>Ghi chú:</span> {record.ship.note}</p>
+                        <p><span className='fw-500'>Thanh toán:</span> {record.ship.method} </p>
+                        <p><span className='fw-500'>Ghi chú:</span> {record.ship.note || <>Không có</>}</p>
                     </div>
 
 
@@ -374,7 +376,7 @@ const DashboardAdminOrders = () => {
 
     return (
         <Row
-            gutter={[20, 20]}
+            gutter={[20, 10]}
         >
             {/* Đường dẫn */}
             <Col span={24}>
@@ -548,7 +550,7 @@ const DashboardAdminOrders = () => {
                         style={{ width: 145, textAlign: 'center' }}
                         defaultValue=''
                         onChange={(value) => setOrdersTime(value)}
-                        size='large'
+                    // size='large'
                     >
                         <Select.Option
                             value=''

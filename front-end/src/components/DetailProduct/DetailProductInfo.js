@@ -68,11 +68,13 @@ export default function DetailProductInfo() {
     }
 
     const handleAddToCart = (product, color) => {
+
         if (!productColor) {
             openNotificationWithIcon('error', 'Hãy chọn màu của sản phẩm!')
             return
         }
         const productWithColor = { ...product, color }
+        console.log(productWithColor)
         dispatch(actAddToCart(productWithColor))
     }
 

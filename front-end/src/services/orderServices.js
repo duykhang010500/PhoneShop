@@ -39,8 +39,12 @@ const orderServices = {
                 order_code
             }
         })
+    },
+    trackingOrder(formValues) {
+        return api.call().get('/tra-cuu-don-hang', {
+            params: formValues
+        })
     }
-
 }
 
 export default orderServices

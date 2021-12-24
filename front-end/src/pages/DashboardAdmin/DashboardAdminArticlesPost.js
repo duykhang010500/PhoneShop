@@ -24,11 +24,17 @@ import {
     HomeOutlined,
     EditOutlined,
     DeleteOutlined,
-    PlusCircleOutlined
+    PlusCircleOutlined,
+    SearchOutlined
 } from '@ant-design/icons'
-
 import { useDispatch, useSelector } from 'react-redux'
-import { actCreateArticleAsync, actDeleteArticleAsync, actGetArticleListAsync, actGetCategoryListAsync, actUpdateArticleAsync } from '../../store/news/action'
+import {
+    actCreateArticleAsync,
+    actDeleteArticleAsync,
+    actGetArticleListAsync,
+    actGetCategoryListAsync,
+    actUpdateArticleAsync
+} from '../../store/news/action'
 
 const DashboardAdminArticlesPost = () => {
 
@@ -46,7 +52,8 @@ const DashboardAdminArticlesPost = () => {
         {
             title: 'ID',
             dataIndex: 'id',
-            key: 'id'
+            key: 'id',
+            sorter: (a, b) => a.id - b.id
         },
         {
             title: 'Ảnh minh hoạ',
@@ -64,7 +71,43 @@ const DashboardAdminArticlesPost = () => {
         {
             title: 'Tên bài viết',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Space direction='vertical'>
+                            <Input
+                                placeholder='Nhập tên bài viết'
+                                value={selectedKeys}
+                                onChange={(e) => {
+                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
+                                    confirm({ closeDropdown: false })
+                                }}
+                                onPressEnter={() => confirm()}
+                            />
+                            <Space>
+                                <Button
+                                    onClick={() => confirm()}
+                                    type='primary'
+                                    size='small'
+                                >
+                                    Ok
+                                </Button>
+                                <Button
+                                    onClick={() => clearFilters()}
+                                    type='primary'
+                                    size='small'
+                                    danger
+                                >
+                                    Reset
+                                </Button>
+                            </Space>
+                        </Space>
+                    </div>
+                )
+            },
+            filterIcon: () => <SearchOutlined />,
+            onFilter: (value, record) => record.name.toLowerCase().includes(value.toLowerCase())
         },
         {
             title: 'Đường dẫn',
@@ -155,7 +198,6 @@ const DashboardAdminArticlesPost = () => {
             setIsLoading(false)
         })
     }
-
     //Editor
     const TextEditor = () => {
         const { quill, quillRef } = useQuill({});
