@@ -18,7 +18,7 @@ import {
     useDispatch, useSelector
 } from 'react-redux'
 
-import { CheckCircleTwoTone } from '@ant-design/icons'
+import { CheckCircleTwoTone, PlusCircleOutlined, CheckCircleOutlined } from '@ant-design/icons'
 import {
     convertNewPrice, formatVND
 } from '../../helpers/priceFormat'
@@ -32,6 +32,7 @@ import SwiperCore, { Navigation, Pagination, Controller, Thumbs } from 'swiper';
 import 'swiper/swiper-bundle.css';
 import './styles.css';
 import { openNotificationWithIcon } from '../../helpers/notification'
+import { actAddToCompare, actRemoveCompare } from '../../store/compare/action'
 SwiperCore.use([Navigation, Pagination, Controller, Thumbs]);
 
 
@@ -43,9 +44,11 @@ export default function DetailProductInfo() {
     const [isLiked, setIsLiked] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
+    const [isCompare, setIsCompare] = useState(false)
 
     const myWishList = selector.WishList
     const product = selector.Products.detailProduct.data
+    const compareList = selector.Compare.compareList
 
     useEffect(() => {
         if (myWishList.find(item => item.product_id === product.id)) {
@@ -54,6 +57,14 @@ export default function DetailProductInfo() {
             setIsLiked(false)
         }
     }, [myWishList])
+
+    useEffect(() => {
+        if (compareList.find(item => item.id === product.id)) {
+            setIsCompare(true)
+        } else {
+            setIsCompare(false)
+        }
+    }, [compareList])
 
     if (!product) {
         return null
@@ -104,6 +115,7 @@ export default function DetailProductInfo() {
     const formatImg = product.images_product
     const galleryImage = [product.image, ...formatImg]
     // console.log('ảnh đã format', galleryImage)
+
 
     return (
         <Row gutter={[40, 40]}>
@@ -190,6 +202,21 @@ export default function DetailProductInfo() {
                                     Thích
                                 </Space>
                             )
+                        }
+                        {
+
+                            isCompare ? <Space
+                                style={{ color: 'blue', cursor: 'pointer' }}
+                                onClick={() => dispatch(actRemoveCompare(product.id))}
+                            >
+                                <CheckCircleOutlined /> Đã thêm so sánh
+                            </Space> :
+                                <Space
+                                    style={{ color: 'blue', cursor: 'pointer' }}
+                                    onClick={() => dispatch(actAddToCompare({ product }))}
+                                >
+                                    <PlusCircleOutlined /> So sánh
+                                </Space>
                         }
                     </Space>
                     <Typography.Text strong>

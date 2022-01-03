@@ -10,7 +10,6 @@ export const ACT_TRACKING_ORDER = 'ACT_TRACKING_ORDER'
 export const actMakeNewOrder = (formData) => async (dispatch) => {
     try {
         const res = await orderServices.makeNewOrder(formData)
-        console.log(res)
     } catch (err) {
         throw err
     }
@@ -84,7 +83,6 @@ export const actGetDetailOrderUserAsync = (order_code) => async (dispatch) => {
 export const actUpdateStatusOrder = (order_code, status) => async (dispatch) => {
     try {
         const res = await orderServices.updateStatusOrders(order_code, status)
-        console.log(res)
     } catch (err) {
         throw err
     }

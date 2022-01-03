@@ -93,8 +93,6 @@ const DashboardUserInfo = () => {
             'dob': fieldsValue['dob'].format('YYYY-MM-DD'),
             'image': avatar || currentUser.image
         }
-
-        console.log(newFieldsValue)
         setIsLoading(true)
         dispatch(actUpdateProfile(newFieldsValue)).then((res) => {
             if (res.ok) {

@@ -16,6 +16,7 @@ import customersReducer from './customers/reducer'
 import newsReducer from './news/reducer'
 import statisticsReducer from './statistics/reducer'
 import couponsReducer from './coupons/reducer'
+import compareReducer from './compare/reducer'
 
 const rootReducer = combineReducers({
     Auth: authReducer,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     Customer: customersReducer,
     News: newsReducer,
     Statistics: statisticsReducer,
-    Coupons: couponsReducer
+    Coupons: couponsReducer,
+    Compare: compareReducer
 })
 const store = createStore(rootReducer, applyMiddleware(thunk, logger))
 

@@ -70,6 +70,9 @@ const FilterProducts = () => {
             setMinPrice(null)
             setMaxPrice(null)
         }
+        if (values.length === 0) {
+            setIsCheckAllBrand(true)
+        }
         setBrandFilter(values)
         setCheckedListBrand(values)
         setMinPrice(null)

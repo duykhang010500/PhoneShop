@@ -290,7 +290,9 @@ const DashboardAdminOrders = () => {
             key: 'status',
             filters: [
                 { text: 'Đang chờ xử lý', value: 1 },
+                { text: 'Đang xử lý', value: 4 },
                 { text: 'Đang giao hàng', value: 2 },
+                { text: 'Giao hàng thất bại', value: 5 },
                 { text: 'Đã hoàn thành', value: 3 },
                 { text: 'Đã huỷ', value: 0 }
             ],
@@ -316,6 +318,16 @@ const DashboardAdminOrders = () => {
                 if (tag == '3') {
                     return <Tag icon={<CheckCircleOutlined />} color="success">
                         Đã hoàn thành
+                    </Tag>
+                }
+                if (tag == '4') {
+                    return <Tag icon={<SyncOutlined spin />} color="processing">
+                        Đang xử lý
+                    </Tag>
+                }
+                if (tag == '5') {
+                    return <Tag icon={<FaTruck style={{ paddingTop: '4px', marginRight: '4px' }} />} color="error">
+                        Giao hàng thất bại
                     </Tag>
                 }
             }
@@ -397,7 +409,7 @@ const DashboardAdminOrders = () => {
                 onOk={handleChangeStatusOrder}
                 confirmLoading={confirmLoading}
                 destroyOnClose={true}
-                width={650}
+                width={700}
             >
                 <Form
                     form={form}
@@ -408,10 +420,18 @@ const DashboardAdminOrders = () => {
                         name="status"
                     >
                         <Radio.Group>
-                            <Radio value={1}>Đang chờ xử lý</Radio>
-                            <Radio value={2}>Đang giao hàng</Radio>
-                            <Radio value={3}>Đã hoàn thành</Radio>
-                            <Radio value={0}>Huỷ đơn</Radio>
+                            <Space direction='vertical'>
+                                <Space>
+                                    <Radio value={1}>Đang chờ xử lý</Radio>
+                                    <Radio value={4}>Đang xử lý</Radio>
+                                    <Radio value={2}>Đang giao hàng</Radio>
+                                    <Radio value={5}>Giao hàng thất bại</Radio>
+                                </Space>
+                                <Space>
+                                    <Radio value={3}>Đã hoàn thành</Radio>
+                                    <Radio value={0}>Huỷ đơn</Radio>
+                                </Space>
+                            </Space>
                         </Radio.Group>
                     </Form.Item>
                 </Form>

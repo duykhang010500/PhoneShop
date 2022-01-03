@@ -131,7 +131,7 @@ const HeaderMenu = () => {
                                 !currentUser ?
                                     <Dropdown overlay={menuLogin} placement="bottomCenter">
                                         <Link to="/login">
-                                            <UserOutlined />&nbsp;
+                                            <UserOutlined /> Đăng nhập
                                         </Link>
                                     </Dropdown>
                                     :

@@ -150,27 +150,27 @@ const DashboardAdminCustomers = () => {
             key: 'created_at',
             sorter: (a, b) => new Date(a.created_at) - new Date(b.created_at)
         },
-        {
-            title: 'Trạng thái',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status, record) => {
-                return (
-                    <Tooltip title='Thay đổi trạng thái'>
-                        <Switch
-                            defaultChecked={status}
-                            onChange={() => (handleChangeStatusCustomer(status, record))}
-                        />
-                    </Tooltip>
-                )
-            },
-            filters: [
-                { text: 'Đang kích hoạt', value: 1 },
-                { text: 'Đang Ẩn', value: 0 },
+        // {
+        //     title: 'Trạng thái',
+        //     dataIndex: 'status',
+        //     key: 'status',
+        //     render: (status, record) => {
+        //         return (
+        //             <Tooltip title='Thay đổi trạng thái'>
+        //                 <Switch
+        //                     defaultChecked={status}
+        //                     onChange={() => (handleChangeStatusCustomer(status, record))}
+        //                 />
+        //             </Tooltip>
+        //         )
+        //     },
+        //     filters: [
+        //         { text: 'Đang kích hoạt', value: 1 },
+        //         { text: 'Đang Ẩn', value: 0 },
 
-            ],
-            onFilter: (value, record) => record.status === value
-        }
+        //     ],
+        //     onFilter: (value, record) => record.status === value
+        // }
     ]
 
     const handleChangeStatusCustomer = (status, record) => {

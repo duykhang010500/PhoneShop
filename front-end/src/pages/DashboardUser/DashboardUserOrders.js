@@ -99,24 +99,34 @@ const DashboardUserOrder = () => {
             key: 'status',
             dataIndex: 'status',
             render: tag => {
-                if (tag === 0) {
+                if (tag == '0') {
                     return <Tag icon={<CloseCircleOutlined />} color="error">
                         Đã huỷ
                     </Tag>
                 }
-                if (tag === 1) {
+                if (tag == '1') {
                     return <Tag icon={<SyncOutlined spin />} color="processing">
                         Đang chờ xử lý
                     </Tag>
                 }
-                if (tag === 2) {
+                if (tag == '2') {
                     return <Tag icon={<FaTruck style={{ paddingTop: '4px', marginRight: '4px' }} />} color="warning">
                         Đang giao hàng
                     </Tag>
                 }
-                if (tag === 3) {
+                if (tag == '3') {
                     return <Tag icon={<CheckCircleOutlined />} color="success">
                         Đã hoàn thành
+                    </Tag>
+                }
+                if (tag == '4') {
+                    return <Tag icon={<SyncOutlined spin />} color="processing">
+                        Đang xử lý
+                    </Tag>
+                }
+                if (tag == '5') {
+                    return <Tag icon={<FaTruck style={{ paddingTop: '4px', marginRight: '4px' }} />} color="error">
+                        Giao hàng thất bại
                     </Tag>
                 }
             }

@@ -4,12 +4,15 @@ import {
     Input,
     message,
     Table,
-    Steps
+    Steps,
+    Tag,
+    Row
 } from 'antd'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { actTrackingOrderAsync } from '../store/orders/action'
-
+import convertStatusToStep from '../helpers/stepConvert'
+import { CloseCircleOutlined } from '@ant-design/icons'
 const OrderTracking = () => {
 
     const [isLoading, setIsLoading] = useState(false)
@@ -84,21 +87,33 @@ const OrderTracking = () => {
                 </Form>
             </div>
             {
-                isShowStatus &&
-                <div
-                    style={{ maxWidth: 500, margin: '0 auto' }}
-                >
-                    <Steps
-                        size='small'
-                        current={order.status - 1}
-                        progressDot
-                        responsive
-                    >
-                        <Steps.Step title="Đang chờ xử lý" />
-                        <Steps.Step title="Đang vận chuyển" />
-                        <Steps.Step title="Đã hoàn thành" />
-                    </Steps>
-                </div>
+                isShowStatus && (order.status !== 0 ?
+                    <div style={{ maxWidth: 500, margin: '0 auto' }}>
+                        <Steps
+                            size='small'
+                            current={convertStatusToStep(order.status)}
+                            progressDot
+                            responsive
+                            status={(order.status === 5) ? 'error' : 'process'}
+                        >
+
+                            <Steps.Step title="Đang chờ xử lý" />
+                            <Steps.Step title="Đang xử lý" />
+                            <Steps.Step title="Đang giao hàng" />
+                            {
+                                order.status === 5 && <Steps.Step title="Giao hàng thất bại" />
+                            }
+                            <Steps.Step title="Đã hoàn thành" />
+                        </Steps>
+                    </div> :
+                    <Row justify='center'>
+                        <Tag
+                            icon={<CloseCircleOutlined />}
+                            color={'red'}
+                            style={{ fontSize: '1.6rem', padding: '1rem' }}
+                        >Đơn hàng đã bị huỷ
+                        </Tag>
+                    </Row>)
             }
         </div>
     )

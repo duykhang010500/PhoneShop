@@ -39,8 +39,6 @@ export default function Login() {
                             history.push('/')
                         })
                 })
-        } else {
-            console.log('huhu')
         }
     }, [])
 
@@ -78,10 +76,6 @@ export default function Login() {
                             required: true,
                             message: 'Vui lòng nhập email!'
                         },
-                        // {
-                        //     type: "email",
-                        //     message: 'Email không hợp lệ'
-                        // }
                     ]}
                 >
                     <Input

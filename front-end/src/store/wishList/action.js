@@ -6,7 +6,6 @@ export const ACT_GET_MY_WISH_LIST = 'ACT_GET_MY_WISH_LIST'
 export const actAddToWishList = (product_id) => async (dispatch) => {
     try {
         const res = await wishlistServices.addToWishList(product_id)
-        console.log(res)
     } catch (err) {
         throw err
     }
@@ -15,7 +14,6 @@ export const actAddToWishList = (product_id) => async (dispatch) => {
 export const actDeleteItemInWishListAsync = (id) => async (dispatch) => {
     try {
         const res = await wishlistServices.deleteItemInWithList(id)
-        console.log(res)
     } catch (err) {
         throw err
     }

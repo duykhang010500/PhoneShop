@@ -21,7 +21,6 @@ export const actSetCurrentUser = (user) => {
 export const actRegister = (formData) => async (dispatch) => {
     try {
         const res = await authServices.register(formData)
-        // console.log(res)
         return {
             ok: true,
             message: 'Tạo tài khoản thành công!'
@@ -38,7 +37,6 @@ export const actRegister = (formData) => async (dispatch) => {
 export const actLogin = (formData) => async (dispatch) => {
     try {
         const res = await authServices.login(formData)
-        // console.log(res)
         const token = res.data.access_token
         if (token) {
             dispatch(actSetToken(token))
@@ -105,7 +103,6 @@ export const actChangePassword = (formData) => async (dispatch) => {
 export const actUpdateProfile = (formData) => async (dispatch) => {
     try {
         const res = await authServices.updateProfile(formData)
-        console.log(res)
         return {
             ok: true,
             message: 'Cập nhật thông tin thành công!'
@@ -124,7 +121,6 @@ export const actUpdateProfile = (formData) => async (dispatch) => {
 export const actAdminLogin = (formData) => async (dispatch) => {
     try {
         const res = await authServices.adminLogin(formData)
-        // console.log(res)
         const token = res.data.access_token
         if (token) {
             dispatch(actSetToken(token))

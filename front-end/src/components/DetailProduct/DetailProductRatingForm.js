@@ -25,7 +25,7 @@ export default function DetailProductRatingForm({ showFormRating }) {
 
     const id = selector.Products.detailProduct.data.id
     const slug = selector.Products.detailProduct.data.slug
-    console.log('product in rating', id)
+
     function handleChangeStar(e) {
         setStar(e)
     }

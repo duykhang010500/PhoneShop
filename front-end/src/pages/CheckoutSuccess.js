@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Result, Spin } from 'antd';
+import { Result, Spin, Button } from 'antd';
 import { useDispatch } from 'react-redux'
 import { actMakeNewOrder } from '../store/orders/action'
 import { actDeleteCart } from '../store/cart/action';
@@ -38,6 +38,14 @@ const CheckoutSuccess = () => {
                         status="success"
                         title={`Thanh toán VNPAY thành công! `}
                         subTitle={`Mã giao dịch ${vnpayCode}`}
+                        extra={[
+                            <Button type="primary" key="console" href="/user/orders">
+                                Xem đơn hàng
+                            </Button>,
+                            <Button key="buy" href="/">
+                                Tiếp tục mua hàng
+                            </Button>,
+                        ]}
                     />
             }
         </div>

@@ -88,7 +88,7 @@ const DashboardAdmin = () => {
                         <Link to='/admin/orders'>Quản lý đơn hàng</Link>
                     </Menu.Item>
                     <Menu.Item
-                        key="/admin/coupon"
+                        key="/admin/coupons"
                         icon={<RiCoupon4Line
                             style={{ fontSize: "2rem" }}
                         />}>

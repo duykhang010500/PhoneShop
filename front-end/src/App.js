@@ -6,7 +6,7 @@ import {
   useRouteMatch,
 } from "react-router-dom"
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { BackTop } from 'antd'
 import { UpCircleTwoTone } from '@ant-design/icons'
@@ -37,11 +37,15 @@ import CheckoutSuccess from "./pages/CheckoutSuccess"
 import ForgotPassword from "./pages/ForgotPassword"
 import NewPassword from "./pages/NewPassword"
 import OrderTracking from "./pages/OrderTracking"
+import CompareMenu from "./components/CompareMenu"
+import CompareProduct from "./pages/CompareProduct"
+import CompareButton from "./components/CompareButton"
 
 function App() {
 
   const dispatch = useDispatch()
   const isDashBoardAdmin = useRouteMatch('/admin')
+  const isShowCompareMenu = useSelector(state => state.Compare.isShowCompareMenu)
   useEffect(() => {
     if (+localStorage.getItem('r') === 1) {
       dispatch(actFetchMe())
@@ -109,6 +113,9 @@ function App() {
         <Route path="/user">
           <DashboardUser />
         </Route>
+        <Route path='/compare'>
+          <CompareProduct />
+        </Route>
         <Route path="/admin">
           <DashboardAdmin />
         </Route>
@@ -119,6 +126,9 @@ function App() {
       {
         !isDashBoardAdmin && (
           <>
+            {
+              (isShowCompareMenu) && <CompareMenu />
+            }
             <CoreValue />
             <Footer />
             <BackTop>

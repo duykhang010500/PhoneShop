@@ -69,7 +69,6 @@ export const actGetBestDiscount = (list) => {
 export const actCreateProductAsync = (formData) => async (dispatch) => {
     try {
         const res = await productsServices.create(formData)
-        console.log(res)
         return {
             ok: true,
             message: 'Tạo mới thành công!'
@@ -87,7 +86,6 @@ export const actCreateProductAsync = (formData) => async (dispatch) => {
 export const actDeleteProductAsync = (slug) => async (dispatch) => {
     try {
         const res = await productsServices.delete(slug)
-        console.log(res)
     } catch (err) {
         throw err
     }
@@ -150,7 +148,6 @@ const actGetRelatedProductList = (list) => {
 export const actGetRelatedListProductAsync = (slug) => async (dispatch) => {
     try {
         const res = await productsServices.getRelatedListProduct(slug)
-        // console.log(res)
         const relatedProductList = res.data.data.data
         dispatch(actGetRelatedProductList(relatedProductList))
 
@@ -190,7 +187,6 @@ const actSearchProduct = (list) => {
 export const actSearchProductAsync = (keyWord) => async (dispatch) => {
     try {
         const res = await productsServices.searchProduct(keyWord)
-        // console.log('Search result: ', res)
         const resultSearch = res.data.data.data
         dispatch(actSearchProduct(resultSearch))
     } catch (err) {
@@ -263,7 +259,6 @@ export const actGetListNewProductPagingAsync = ({
 } = {}) => async (dispatch) => {
     try {
         const res = await productsServices.filterProduct({ page, ...restParams })
-        console.log('Filter', res)
         const products = res.data.data.data
         const totalItem = res.data.data.total
         const currentPage = res.data.data.current_page
