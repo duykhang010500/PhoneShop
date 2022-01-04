@@ -72,7 +72,7 @@ export const actUpdateBrandAsync = (id, formData) => async (dispatch) => {
 const actGetListBrandAdmin = (list) => {
     // console.log(list)
     return {
-        type: ACT_GET_LIST_BRAND_ADMIN,
+        type: ACT_SET_LIST_BRAND,
         payload: { list }
     }
 }
@@ -80,7 +80,7 @@ const actGetListBrandAdmin = (list) => {
 export const actGetListBrandAdminAsync = () => async (dispatch) => {
     try {
         const res = await brandsServices.getListBrandAdmin()
-        return res.data.data
+        // return res.data.data
         dispatch(actGetListBrandAdmin(res.data.data))
     } catch (err) {
 

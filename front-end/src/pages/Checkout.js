@@ -30,6 +30,8 @@ import {
     EditOutlined
 } from '@ant-design/icons'
 
+
+
 import { useDispatch, useSelector } from 'react-redux'
 import { convertNewPrice, formatVND } from '../helpers/priceFormat'
 import { actMakeNewOrder } from '../store/orders/action'
@@ -39,6 +41,7 @@ import { actCheckCoupon } from '../store/coupons/action'
 const convertPriceWithCoupon = (totalPrice, couponValue) => {
     return totalPrice - couponValue
 }
+
 
 const Checkout = () => {
 
@@ -137,7 +140,11 @@ const Checkout = () => {
 
 
     const handleSubmitForm = () => {
-        form.validateFields().then((values) => finalSubmit(values))
+        if (!currUser) {
+            message.error('Vui lòng đăng nhập để đặt hàng!')
+        } else {
+            form.validateFields().then((values) => finalSubmit(values))
+        }
     }
 
     function sortObject(obj) {
@@ -265,6 +272,8 @@ const Checkout = () => {
                 setIsCheckCoupon(false)
             })
     }
+    const currUser = selector.Auth.token
+
 
     return (
         <div className="container checkout-page">

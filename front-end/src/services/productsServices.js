@@ -46,7 +46,7 @@ const productsServices = {
         page = 1,
         ...restParams
     } = {}) {
-        return api.call().get('/products/filter', {
+        return api.call().get('/products/filter?sort_by=new', {
             params: {
                 page,
                 ...restParams

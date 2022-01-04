@@ -38,8 +38,18 @@ const DashboardAminProducts = () => {
             .finally(() => setIsFetchingProduct(false))
     }, [dispatch])
 
-    const listProduct = useSelector((state) => state.Products.list)
+    const selector = useSelector(state => state)
+    const listProduct = selector.Products.list
+    const listBrand = selector.Brands.list
 
+    const convertBrandToFilter = (arr) => {
+        const arrTemp = []
+        arr.forEach((item) => {
+            let newObj = { text: item.name, value: item.name }
+            arrTemp.push(newObj)
+        })
+        return arrTemp
+    }
     //Columns in table
     const columns = [
         {
@@ -121,17 +131,7 @@ const DashboardAminProducts = () => {
                     {record.brand.name}
                 </Typography.Text>
             ),
-            filters: [
-                { text: 'Realmi', value: 'Realmi' },
-                { text: 'Vivo', value: 'Vivo' },
-                { text: 'Asus', value: 'Asus' },
-                { text: 'Xiaomi', value: 'Xiaomi' },
-                { text: 'Apple', value: 'Apple' },
-                { text: 'Oppo', value: 'Oppo' },
-                { text: 'Nokia', value: 'Nokia' },
-                { text: 'Samsung', value: 'Samsung' }
-
-            ],
+            filters: convertBrandToFilter(listBrand),
             onFilter: (value, record) => {
                 return record.brand.name === value
             }
@@ -225,6 +225,8 @@ const DashboardAminProducts = () => {
             )
         }
     ]
+
+
 
     const handleChangeStatus = (status, record) => {
         // console.log('Change: ', status, record)

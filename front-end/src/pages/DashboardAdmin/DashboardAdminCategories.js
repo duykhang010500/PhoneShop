@@ -22,7 +22,7 @@ import {
     SaveOutlined,
     SearchOutlined
 } from '@ant-design/icons'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     actCreateBrandAsync,
     actDeleteBrandAsync,
@@ -35,20 +35,23 @@ import slugify from 'slugify'
 const DashboardAdminCategories = () => {
 
     const dispatch = useDispatch()
+    const selector = useSelector(state => state)
     const [isLoading, setIsLoading] = useState(false)
     const [idSelected, setIdSelected] = useState("")
     const [form] = Form.useForm()
     const [showFormAdd, setShowFormAdd] = useState(false)
     const [showFormUpdate, setShowFormUpdate] = useState(false)
-    const [listBrand, setListBrand] = useState([])
+    // const [listBrand, setListBrand] = useState([])
     //Get list brand
 
     useEffect(() => {
         setIsLoading(true)
         dispatch(actGetListBrandAdminAsync())
-            .then((res) => setListBrand(res))
+            // .then((res) => setListBrand(res))
             .finally(() => setIsLoading(false))
     }, [dispatch])
+
+    const listBrand = selector.Brands.list
 
     //Create Brand
     const handleSubmit = (values) => {
@@ -57,7 +60,7 @@ const DashboardAdminCategories = () => {
             if (res.ok) {
                 message.success(res.message)
                 dispatch(actGetListBrandAdminAsync())
-                    .then((res) => setListBrand(res))
+                    // .then((res) => setListBrand(res))
                     .finally(() => setIsLoading(false))
             } else {
                 message.error(res.message)
@@ -80,9 +83,8 @@ const DashboardAdminCategories = () => {
             }
         }).finally(() => {
             dispatch(actGetListBrandAdminAsync())
-                .then((res) => setListBrand(res))
+                // .then((res) => setListBrand(res))
                 .finally(() => setIsLoading(false))
-            setIsLoading(false)
         })
     }
 
